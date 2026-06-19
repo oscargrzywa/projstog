@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary:    #060807;
+  --bg-secondary:  #070c07;
+  --bg-card:       #0e130e;
+  --bg-card-hover: #131d12;
+  --green-mid:     #1B9D17;
+  --green-bright:  #34E12E;
+  --text-bone:     #ECE7DD;
+  --text-muted:    #6b8068;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-bone);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-bone);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+/* ── Card hover effects ── */
+.service-card,
+.why-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(52, 225, 46, 0.12);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.service-card:hover,
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(52, 225, 46, 0.35);
+  background: var(--bg-card-hover);
+}
+
+.portfolio-card {
+  border: 1px solid rgba(52, 225, 46, 0.08);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(52, 225, 46, 0.3);
+}
+
+/* ── Navigation ── */
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--green-bright);
+}
+
+/* ── Form focus ── */
+.form-field {
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-field:focus {
+  border-color: rgba(52, 225, 46, 0.45) !important;
+}
+
+/* ── Hero animation ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content {
+  animation: fadeInUp 0.7s ease both;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav-desktop       { display: none !important; }
+  .nav-burger        { display: flex !important; }
+  .owner-grid        { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .contact-grid      { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .process-grid      { grid-template-columns: 1fr 1fr !important; }
+  .process-connector { display: none !important; }
+  .hero-stats        { gap: 24px !important; }
+  .footer-inner      { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+}
+
+@media (max-width: 540px) {
+  .process-grid   { grid-template-columns: 1fr !important; }
+  .portfolio-grid { grid-template-columns: 1fr !important; }
+  .hero-stats     { flex-direction: column !important; align-items: center !important; }
 }

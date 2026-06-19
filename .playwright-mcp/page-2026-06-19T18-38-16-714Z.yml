@@ -1,0 +1,219 @@
+- generic [ref=e2]:
+  - navigation "Nawigacja główna" [ref=e3]:
+    - generic [ref=e4]:
+      - link "PROJSTOG – strona główna" [ref=e5] [cursor=pointer]:
+        - /url: "#"
+        - img [ref=e6]
+        - generic [ref=e11]: PROJSTOG
+      - generic [ref=e12]:
+        - link "Usługi" [ref=e13] [cursor=pointer]:
+          - /url: "#uslugi"
+        - link "Jak działamy" [ref=e14] [cursor=pointer]:
+          - /url: "#proces"
+        - link "Portfolio" [ref=e15] [cursor=pointer]:
+          - /url: "#portfolio"
+        - link "O właścicielu" [ref=e16] [cursor=pointer]:
+          - /url: "#wlasciciel"
+        - link "Kontakt" [ref=e17] [cursor=pointer]:
+          - /url: "#kontakt"
+        - link "Darmowa wycena" [ref=e18] [cursor=pointer]:
+          - /url: "#kontakt"
+  - generic [ref=e20]:
+    - img [ref=e23]
+    - heading "Strony, które zarabiają" [level=1] [ref=e28]
+    - paragraph [ref=e29]: Tworzymy profesjonalne strony internetowe i sklepy e-commerce, które realnie napędzają sprzedaż Twojego biznesu. Bez teorii — tylko wyniki.
+    - generic [ref=e30]:
+      - link "Zamów stronę" [ref=e31] [cursor=pointer]:
+        - /url: "#kontakt"
+        - text: Zamów stronę
+        - generic [ref=e32]: →
+      - link "Zobacz portfolio" [ref=e33] [cursor=pointer]:
+        - /url: "#portfolio"
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]: 50+
+        - generic [ref=e37]: Projektów
+      - generic [ref=e38]:
+        - generic [ref=e39]: 100%
+        - generic [ref=e40]: Zadowolonych klientów
+      - generic [ref=e41]:
+        - generic [ref=e42]: 24h
+        - generic [ref=e43]: Wycena w ciągu
+  - generic [ref=e45]:
+    - generic [ref=e46]:
+      - paragraph [ref=e47]: Nasze usługi
+      - heading "Co tworzymy?" [level=2] [ref=e48]
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - img [ref=e52]
+        - heading "Strony wizytówkowe" [level=3] [ref=e55]
+        - paragraph [ref=e56]: Szybkie, nowoczesne strony firmowe z myślą o konwersji. Pierwsze wrażenie w internecie ma ogromne znaczenie.
+        - generic [ref=e57]:
+          - generic [ref=e58]: SEO-ready
+          - generic [ref=e59]: Mobile-first
+          - generic [ref=e60]: CMS
+      - generic [ref=e61]:
+        - img [ref=e63]
+        - heading "Sklepy e-commerce" [level=3] [ref=e66]
+        - paragraph [ref=e67]: Sklepy internetowe, które sprzedają. Intuicyjny UX, szybkie ładowanie i integracje z systemami płatności.
+        - generic [ref=e68]:
+          - generic [ref=e69]: WooCommerce
+          - generic [ref=e70]: Shopify
+          - generic [ref=e71]: Custom
+      - generic [ref=e72]:
+        - img [ref=e74]
+        - heading "Pozycjonowanie SEO" [level=3] [ref=e76]
+        - paragraph [ref=e77]: Organiczny ruch z Google to najlepsza inwestycja. Budujemy widoczność Twojej strony na długie lata.
+        - generic [ref=e78]:
+          - generic [ref=e79]: Audyt SEO
+          - generic [ref=e80]: Treści
+          - generic [ref=e81]: Linki
+      - generic [ref=e82]:
+        - img [ref=e84]
+        - heading "Redesign stron" [level=3] [ref=e87]
+        - paragraph [ref=e88]: Stara strona traci klientów? Odświeżamy wizerunek, poprawiamy wydajność i zwiększamy konwersję.
+        - generic [ref=e89]:
+          - generic [ref=e90]: UI/UX
+          - generic [ref=e91]: Performance
+          - generic [ref=e92]: Migracja
+  - generic [ref=e94]:
+    - generic [ref=e95]:
+      - paragraph [ref=e96]: Nasz proces
+      - heading "Jak działamy?" [level=2] [ref=e97]
+    - generic [ref=e98]:
+      - generic [ref=e99]:
+        - generic [ref=e100]: "01"
+        - heading "Konsultacja" [level=3] [ref=e102]
+        - paragraph [ref=e103]: Bezpłatna rozmowa — poznajemy Twój biznes, branżę i cele. To fundament dobrego projektu.
+        - generic [ref=e104]: ›
+      - generic [ref=e105]:
+        - generic [ref=e106]: "02"
+        - heading "Projekt graficzny" [level=3] [ref=e108]
+        - paragraph [ref=e109]: Tworzymy makietę i projekt UX/UI. Iterujemy, aż będziesz w pełni zadowolony.
+        - generic [ref=e110]: ›
+      - generic [ref=e111]:
+        - generic [ref=e112]: "03"
+        - heading "Realizacja" [level=3] [ref=e114]
+        - paragraph [ref=e115]: Budujemy stronę według zatwierdzonego projektu. Kod czysty, szybki i skalowalny.
+        - generic [ref=e116]: ›
+      - generic [ref=e117]:
+        - generic [ref=e118]: "04"
+        - heading "Wdrożenie" [level=3] [ref=e120]
+        - paragraph [ref=e121]: Launch, testy na urządzeniach, szkolenie z CMS i opieka techniczna po starcie.
+  - generic [ref=e123]:
+    - generic [ref=e124]:
+      - paragraph [ref=e125]: Dlaczego my?
+      - heading "Wybierz PROJSTOG" [level=2] [ref=e126]
+    - generic [ref=e127]:
+      - generic [ref=e128]:
+        - img [ref=e130]
+        - heading "Szybka realizacja" [level=3] [ref=e132]
+        - paragraph [ref=e133]: Strona gotowa w 2–4 tygodnie od zatwierdzenia projektu. Szanujemy Twój czas i dotrzymujemy terminów.
+      - generic [ref=e134]:
+        - img [ref=e136]
+        - heading "Orientacja na wyniki" [level=3] [ref=e140]
+        - paragraph [ref=e141]: Każda decyzja projektowa służy konwersji. Nie robimy sztuki dla sztuki — robimy strony, które zarabiają.
+      - generic [ref=e142]:
+        - img [ref=e144]
+        - heading "Wsparcie po starcie" [level=3] [ref=e146]
+        - paragraph [ref=e147]: Nie znikamy po wdrożeniu. Oferujemy stałą opiekę techniczną i aktualizacje w przystępnej cenie.
+  - generic [ref=e149]:
+    - generic [ref=e150]:
+      - paragraph [ref=e151]: Nasze realizacje
+      - heading "Portfolio" [level=2] [ref=e152]
+    - generic [ref=e153]:
+      - generic [ref=e154]:
+        - generic [ref=e155]:
+          - img [ref=e157]
+          - generic [ref=e162]: PROJSTOG DESIGN
+        - generic [ref=e163]:
+          - generic [ref=e164]: Strona firmowa
+          - generic [ref=e165]: Kancelaria Malinowski & Wspólnicy
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - img [ref=e169]
+          - generic [ref=e174]: PROJSTOG DESIGN
+        - generic [ref=e175]:
+          - generic [ref=e176]: Sklep e-commerce
+          - generic [ref=e177]: UrbanFit Store
+      - generic [ref=e178]:
+        - generic [ref=e179]:
+          - img [ref=e181]
+          - generic [ref=e186]: PROJSTOG DESIGN
+        - generic [ref=e187]:
+          - generic [ref=e188]: Portfolio & Wizytówka
+          - generic [ref=e189]: Studio Architektoniczne Kurek
+  - generic [ref=e191]:
+    - generic [ref=e192]:
+      - paragraph [ref=e193]: O właścicielu
+      - heading "Poznaj twórcę PROJSTOG" [level=2] [ref=e194]
+    - generic [ref=e195]:
+      - generic [ref=e196]:
+        - generic "Oscar Grzywa" [ref=e197]: OG
+        - generic [ref=e198]:
+          - generic [ref=e199]: Oscar Grzywa
+          - generic [ref=e200]: Założyciel & CEO
+        - link "Napisz do mnie" [ref=e201] [cursor=pointer]:
+          - /url: mailto:oscar.grzywa@gmail.com
+      - generic [ref=e202]:
+        - heading "Pasja do stron, które napędzają biznes" [level=3] [ref=e203]
+        - paragraph [ref=e204]:
+          - text: Jestem
+          - strong [ref=e205]: Oscar Grzywa
+          - text: — web developer i twórca PROJSTOG. Pomagam firmom budować silną obecność w internecie poprzez strony, które wyglądają profesjonalnie i
+          - strong [ref=e206]: realnie przekładają się na wyniki sprzedaży
+          - text: .
+        - paragraph [ref=e207]: "PROJSTOG powstało z prostej obserwacji: wiele firm traci klientów przez słabą lub przestarzałą stronę internetową. Moją misją jest to zmieniać — jedno wdrożenie na raz."
+        - generic [ref=e208]:
+          - generic [ref=e209]:
+            - img [ref=e211]
+            - paragraph [ref=e213]: Każdy projekt traktuję jak własny biznes — zależy mi na Twoich wynikach, nie tylko dostarczeniu kodu.
+          - generic [ref=e214]:
+            - img [ref=e216]
+            - paragraph [ref=e218]: Pracuję bezpośrednio z klientem — bez pośredników, agencyjnych narzutów i głuchych telefonów.
+          - generic [ref=e219]:
+            - img [ref=e221]
+            - paragraph [ref=e223]: "Łączę estetykę z funkcjonalnością: piękna strona, która ładuje się 5 sekund, nie sprzedaje — moja tak."
+  - generic [ref=e225]:
+    - generic [ref=e226]:
+      - paragraph [ref=e227]: Skontaktuj się
+      - heading "Zaczynamy od rozmowy" [level=2] [ref=e228]
+    - generic [ref=e229]:
+      - generic [ref=e230]:
+        - paragraph [ref=e231]:
+          - text: Napisz do mnie —
+          - strong [ref=e232]: pierwsza konsultacja jest bezpłatna
+          - text: . Opisz swój projekt, a wycenę przygotuję w ciągu 24 godzin.
+        - generic [ref=e233]:
+          - img [ref=e235]
+          - generic [ref=e238]:
+            - generic [ref=e239]: Email
+            - link "oscar.grzywa@gmail.com" [ref=e240] [cursor=pointer]:
+              - /url: mailto:oscar.grzywa@gmail.com
+      - generic [ref=e241]:
+        - generic [ref=e242]:
+          - generic [ref=e243]: Imię i nazwisko
+          - textbox "Imię i nazwisko" [ref=e244]
+        - generic [ref=e245]:
+          - generic [ref=e246]: Email
+          - textbox "Email" [ref=e247]
+        - generic [ref=e248]:
+          - generic [ref=e249]: Telefon (opcjonalnie)
+          - textbox "Telefon (opcjonalnie)" [ref=e250]
+        - generic [ref=e251]:
+          - generic [ref=e252]: Opisz swój projekt
+          - textbox "Opisz swój projekt" [ref=e253]
+        - button "Wyślij wiadomość" [ref=e254] [cursor=pointer]
+  - contentinfo [ref=e255]:
+    - generic [ref=e256]:
+      - generic [ref=e257]:
+        - img [ref=e258]
+        - generic [ref=e263]: PROJSTOG
+      - paragraph [ref=e264]: Strony, które zarabiają · © 2026 Oscar Grzywa
+      - navigation "Stopka" [ref=e265]:
+        - link "Usługi" [ref=e266] [cursor=pointer]:
+          - /url: "#uslugi"
+        - link "Portfolio" [ref=e267] [cursor=pointer]:
+          - /url: "#portfolio"
+        - link "Kontakt" [ref=e268] [cursor=pointer]:
+          - /url: "#kontakt"
