@@ -543,39 +543,52 @@ export function ServicesSection() {
               const active = i === currentCard, above = i < currentCard;
               const V = card.Visual;
               return (
-                <div key={card.title} style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", opacity: active ? 1 : 0, transform: `translateY(${active ? 0 : above ? -28 : 28}px)`, transition: "opacity 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.42s cubic-bezier(0.22,1,0.36,1)", pointerEvents: active ? "auto" : "none" }}>
+                <div key={card.title} style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "row", opacity: active ? 1 : 0, transform: `translateY(${active ? 0 : above ? -28 : 28}px)`, transition: "opacity 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.42s cubic-bezier(0.22,1,0.36,1)", pointerEvents: active ? "auto" : "none" }}>
 
-                  {/* TEXT */}
-                  <div className="svc-text" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 52px 20px" }}>
-                    <div style={{ maxWidth: 620 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                        <span style={{ fontSize: 12, color: "#2d4a2a", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>{String(card.catServiceIndex + 1).padStart(2, "0")} / {String(card.catTotal).padStart(2, "0")}</span>
-                        <div style={{ flex: 1, height: 1, background: "rgba(52,225,46,0.08)" }} />
-                        <span style={{ fontSize: 9, color: "#2d4a2a", fontFamily: "var(--font-geist-mono)", letterSpacing: 1 }}>{card.catLabel.toUpperCase()}</span>
+                  {/* LEFT — service info */}
+                  <div className="svc-text" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 52px 60px", overflowY: "auto" }}>
+                    {/* Icon + category + index */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+                      <div style={{ width: 46, height: 46, borderRadius: 13, background: `${card.accent}0d`, border: `1px solid ${card.accent}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <span style={{ fontSize: 22 }}>{card.emoji}</span>
                       </div>
-                      <h3 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.4rem,2.2vw,2.3rem)", fontWeight: 900, color: "#ECE7DD", margin: "0 0 12px", lineHeight: 1.1, letterSpacing: "-0.025em" }}>{card.title}</h3>
-                      <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.8, margin: "0 0 16px" }}>{card.desc}</p>
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                        {[...card.tags].map(tag => <Tag key={tag} accent={card.accent}>{tag}</Tag>)}
+                      <div>
+                        <div style={{ fontSize: 9, color: card.accent, letterSpacing: 2.5, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>{card.catLabel}</div>
+                        <div style={{ fontSize: 10, color: "#2d4a2a", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>{String(card.catServiceIndex + 1).padStart(2, "0")} / {String(card.catTotal).padStart(2, "0")}</div>
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ width: 30, height: 30, borderRadius: "50%", border: `1px solid ${card.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, animationName: isLast ? undefined : "scroll-hint-bounce", animationDuration: "1.8s", animationIterationCount: "infinite" }}>
-                          <span style={{ fontSize: 13, color: card.accent }}>{isLast ? "✓" : "↓"}</span>
+                      <div style={{ flex: 1, height: 1, background: "rgba(52,225,46,0.06)", marginLeft: 8 }} />
+                    </div>
+
+                    <h3 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.5rem,2.4vw,2.6rem)", fontWeight: 900, color: "#ECE7DD", margin: "0 0 14px", lineHeight: 1.1, letterSpacing: "-0.025em" }}>{card.title}</h3>
+                    <p style={{ fontSize: 15, color: "#6b8068", lineHeight: 1.85, margin: "0 0 22px", maxWidth: 500 }}>{card.desc}</p>
+
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 30 }}>
+                      {[...card.tags].map(tag => <Tag key={tag} accent={card.accent}>{tag}</Tag>)}
+                    </div>
+
+                    {/* CTA + scroll hint */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                      <a href="#kontakt" className="cta-green" style={{ display: "inline-flex", alignItems: "center", gap: 7, background: `linear-gradient(135deg,#1B9D17,${card.accent})`, color: "#060807", fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 9, textDecoration: "none" }}>
+                        {lang === "pl" ? "Zapytaj o wycenę" : "Get a quote"} →
+                      </a>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                        <div style={{ width: 24, height: 24, borderRadius: "50%", border: `1px solid ${card.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, animationName: isLast ? undefined : "scroll-hint-bounce", animationDuration: "1.8s", animationIterationCount: "infinite" }}>
+                          <span style={{ fontSize: 11, color: card.accent }}>{isLast ? "✓" : "↓"}</span>
                         </div>
                         <span style={{ fontSize: 12, color: "#4a6347" }}>
-                          {isLast ? (lang === "pl" ? "Wszystkie usługi — przewiń dalej" : "Scroll to continue") : (lang === "pl" ? "Scroll po następną usługę" : "Scroll for next service")}
+                          {isLast ? (lang === "pl" ? "koniec — przewiń dalej" : "end — scroll on") : (lang === "pl" ? "następna usługa" : "next service")}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* BENEFIT VISUAL */}
-                  <div className="svc-visual" style={{ flex: "0 0 48vh", background: "rgba(7,12,7,0.88)", borderTop: "1px solid rgba(52,225,46,0.06)", position: "relative", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 30% 60%, ${card.accent}10 0%, transparent 65%)`, pointerEvents: "none" }} />
-                    <div style={{ position: "absolute", top: 12, left: 14, zIndex: 2 }}>
+                  {/* RIGHT — benefit visual */}
+                  <div className="svc-visual" style={{ width: "44%", flexShrink: 0, background: "rgba(5,8,5,0.72)", borderLeft: "1px solid rgba(52,225,46,0.06)", position: "relative", overflow: "hidden" }}>
+                    <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 35% 55%, ${card.accent}0e 0%, transparent 68%)`, pointerEvents: "none" }} />
+                    <div style={{ position: "absolute", top: 14, left: 16, zIndex: 2 }}>
                       <span style={{ fontSize: 9, fontWeight: 700, color: card.accent, letterSpacing: 1.5, textTransform: "uppercase", background: `${card.accent}12`, border: `1px solid ${card.accent}24`, borderRadius: 100, padding: "3px 10px" }}>{card.emoji} {card.catLabel}</span>
                     </div>
-                    <div style={{ position: "absolute", inset: 0, paddingTop: 36 }}>
+                    <div style={{ position: "absolute", inset: 0, paddingTop: 40 }}>
                       <V />
                     </div>
                   </div>

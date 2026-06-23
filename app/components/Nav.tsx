@@ -219,14 +219,6 @@ export function Nav() {
           opacity: open ? 1 : 0,
           transition: `transform 0.45s cubic-bezier(0.22,1,0.36,1) ${t.links.length * 0.07 + 0.08}s, opacity 0.35s ease ${t.links.length * 0.07 + 0.08}s`,
         }}>
-          {/* Phone */}
-          <a href={`tel:${t.phone.replace(/\s/g,"")}`} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <PhoneIcon />
-            </div>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 17, fontWeight: 700, color: "#34E12E" }}>{t.phone}</span>
-          </a>
-
           {/* Language + CTA */}
           <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
             <div style={{ display: "flex", gap: 4, background: "rgba(52,225,46,0.04)", border: "1px solid rgba(52,225,46,0.1)", borderRadius: 10, padding: 4, flexShrink: 0 }}>

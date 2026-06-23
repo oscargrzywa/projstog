@@ -113,9 +113,12 @@ export const content = {
       sub: "Każdy projekt to wymierne rezultaty — nie piękna strona dla samej estetyki.",
       soon: "Więcej realizacji wkrótce — każdy nowy projekt to nowy dowód, że to działa.",
       items: [
-        { name: "Studio Detailingowe", cat: "Strona One Page + Google Moja Firma", result: "+340% zapytań z Google w 3 miesiące", tech: ["Next.js", "SEO lokalne", "GMB"], bg: "#0b1a13", accentBg: "rgba(27,157,23,0.12)" },
-        { name: "Producent Konstrukcji Stalowych", cat: "Strona firmowa + Automatyzacja ofert AI", result: "Oferty generowane w 3 minuty zamiast 2 dni", tech: ["React", "OpenAI", "PDF auto"], bg: "#0d1a1f", accentBg: "rgba(0,100,180,0.10)" },
-        { name: "Agentka Nieruchomości Podkarpacie", cat: "Strona + CRM + Chatbot AI", result: "Obsługa zapytań 24/7 bez zatrudnienia asystenta", tech: ["Next.js", "GPT-4", "CRM custom"], bg: "#1a0d1f", accentBg: "rgba(100,0,180,0.10)" },
+        { name: "Luxury Car Care",     url: "https://luxurycc.pl",           cat: "Strona One Page",  result: "Profesjonalne studio detailingu samochodowego",   tech: ["WordPress", "SEO", "Animacje"],       bg: "#0b1a13", accentBg: "rgba(27,157,23,0.12)" },
+        { name: "Luksusowy Ogród",     url: "https://luksusowyogrod.pl",     cat: "Strona firmowa",   result: "Ekskluzywne projektowanie ogrodów premium",       tech: ["WordPress", "CMS", "SEO"],            bg: "#0d1a10", accentBg: "rgba(27,157,23,0.10)" },
+        { name: "Kasza Ubezpieczenia", url: "https://kaszaubezpieczenia.pl", cat: "Strona firmowa",   result: "Biuro ubezpieczeń — generowanie zapytań online",  tech: ["WordPress", "SEO", "Google Ads"],     bg: "#0d1a1f", accentBg: "rgba(0,100,180,0.10)" },
+        { name: "Drzewka Wałęga",      url: "https://drzewkawalega.eu",      cat: "Strona One Page",  result: "Szkółka drzewek — widoczność lokalna",            tech: ["WordPress", "GMB", "SEO"],            bg: "#111a0a", accentBg: "rgba(100,160,0,0.10)" },
+        { name: "Meble Antek",         url: "https://mebleantek.pl",         cat: "Sklep internetowy",result: "E-commerce mebli na zamówienie",                  tech: ["WordPress", "WooCommerce", "Płatności"], bg: "#1a0d0a", accentBg: "rgba(180,60,0,0.08)" },
+        { name: "Eko-Stal Mielec",     url: "https://eko-stal.mielec.pl",    cat: "Strona firmowa",   result: "Producent konstrukcji stalowych — B2B online",    tech: ["Next.js", "SEO lokalne", "Custom"],   bg: "#0a0f1a", accentBg: "rgba(0,80,180,0.10)" },
       ],
     },
     owner: {
@@ -265,9 +268,12 @@ export const content = {
       sub: "Every project delivers measurable results — not just a beautiful website for aesthetics.",
       soon: "More projects coming soon — each new one is new proof that it works.",
       items: [
-        { name: "Detailing Studio", cat: "One Page + Google My Business", result: "+340% Google inquiries in 3 months", tech: ["Next.js", "Local SEO", "GMB"], bg: "#0b1a13", accentBg: "rgba(27,157,23,0.12)" },
-        { name: "Steel Structure Manufacturer", cat: "Company Website + AI Quote Automation", result: "Quotes generated in 3 min instead of 2 days", tech: ["React", "OpenAI", "PDF auto"], bg: "#0d1a1f", accentBg: "rgba(0,100,180,0.10)" },
-        { name: "Real Estate Agent, Subcarpathia", cat: "Website + CRM + AI Chatbot", result: "24/7 inquiry handling without an assistant", tech: ["Next.js", "GPT-4", "CRM custom"], bg: "#1a0d1f", accentBg: "rgba(100,0,180,0.10)" },
+        { name: "Luxury Car Care",     url: "https://luxurycc.pl",           cat: "One Page Website",  result: "Professional car detailing studio",             tech: ["WordPress", "SEO", "Animations"],    bg: "#0b1a13", accentBg: "rgba(27,157,23,0.12)" },
+        { name: "Luksusowy Ogród",     url: "https://luksusowyogrod.pl",     cat: "Company Website",   result: "Premium luxury garden design",                  tech: ["WordPress", "CMS", "SEO"],           bg: "#0d1a10", accentBg: "rgba(27,157,23,0.10)" },
+        { name: "Kasza Ubezpieczenia", url: "https://kaszaubezpieczenia.pl", cat: "Company Website",   result: "Insurance office — online lead generation",     tech: ["WordPress", "SEO", "Google Ads"],    bg: "#0d1a1f", accentBg: "rgba(0,100,180,0.10)" },
+        { name: "Drzewka Wałęga",      url: "https://drzewkawalega.eu",      cat: "One Page Website",  result: "Tree nursery — local visibility",                tech: ["WordPress", "GMB", "SEO"],           bg: "#111a0a", accentBg: "rgba(100,160,0,0.10)" },
+        { name: "Meble Antek",         url: "https://mebleantek.pl",         cat: "Online Store",      result: "Custom furniture e-commerce",                   tech: ["WordPress", "WooCommerce", "Payments"], bg: "#1a0d0a", accentBg: "rgba(180,60,0,0.08)" },
+        { name: "Eko-Stal Mielec",     url: "https://eko-stal.mielec.pl",    cat: "Company Website",   result: "Steel structures manufacturer — B2B online",    tech: ["Next.js", "Local SEO", "Custom"],    bg: "#0a0f1a", accentBg: "rgba(0,80,180,0.10)" },
       ],
     },
     owner: {

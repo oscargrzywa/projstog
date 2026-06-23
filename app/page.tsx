@@ -95,11 +95,6 @@ const SERVICE_CATEGORIES: {
   },
 ];
 
-const PORTFOLIO = [
-  { name: "Studio Detailingowe", cat: "Strona One Page + Google Moja Firma", result: "+340% zapytań z Google w 3 miesiące", tech: ["Next.js", "SEO lokalne", "GMB"], bg: "#0b1a13", accentBg: "rgba(27,157,23,0.12)" },
-  { name: "Producent Konstrukcji Stalowych", cat: "Strona firmowa + Automatyzacja ofert AI", result: "Oferty generowane w 3 minuty zamiast 2 dni", tech: ["React", "OpenAI", "PDF auto"], bg: "#0d1a1f", accentBg: "rgba(0,100,180,0.10)" },
-  { name: "Agentka Nieruchomości Podkarpacie", cat: "Strona + CRM + Chatbot AI", result: "Obsługa zapytań 24/7 bez zatrudnienia asystenta", tech: ["Next.js", "GPT-4", "CRM custom"], bg: "#1a0d1f", accentBg: "rgba(100,0,180,0.10)" },
-] as const;
 
 const PROCESS = [
   { step: "01", title: "Rozmowa", desc: "Bezpłatna, bez agendy. Mówisz mi co chcesz osiągnąć — ja słucham i zadaję właściwe pytania." },
@@ -159,27 +154,32 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 
 // Browser mockup for portfolio
-function BrowserMock({ bg, accentBg }: { bg: string; accentBg: string }) {
+function BrowserMock({ bg, accentBg, url }: { bg: string; accentBg: string; url: string }) {
+  const domain = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
   return (
     <div style={{ borderRadius: 10, overflow: "hidden", background: bg, border: "1px solid rgba(255,255,255,0.06)" }}>
-      {/* Chrome */}
-      <div style={{ padding: "10px 14px", background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", gap: 6 }}>
-        <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(255,80,80,0.45)" }} />
-        <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(255,180,0,0.35)" }} />
-        <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(52,225,46,0.35)" }} />
-        <div style={{ flex: 1, height: 16, borderRadius: 4, background: "rgba(255,255,255,0.04)", marginLeft: 10 }} />
+      {/* Chrome bar */}
+      <div style={{ padding: "8px 12px", background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", gap: 6 }}>
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,80,80,0.45)", flexShrink: 0 }} />
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,180,0,0.35)", flexShrink: 0 }} />
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(52,225,46,0.35)", flexShrink: 0 }} />
+        <div style={{ flex: 1, height: 18, borderRadius: 5, background: "rgba(255,255,255,0.05)", marginLeft: 8, display: "flex", alignItems: "center", paddingLeft: 10, gap: 5 }}>
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="rgba(52,225,46,0.5)" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span style={{ fontSize: 9, color: "rgba(52,225,46,0.6)", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.3 }}>{domain}</span>
+        </div>
       </div>
       {/* Wireframe content */}
-      <div style={{ padding: "20px 18px", display: "flex", flexDirection: "column", gap: 12, minHeight: 140 }}>
-        <div style={{ background: accentBg, borderRadius: 6, height: 36, display: "flex", alignItems: "center", paddingLeft: 12 }}>
-          <div style={{ width: 24, height: 4, background: "rgba(52,225,46,0.4)", borderRadius: 2 }} />
+      <div style={{ padding: "16px 14px", display: "flex", flexDirection: "column", gap: 10, minHeight: 130 }}>
+        <div style={{ background: accentBg, borderRadius: 6, height: 32, display: "flex", alignItems: "center", paddingLeft: 10, gap: 8 }}>
+          <div style={{ width: 18, height: 3, background: "rgba(52,225,46,0.5)", borderRadius: 2 }} />
+          <div style={{ width: 32, height: 3, background: "rgba(52,225,46,0.25)", borderRadius: 2 }} />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-          {[0.7, 0.5, 0.6].map((o, i) => <div key={i} style={{ height: 48, background: `rgba(52,225,46,${o * 0.07})`, borderRadius: 5 }} />)}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
+          {[0.7, 0.5, 0.6].map((o, i) => <div key={i} style={{ height: 44, background: `rgba(52,225,46,${o * 0.06})`, borderRadius: 5 }} />)}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 8 }}>
-          <div style={{ height: 28, background: "rgba(255,255,255,0.03)", borderRadius: 5 }} />
-          <div style={{ height: 28, background: "rgba(52,225,46,0.12)", borderRadius: 5 }} />
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 6 }}>
+          <div style={{ height: 24, background: "rgba(255,255,255,0.03)", borderRadius: 5 }} />
+          <div style={{ height: 24, background: "rgba(52,225,46,0.12)", borderRadius: 5 }} />
         </div>
       </div>
     </div>
@@ -264,8 +264,8 @@ export default function Home() {
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 28 }}>
                   {[["14+", "Usług cyfrowych"], ["24h", "Czas reakcji"], ["3+", "Lata doświadczenia"], ["100%", "Realizuję osobiście"]].map(([n, l]) => (
-                    <div key={l} style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 14, padding: "16px 18px" }}>
-                      <div style={{ fontSize: 26, fontWeight: 900, color: "#34E12E", fontFamily: "var(--font-geist-mono)", lineHeight: 1 }}>{n}</div>
+                    <div key={l} className="stat-card" style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 14, padding: "16px 18px", cursor: "default" }}>
+                      <div className="stat-card-num" style={{ fontSize: 26, fontWeight: 900, color: "#34E12E", fontFamily: "var(--font-geist-mono)", lineHeight: 1 }}>{n}</div>
                       <div style={{ fontSize: 11, color: "#4a6347", marginTop: 6, lineHeight: 1.4 }}>{l}</div>
                     </div>
                   ))}
@@ -340,24 +340,24 @@ export default function Home() {
           </AnimateOnScroll>
 
           <div className="portfolio-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
-            {t.portfolio.items.map(({ name, cat, result, tech, bg, accentBg }, i) => (
-              <AnimateOnScroll key={name} delay={i * 100}>
-                <div className="portfolio-card" style={{ borderRadius: 16, overflow: "hidden", background: bg, height: "100%", display: "flex", flexDirection: "column" }}>
+            {t.portfolio.items.map(({ name, cat, result, tech, bg, accentBg, url }, i) => (
+              <AnimateOnScroll key={name} delay={i * 80}>
+                <a href={url} target="_blank" rel="noopener noreferrer" className="portfolio-card" style={{ borderRadius: 16, overflow: "hidden", background: bg, height: "100%", display: "flex", flexDirection: "column", textDecoration: "none" }}>
                   <div style={{ padding: 4 }}>
-                    <BrowserMock bg={bg} accentBg={accentBg} />
+                    <BrowserMock bg={bg} accentBg={accentBg} url={url} />
                   </div>
-                  <div style={{ padding: "20px 22px 26px", flex: 1, display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 10, color: "#34E12E", fontWeight: 700, letterSpacing: 2, marginBottom: 8, textTransform: "uppercase" }}>{cat}</div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: "#ECE7DD", marginBottom: 14 }}>{name}</div>
-                    <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.14)", borderRadius: 8, padding: "7px 11px", marginBottom: 14, alignSelf: "flex-start" }}>
-                      <IconTrendUp />
-                      <span style={{ fontSize: 11.5, color: "#34E12E", fontWeight: 600 }}>{result}</span>
-                    </div>
-                    <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: "auto" }}>
-                      {[...tech].map((tech) => <span key={tech} style={{ fontSize: 10, fontWeight: 600, padding: "3px 8px", borderRadius: 6, background: "rgba(255,255,255,0.04)", color: "#4a6347" }}>{tech}</span>)}
+                  <div style={{ padding: "18px 20px 22px", flex: 1, display: "flex", flexDirection: "column" }}>
+                    <div style={{ fontSize: 9, color: "#34E12E", fontWeight: 700, letterSpacing: 2, marginBottom: 6, textTransform: "uppercase" }}>{cat}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#ECE7DD", marginBottom: 10 }}>{name}</div>
+                    <div style={{ fontSize: 12, color: "#6b8068", lineHeight: 1.6, marginBottom: 14, flex: 1 }}>{result}</div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                        {[...tech].map((t) => <span key={t} style={{ fontSize: 9, fontWeight: 600, padding: "2px 7px", borderRadius: 5, background: "rgba(255,255,255,0.04)", color: "#4a6347" }}>{t}</span>)}
+                      </div>
+                      <span style={{ fontSize: 11, color: "#34E12E", fontWeight: 600, whiteSpace: "nowrap", marginLeft: 8 }}>Otwórz →</span>
                     </div>
                   </div>
-                </div>
+                </a>
               </AnimateOnScroll>
             ))}
           </div>
@@ -415,8 +415,20 @@ export default function Home() {
 
           {/* Form */}
           <AnimateOnScroll>
-            <div style={{ maxWidth: 640, margin: "0 auto" }}>
-              <ContactForm />
+            <div style={{ maxWidth: 640, margin: "0 auto", position: "relative" }}>
+              {/* Glass background */}
+              <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", padding: "40px 36px 44px", background: "rgba(8,14,8,0.72)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(52,225,46,0.12)", boxShadow: "0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(52,225,46,0.07)" }}>
+                {/* Decorative gradient blob */}
+                <div aria-hidden style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(52,225,46,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+                <div aria-hidden style={{ position: "absolute", bottom: -40, left: -40, width: 160, height: 160, borderRadius: "50%", background: "radial-gradient(circle, rgba(27,157,23,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+                {/* Header */}
+                <div style={{ marginBottom: 28, position: "relative" }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, color: "#34E12E", letterSpacing: 3, textTransform: "uppercase", margin: "0 0 8px", opacity: 0.8 }}>Szybki kontakt</p>
+                  <h3 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.25rem,2.5vw,1.6rem)", fontWeight: 800, color: "#ECE7DD", margin: "0 0 8px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{lang === "pl" ? "Napisz — odezwę się tego samego dnia" : "Write — I'll reply the same day"}</h3>
+                  <p style={{ fontSize: 13, color: "#4a6347", margin: 0, lineHeight: 1.6 }}>{lang === "pl" ? "Bez automatycznych odpowiedzi. Piszę osobiście." : "No automated replies. I write personally."}</p>
+                </div>
+                <ContactForm />
+              </div>
             </div>
           </AnimateOnScroll>
         </div>

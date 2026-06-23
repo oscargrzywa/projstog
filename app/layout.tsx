@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "PROJSTOG — Cyfrowe rozwiązania, które zarabiają na Ciebie",
   description:
     "Strony internetowe, automatyzacje AI, chatboty, sklepy e-commerce, CRM i więcej. Oscar Grzywa z Mielca — jeden człowiek, pełne rozwiązania cyfrowe.",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

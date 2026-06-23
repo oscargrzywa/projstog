@@ -254,12 +254,10 @@ export function ReviewsSection() {
 
           {/* Google link */}
           <div style={{ textAlign: "center", marginTop: 32 }}>
-            <a href="https://maps.app.goo.gl/NaSNZRqN2QSQ1LFp7" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "#4a6347", fontSize: 13, textDecoration: "none" }}>
-              <GoogleG size={13} />
-              <span>
-                {lang === "pl" ? "Wszystkie opinie na " : "All reviews on "}
-                <span style={{ color: "#34E12E", fontWeight: 600 }}>Google Maps →</span>
-              </span>
+            <a href="https://maps.app.goo.gl/NaSNZRqN2QSQ1LFp7" target="_blank" rel="noopener noreferrer" className="reviews-gmap-link">
+              <GoogleG size={14} />
+              <span>{lang === "pl" ? "Wszystkie opinie na Google Maps" : "All reviews on Google Maps"}</span>
+              <span style={{ color: "#34E12E", fontWeight: 700 }}>→</span>
             </a>
           </div>
         </div>
