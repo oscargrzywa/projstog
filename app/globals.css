@@ -558,25 +558,30 @@ body {
   50%       { transform: translateY(5px); }
 }
 
-/* ── Animated visual helpers ──────────────────────────── */
-@keyframes step-in {
-  from { opacity: 0; transform: translateY(14px); }
+/* ── Service visual animations ────────────────────────── */
+@keyframes svc-draw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes svc-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes msg-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes svc-slide-r {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-@keyframes cart-pop {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.35); }
-  70%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
+@keyframes svc-ping {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.8); opacity: 0; }
 }
-@keyframes success-ring {
-  0%   { transform: scale(0.6); opacity: 0; }
-  60%  { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1);   opacity: 1; }
+@keyframes svc-widen {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes svc-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 /* ── Review cards ─────────────────────────────────────── */

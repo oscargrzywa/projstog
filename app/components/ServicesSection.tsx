@@ -4,214 +4,322 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLang } from "./LangContext";
 import { content } from "../lib/content";
 
-// ── Shared visual building blocks ─────────────────────────────────────────────
-
-function MetricRow({ value, label, accent = "#34E12E" }: { value: string; label: string; accent?: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-      <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 28, fontWeight: 900, color: accent, lineHeight: 1, minWidth: 96 }}>{value}</div>
-      <div style={{ fontSize: 12, color: "#6b8068", lineHeight: 1.5 }}>{label}</div>
-    </div>
-  );
-}
-
-function BarChart({ bars, accent = "#34E12E" }: { bars: { label: string; pct: number }[]; accent?: string }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
-      {bars.map(b => (
-        <div key={b.label}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-            <span style={{ fontSize: 11, color: "#4a6347" }}>{b.label}</span>
-            <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontFamily: "var(--font-geist-mono)" }}>{b.pct}%</span>
-          </div>
-          <div style={{ height: 4, borderRadius: 2, background: "rgba(52,225,46,0.08)", overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${b.pct}%`, background: `linear-gradient(90deg,${accent},${accent}88)`, borderRadius: 2 }} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function StatGrid({ items, accent = "#34E12E" }: { items: [string, string][]; accent?: string }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%" }}>
-      {items.map(([v, l]) => (
-        <div key={l} style={{ background: "rgba(52,225,46,0.04)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 12, padding: "14px 16px" }}>
-          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 22, fontWeight: 900, color: accent, lineHeight: 1 }}>{v}</div>
-          <div style={{ fontSize: 11, color: "#4a6347", marginTop: 5, lineHeight: 1.4 }}>{l}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Pill({ text, accent = "#34E12E" }: { text: string; accent?: string }) {
-  return <span style={{ fontSize: 10, fontWeight: 700, color: accent, background: `${accent}14`, border: `1px solid ${accent}2a`, borderRadius: 100, padding: "3px 10px", letterSpacing: 0.5 }}>{text}</span>;
-}
+// ── VisualWrap shell ──────────────────────────────────────────────────────────
 
 function VisualWrap({ children, accent = "#34E12E", headline, sub }: { children?: React.ReactNode; accent?: string; headline: string; sub: string }) {
   return (
-    <div className="svc-vwrap" style={{ display: "flex", flexDirection: "column", height: "100%", padding: "28px 36px 24px", gap: 14 }}>
+    <div className="svc-vwrap" style={{ display: "flex", flexDirection: "column", height: "100%", padding: "28px 36px 24px", gap: 16 }}>
       <div>
-        <div className="svc-vheadline" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.8rem,4.5vw,4rem)", fontWeight: 900, color: accent, lineHeight: 1, letterSpacing: "-0.03em" }}>{headline}</div>
-        <div className="svc-vsub" style={{ fontSize: 12, color: "#ECE7DD", fontWeight: 600, marginTop: 5 }}>{sub}</div>
+        <div className="svc-vheadline" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(2.2rem,5vw,4.5rem)", fontWeight: 900, color: accent, lineHeight: 1, letterSpacing: "-0.04em" }}>{headline}</div>
+        <div className="svc-vsub" style={{ fontSize: 12, color: "#9aad96", fontWeight: 500, marginTop: 6, lineHeight: 1.5 }}>{sub}</div>
       </div>
       {children}
     </div>
   );
 }
 
-// ── 13 Benefit visuals ────────────────────────────────────────────────────────
+// ── 13 Benefit visuals — simple & animated ────────────────────────────────────
 
 function V_OnePage() {
   return (
-    <VisualWrap accent="#34E12E" headline="+340%" sub="więcej zapytań z Google · typowy wynik po 3 mies.">
-      <BarChart bars={[{ label: "Zapytania telefoniczne", pct: 94 }, { label: "Widoczność w Google", pct: 88 }, { label: "Czas wczytywania", pct: 97 }]} />
+    <VisualWrap accent="#34E12E" headline="+340%" sub="więcej zapytań z Google po 3 miesiącach">
+      <div style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: 6, paddingBottom: 2 }}>
+        {[12, 18, 28, 42, 58, 76, 100].map((h, i) => (
+          <div key={i} style={{
+            flex: 1, borderRadius: "4px 4px 0 0",
+            background: i === 6 ? "#34E12E" : `rgba(52,225,46,${0.1 + i * 0.09})`,
+            height: `${h}%`, transformOrigin: "bottom",
+            animationName: "bar-grow", animationDuration: "0.65s",
+            animationDelay: `${i * 0.07}s`, animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+            animationFillMode: "both",
+          }} />
+        ))}
+      </div>
     </VisualWrap>
   );
 }
+
 function V_Firmowa() {
   return (
-    <VisualWrap accent="#34E12E" headline="24/7" sub="Twoja firma reprezentuje się profesjonalnie przez całą dobę">
-      <StatGrid items={[["4.9★", "Avg ocena klientów"], ["-60%", "Odrzucenia powrotu"], ["+2 min", "Czas na stronie"], ["×3", "Więcej kontaktów"]]} />
-    </VisualWrap>
-  );
-}
-function V_Sklep() {
-  return (
-    <VisualWrap accent="#34E12E" headline="3:42 AM" sub="Zamówienie złożone — bez Twojego udziału">
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {[["22:15", "Nowe zamówienie · 189 zł ✓"], ["01:38", "Nowe zamówienie · 320 zł ✓"], ["03:42", "Nowe zamówienie · 540 zł ✓"]].map(([t, m]) => (
-          <div key={t} style={{ display: "flex", gap: 12, alignItems: "center", background: "rgba(52,225,46,0.04)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 10, padding: "11px 14px" }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "#34E12E", minWidth: 42 }}>{t}</span>
-            <span style={{ fontSize: 12, color: "#ECE7DD" }}>{m}</span>
-          </div>
-        ))}
-      </div>
-    </VisualWrap>
-  );
-}
-function V_Blog() {
-  return (
-    <VisualWrap accent="#34E12E" headline="×18" sub="Więcej bezpłatnego ruchu z Google po roku treści SEO">
-      <BarChart bars={[{ label: "Mies. 1", pct: 5 }, { label: "Mies. 6", pct: 38 }, { label: "Mies. 12", pct: 89 }]} />
-    </VisualWrap>
-  );
-}
-function V_AutomacjaAI() {
-  return (
-    <VisualWrap accent="#00C8A0" headline="-20h" sub="tygodniowo zwrócone Tobie — AI obsługuje powtarzalne zadania">
-      <StatGrid accent="#00C8A0" items={[["<3min", "Czas generowania oferty"], ["0", "Niezapłacone faktury"], ["100%", "Raporty na czas"], ["-80%", "Ręczna praca"]]} />
-    </VisualWrap>
-  );
-}
-function V_Chatbot() {
-  return (
-    <VisualWrap accent="#00C8A0" headline="24/7" sub="Chatbot AI obsługuje klientów gdy Ty śpisz">
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {[
-          { from: "client", text: "Czy mają Państwo coś w rozmiarze L?", time: "03:14" },
-          { from: "bot", text: "Tak, mamy dostępne L w 3 kolorach. Czy chcesz zobaczyć?", time: "03:14" },
-          { from: "client", text: "Tak! Ile wynosi dostawa?", time: "03:15" },
-        ].map((msg, i) => (
-          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: msg.from === "client" ? "flex-end" : "flex-start" }}>
-            <div style={{ maxWidth: "82%", padding: "9px 13px", borderRadius: msg.from === "client" ? "12px 12px 3px 12px" : "3px 12px 12px 12px", background: msg.from === "client" ? "rgba(0,200,160,0.09)" : "#0e130e", border: `1px solid ${msg.from === "client" ? "rgba(0,200,160,0.2)" : "rgba(255,255,255,0.05)"}` }}>
-              <span style={{ fontSize: 11, color: msg.from === "client" ? "rgba(255,255,255,0.75)" : "#9aad96" }}>{msg.text}</span>
-            </div>
-            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 2, paddingInline: 4 }}>{msg.time}</span>
-          </div>
-        ))}
-      </div>
-    </VisualWrap>
-  );
-}
-function V_CRM() {
-  return (
-    <VisualWrap accent="#00C8A0" headline="0" sub="zgubionych klientów — każdy lead jest widoczny w lejku">
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, width: "100%" }}>
-        {[["Nowy kontakt", 12, "rgba(0,200,160,0.5)"], ["Wysłano ofertę", 8, "rgba(0,200,160,0.6)"], ["Negocjacje", 5, "rgba(0,200,160,0.75)"], ["Zamknięte ✓", 4, "#00C8A0"]].map(([l, n, c]) => (
-          <div key={String(l)} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontSize: 11, color: "#4a6347", minWidth: 120 }}>{l}</span>
-            <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,0.04)", borderRadius: 3, overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${(Number(n) / 12) * 100}%`, background: String(c), borderRadius: 3 }} />
-            </div>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: String(c), minWidth: 20, textAlign: "right" }}>{n}</span>
-          </div>
-        ))}
-      </div>
-    </VisualWrap>
-  );
-}
-function V_App() {
-  return (
-    <VisualWrap accent="#00C8A0" headline="∞" sub="Twój własny cyfrowy proces — zbudowany dokładnie pod Ciebie">
-      <StatGrid accent="#00C8A0" items={[["1", "Kontakt przez cały projekt"], ["100%", "Twoje wymagania"], ["0", "Nadmiarowych funkcji"], ["✓", "Dopasowanie do procesu"]]} />
-    </VisualWrap>
-  );
-}
-function V_GMB() {
-  return (
-    <VisualWrap accent="#a3e635" headline="Top 3" sub="Pojawiasz się w mapach Google dla lokalnych klientów">
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={{ background: "rgba(163,230,53,0.06)", border: "1px solid rgba(163,230,53,0.2)", borderRadius: 12, padding: "12px 16px" }}>
-          <div style={{ fontSize: 10, color: "#a3e635", fontWeight: 700, letterSpacing: 1, marginBottom: 8 }}>GOOGLE MAPS · TWOJA OKOLICA</div>
-          {[["★ 4.9", "Twoja firma", true], ["4.7", "Konkurent A", false], ["4.6", "Konkurent B", false]].map(([r, n, h]) => (
-            <div key={String(n)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderTop: "1px solid rgba(163,230,53,0.07)" }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: h ? "#a3e635" : "rgba(255,255,255,0.15)", flexShrink: 0 }} />
-              <span style={{ fontSize: 12, color: h ? "#ECE7DD" : "#4a6347", fontWeight: h ? 700 : 400 }}>{n}</span>
-              <span style={{ fontSize: 12, color: h ? "#a3e635" : "#3d5e3a", marginLeft: "auto", fontFamily: "var(--font-geist-mono)" }}>{r}</span>
-            </div>
+    <VisualWrap accent="#34E12E" headline="24/7" sub="Twoja firma zawsze online">
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 18 }}>
+        <div style={{ display: "flex", gap: 8 }}>
+          {[0,1,2,3,4].map(i => (
+            <span key={i} style={{
+              fontSize: "clamp(1.6rem,4vw,2.8rem)", color: "#febc2e", lineHeight: 1,
+              animationName: "svc-fade-up", animationDuration: "0.35s",
+              animationDelay: `${0.2 + i * 0.1}s`, animationFillMode: "both",
+            }}>★</span>
           ))}
         </div>
-        <MetricRow value="+68%" label="Więcej połączeń telefonicznych z profilu Google" accent="#a3e635" />
-      </div>
-    </VisualWrap>
-  );
-}
-function V_Social() {
-  return (
-    <VisualWrap accent="#a3e635" headline="+2 400" sub="obserwujących w 6 miesięcy — marka, która przyciąga klientów">
-      <BarChart accent="#a3e635" bars={[{ label: "Zasięg postów", pct: 82 }, { label: "Zaangażowanie", pct: 74 }, { label: "Zapytania z social", pct: 61 }]} />
-    </VisualWrap>
-  );
-}
-function V_Copy() {
-  return (
-    <VisualWrap accent="#a3e635" headline="+43%" sub="wzrost konwersji po przepisaniu tekstów ofertowych">
-      <div style={{ display: "flex", gap: 12 }}>
-        <div style={{ flex: 1, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "14px" }}>
-          <div style={{ fontSize: 9, color: "#3d5e3a", marginBottom: 8, fontWeight: 700, letterSpacing: 1 }}>PRZED</div>
-          <div style={{ fontSize: 11, color: "#4a6347", lineHeight: 1.65 }}>"Oferujemy kompleksowe usługi w zakresie..."</div>
-          <div style={{ fontSize: 10, color: "#2d4a2a", marginTop: 8, fontFamily: "var(--font-geist-mono)" }}>Konwersja: 1.2%</div>
-        </div>
-        <div style={{ flex: 1, background: "rgba(163,230,53,0.05)", border: "1px solid rgba(163,230,53,0.18)", borderRadius: 10, padding: "14px" }}>
-          <div style={{ fontSize: 9, color: "#a3e635", marginBottom: 8, fontWeight: 700, letterSpacing: 1 }}>PO</div>
-          <div style={{ fontSize: 11, color: "#ECE7DD", lineHeight: 1.65 }}>"Zarabiaj więcej — my zajmiemy się resztą."</div>
-          <div style={{ fontSize: 10, color: "#a3e635", marginTop: 8, fontFamily: "var(--font-geist-mono)" }}>Konwersja: 4.3%</div>
+        <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "#34E12E", fontWeight: 600 }}>
+          4.9 · Średnia ocena klientów
         </div>
       </div>
     </VisualWrap>
   );
 }
-function V_Admin() {
+
+function V_Sklep() {
   return (
-    <VisualWrap accent="#1B9D17" headline="99.9%" sub="uptime — Twoja strona działa zawsze, hosting i SSL pod kontrolą">
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {[["Uptime (30 dni)", "99.97%", true], ["Czas odpowiedzi", "182 ms", true], ["SSL ważny", "tak ✓", true], ["Backup", "codziennie ✓", true]].map(([l, v, ok]) => (
-          <div key={String(l)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", background: "rgba(27,157,23,0.04)", border: "1px solid rgba(27,157,23,0.10)", borderRadius: 9 }}>
-            <span style={{ fontSize: 12, color: "#6b8068" }}>{l}</span>
-            <span style={{ fontSize: 12, fontWeight: 700, color: ok ? "#1B9D17" : "#ECE7DD", fontFamily: "var(--font-geist-mono)" }}>{v}</span>
+    <VisualWrap accent="#34E12E" headline="3:42 AM" sub="Zamówienie bez Twojego udziału">
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, justifyContent: "center" }}>
+        {[["22:15", "189 zł"], ["01:38", "320 zł"], ["03:42", "540 zł"]].map(([t, a], i) => (
+          <div key={i} style={{
+            display: "flex", alignItems: "center", gap: 12,
+            background: "rgba(52,225,46,0.05)", borderRadius: 10, padding: "11px 14px",
+            border: "1px solid rgba(52,225,46,0.1)",
+            animationName: "svc-slide-r", animationDuration: "0.45s",
+            animationDelay: `${0.2 + i * 0.15}s`, animationFillMode: "both",
+            animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+          }}>
+            <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#34E12E", flexShrink: 0, animationName: "live-blink", animationDuration: "2s", animationIterationCount: "infinite", animationDelay: `${i * 0.7}s` }} />
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#34E12E", minWidth: 40 }}>{t}</span>
+            <span style={{ fontSize: 12, color: "#ECE7DD", flex: 1 }}>Nowe zamówienie</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, color: "#34E12E" }}>{a}</span>
           </div>
         ))}
       </div>
     </VisualWrap>
   );
 }
+
+function V_Blog() {
+  return (
+    <VisualWrap accent="#34E12E" headline="×18" sub="więcej ruchu z Google po roku treści">
+      <svg viewBox="0 0 180 70" style={{ flex: 1, width: "100%", overflow: "visible" }} preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="blog-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#34E12E" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#34E12E" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M0,68 L25,64 L55,56 L90,42 L125,24 L155,12 L180,4 L180,70 L0,70 Z" fill="url(#blog-grad)" />
+        <path d="M0,68 L25,64 L55,56 L90,42 L125,24 L155,12 L180,4"
+          fill="none" stroke="#34E12E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          style={{ strokeDasharray: 1000, strokeDashoffset: 1000, animationName: "svc-draw", animationDuration: "1.6s", animationDelay: "0.2s", animationFillMode: "forwards", animationTimingFunction: "ease-out" }}
+        />
+        <circle cx="180" cy="4" r="4" fill="#34E12E"
+          style={{ opacity: 0, animationName: "svc-fade-up", animationDuration: "0.3s", animationDelay: "1.7s", animationFillMode: "forwards" }} />
+      </svg>
+    </VisualWrap>
+  );
+}
+
+function V_AutomacjaAI() {
+  return (
+    <VisualWrap accent="#00C8A0" headline="-20h" sub="tygodniowo — AI robi to za Ciebie">
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="42" stroke="rgba(0,200,160,0.1)" strokeWidth="1.5" />
+          <circle cx="50" cy="50" r="42" stroke="#00C8A0" strokeWidth="1.5" strokeDasharray="1000" strokeDashoffset="1000"
+            style={{ animationName: "svc-draw", animationDuration: "1.8s", animationDelay: "0.2s", animationFillMode: "forwards", animationTimingFunction: "linear" }} />
+          <g style={{ transformOrigin: "50px 50px", animationName: "svc-spin", animationDuration: "10s", animationTimingFunction: "linear", animationIterationCount: "infinite" }}>
+            {[0,45,90,135,180,225,270,315].map((a, i) => {
+              const rad = (a * Math.PI) / 180;
+              return <circle key={i} cx={50 + 32 * Math.cos(rad)} cy={50 + 32 * Math.sin(rad)} r={i % 2 === 0 ? 3.5 : 2.2} fill="#00C8A0" opacity={0.35 + i * 0.07} />;
+            })}
+          </g>
+          <circle cx="50" cy="50" r="18" fill="rgba(0,200,160,0.08)" stroke="#00C8A0" strokeWidth="1" />
+          <text x="50" y="54" textAnchor="middle" fill="#00C8A0" fontFamily="var(--font-geist-mono)" fontSize="11" fontWeight="700">AI</text>
+        </svg>
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_Chatbot() {
+  return (
+    <VisualWrap accent="#00C8A0" headline="24/7" sub="Chatbot odpowiada gdy śpisz">
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, justifyContent: "center" }}>
+        {[
+          { role: "user", text: "Czy macie rozmiar L?" },
+          { role: "bot",  text: "Tak! Dostępne w 3 kolorach 🎨" },
+          { role: "user", text: "Ile kosztuje dostawa?" },
+        ].map((m, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", animationName: "svc-fade-up", animationDuration: "0.4s", animationDelay: `${0.2 + i * 0.22}s`, animationFillMode: "both" }}>
+            <div style={{
+              maxWidth: "80%", padding: "8px 13px",
+              borderRadius: m.role === "user" ? "12px 12px 2px 12px" : "2px 12px 12px 12px",
+              background: m.role === "user" ? "rgba(0,200,160,0.1)" : "rgba(255,255,255,0.04)",
+              border: `1px solid ${m.role === "user" ? "rgba(0,200,160,0.22)" : "rgba(255,255,255,0.07)"}`,
+              fontSize: 12, color: m.role === "user" ? "#ECE7DD" : "#9aad96",
+            }}>{m.text}</div>
+          </div>
+        ))}
+        <div style={{ display: "flex", gap: 5, paddingLeft: 6, animationName: "svc-fade-up", animationDuration: "0.3s", animationDelay: "1s", animationFillMode: "both" }}>
+          {[0,1,2].map(i => <div key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: "#00C8A0", animationName: "live-blink", animationDuration: "1.2s", animationDelay: `${i * 0.22}s`, animationIterationCount: "infinite" }} />)}
+        </div>
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_CRM() {
+  return (
+    <VisualWrap accent="#00C8A0" headline="0" sub="zgubionych leadów — wszystko w lejku">
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, justifyContent: "center" }}>
+        {[["Nowy lead", 100, 12], ["Kontakt", 67, 8], ["Oferta", 42, 5], ["Zamknięte ✓", 33, 4]].map(([l, pct, n], i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 10, color: "#4a6347", minWidth: 80, textAlign: "right" }}>{l}</span>
+            <div style={{ flex: 1, height: 7, background: "rgba(0,200,160,0.08)", borderRadius: 4, overflow: "hidden" }}>
+              <div style={{
+                height: "100%", width: `${pct}%`, borderRadius: 4,
+                background: "linear-gradient(90deg,#00C8A0,rgba(0,200,160,0.5))",
+                transformOrigin: "left", animationName: "svc-widen",
+                animationDuration: "0.8s", animationDelay: `${0.2 + i * 0.12}s`,
+                animationFillMode: "both", animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+              }} />
+            </div>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#00C8A0", minWidth: 16, textAlign: "right" }}>{n}</span>
+          </div>
+        ))}
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_App() {
+  return (
+    <VisualWrap accent="#00C8A0" headline="∞" sub="Twój własny cyfrowy proces">
+      <div style={{ flex: 1, background: "rgba(0,0,0,0.32)", borderRadius: 10, padding: "16px 18px", fontFamily: "var(--font-geist-mono)", display: "flex", flexDirection: "column", gap: 8 }}>
+        {[
+          ["$", "build --custom", "#6b8068"],
+          [">", "Kompilowanie...", "#4a6347"],
+          [">", "✓ Gotowe", "#00C8A0"],
+          ["$", "deploy --prod", "#6b8068"],
+          [">", "✓ Live na produkcji", "#00C8A0"],
+        ].map(([prefix, text, color], i) => (
+          <div key={i} style={{
+            display: "flex", gap: 7, fontSize: 11, color: color,
+            animationName: "svc-fade-up", animationDuration: "0.3s",
+            animationDelay: `${0.2 + i * 0.22}s`, animationFillMode: "both",
+          }}>
+            <span style={{ color: "#00C8A0", opacity: 0.55 }}>{prefix}</span>
+            <span>{text}</span>
+          </div>
+        ))}
+        <div style={{ display: "flex", alignItems: "center", gap: 4, animationName: "svc-fade-up", animationDuration: "0.3s", animationDelay: "1.5s", animationFillMode: "both" }}>
+          <span style={{ color: "#00C8A0", fontSize: 11, opacity: 0.55 }}>$</span>
+          <div style={{ width: 6, height: 13, background: "#00C8A0", opacity: 0.8, animationName: "live-blink", animationDuration: "1s", animationIterationCount: "infinite" }} />
+        </div>
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_GMB() {
+  return (
+    <VisualWrap accent="#a3e635" headline="Top 3" sub="w mapach Google dla Twojej okolicy">
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+        {[0,1,2].map(i => (
+          <div key={i} aria-hidden style={{
+            position: "absolute", width: 56 + i * 30, height: 56 + i * 30, borderRadius: "50%",
+            border: `1px solid rgba(163,230,53,${0.5 - i * 0.14})`,
+            animationName: "svc-ping", animationDuration: "2.4s",
+            animationDelay: `${i * 0.8}s`, animationIterationCount: "infinite",
+            animationTimingFunction: "ease-out",
+          }} />
+        ))}
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <svg width="38" height="48" viewBox="0 0 38 48" fill="none">
+            <path d="M19 0C8.51 0 0 8.51 0 19c0 14.25 19 29 19 29s19-14.75 19-29C38 8.51 29.49 0 19 0Z" fill="#a3e635" />
+            <circle cx="19" cy="19" r="8" fill="#060807" />
+          </svg>
+          <div style={{ width: 2, height: 10, background: "#a3e635" }} />
+          <div style={{ width: 16, height: 4, borderRadius: "50%", background: "rgba(163,230,53,0.3)" }} />
+        </div>
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_Social() {
+  return (
+    <VisualWrap accent="#a3e635" headline="+2 400" sub="obserwujących w 6 miesięcy">
+      <div style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: 5, paddingBottom: 2 }}>
+        {[8, 14, 22, 34, 48, 64, 80, 100].map((h, i) => (
+          <div key={i} style={{
+            flex: 1, borderRadius: "3px 3px 0 0",
+            background: i === 7 ? "#a3e635" : `rgba(163,230,53,${0.1 + i * 0.1})`,
+            height: `${h}%`, transformOrigin: "bottom",
+            animationName: "bar-grow", animationDuration: "0.6s",
+            animationDelay: `${i * 0.06}s`, animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+            animationFillMode: "both",
+          }} />
+        ))}
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_Copy() {
+  return (
+    <VisualWrap accent="#a3e635" headline="+43%" sub="wzrost konwersji po przepisaniu tekstów">
+      <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignContent: "center" }}>
+        {[
+          { label: "PRZED", bg: "rgba(255,255,255,0.02)", border: "rgba(255,255,255,0.06)", textColor: "#4a6347", bar: "rgba(255,80,80,0.45)", acc: "1.2%", text: `"Oferujemy kompleksowe usługi w zakresie..."`, delay: "0.2s", barDelay: "0.4s" },
+          { label: "PO",    bg: "rgba(163,230,53,0.05)", border: "rgba(163,230,53,0.2)",   textColor: "#ECE7DD", bar: "#a3e635",              acc: "4.3%", text: `"Zarabiaj więcej — my zajmiemy się resztą"`, delay: "0.4s", barDelay: "0.8s" },
+        ].map((c, i) => (
+          <div key={i} style={{
+            background: c.bg, border: `1px solid ${c.border}`, borderRadius: 10, padding: "12px 10px",
+            animationName: "svc-fade-up", animationDuration: "0.4s", animationDelay: c.delay, animationFillMode: "both",
+          }}>
+            <div style={{ fontSize: 8, color: i === 0 ? "#3d5e3a" : "#a3e635", fontWeight: 700, letterSpacing: 1.4, marginBottom: 7 }}>{c.label}</div>
+            <div style={{ fontSize: 10, color: c.textColor, lineHeight: 1.55, fontStyle: "italic", minHeight: 42 }}>{c.text}</div>
+            <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ height: 2, flex: 1, background: c.bar, borderRadius: 1, transformOrigin: "left", animationName: "svc-widen", animationDuration: "0.7s", animationDelay: c.barDelay, animationFillMode: "both" }} />
+              <span style={{ fontSize: 9, color: c.bar, fontWeight: 700, fontFamily: "var(--font-geist-mono)" }}>{c.acc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </VisualWrap>
+  );
+}
+
+function V_Admin() {
+  return (
+    <VisualWrap accent="#1B9D17" headline="99.9%" sub="uptime — hosting, SSL i backup">
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 14 }}>
+        <div style={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+          {Array.from({ length: 28 }, (_, i) => ({ ok: i !== 5 && i !== 17 })).map((b, i) => (
+            <div key={i} style={{
+              width: 13, height: 26, borderRadius: 3,
+              background: b.ok ? "#1B9D17" : "rgba(255,80,80,0.5)",
+              opacity: b.ok ? 0.35 + (i / 28) * 0.65 : 1,
+              animationName: "svc-fade-up", animationDuration: "0.25s",
+              animationDelay: `${i * 0.025}s`, animationFillMode: "both",
+            }} />
+          ))}
+        </div>
+        <span style={{ fontSize: 10, color: "#4a6347", fontFamily: "var(--font-geist-mono)" }}>Ostatnie 28 dni · 2 incydenty naprawione &lt;1h</span>
+      </div>
+    </VisualWrap>
+  );
+}
+
 function V_Support() {
   return (
-    <VisualWrap accent="#1B9D17" headline="< 2h" sub="czas reakcji — jeden człowiek, który zna Twój projekt od początku">
-      <StatGrid accent="#1B9D17" items={[["1", "Kontakt · zawsze Oscar"], ["24/7", "Monitoring systemu"], ["0", "Biletów i kolejek"], ["✓", "Bez umów na rok"]]} />
+    <VisualWrap accent="#1B9D17" headline="< 2h" sub="czas reakcji — jeden kontakt przez cały czas">
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, justifyContent: "center" }}>
+        {[
+          ["Twoja wiadomość", "00:00", false],
+          ["Czytam",          "00:08", false],
+          ["Odpowiadam",      "00:41", false],
+          ["Rozwiązane ✓",    "01:17", true],
+        ].map(([label, time, done], i) => (
+          <div key={i} style={{
+            display: "flex", alignItems: "center", gap: 10,
+            animationName: "svc-fade-up", animationDuration: "0.35s",
+            animationDelay: `${0.2 + i * 0.15}s`, animationFillMode: "both",
+          }}>
+            <div style={{ width: 7, height: 7, borderRadius: "50%", background: done ? "#1B9D17" : "rgba(27,157,23,0.3)", flexShrink: 0 }} />
+            <span style={{ fontSize: 12, color: done ? "#ECE7DD" : "#4a6347", flex: 1 }}>{label}</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "#1B9D17" }}>{time}</span>
+          </div>
+        ))}
+      </div>
     </VisualWrap>
   );
 }

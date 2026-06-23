@@ -120,7 +120,7 @@ export const content = {
     },
     owner: {
       label: "O mnie",
-      h2: "Buduję cyfrowe narzędzia z Mielca",
+      h2: "Buduje cyfrowe narzędzia",
       role: "Założyciel PROJSTOG",
       city: "Mielec, Podkarpacie",
       email: "Napisz",

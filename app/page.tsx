@@ -257,7 +257,7 @@ export default function Home() {
                   <img src="/img/owner.jpg" alt="Oscar Grzywa" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(7,12,7,0.45) 0%, transparent 50%)", pointerEvents: "none" }} />
                 </div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: "#ECE7DD", marginBottom: 4 }}>Oscar Grzywa</div>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: "#ECE7DD", marginBottom: 4, margin: "0 0 4px" }}>Oscar Grzywa</h2>
                 <div style={{ fontSize: 14, color: "#34E12E", fontWeight: 600, marginBottom: 8 }}>{t.owner.role}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "#4a6347", marginBottom: 32 }}>
                   <IconMapPin /><span>{t.owner.city}</span>
@@ -396,13 +396,12 @@ export default function Home() {
             <AnimateOnScroll from="right">
               <div className="booking-card" style={{ borderRadius: 20, padding: "44px 36px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", height: "100%" }}>
                 <div style={{ width: 68, height: 68, borderRadius: 18, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.16)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22 }}>
-                  <IconVideo />
+                  <IconMail />
                 </div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>Google Meet</h3>
-                <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 24px", maxWidth: 200 }}>{t.contact.meetText}</p>
-                <div style={{ fontSize: 13, color: "#4a6347", fontStyle: "italic", marginBottom: 24 }}>{t.contact.meetSub}</div>
-                <a href="https://calendar.app.google/" target="_blank" rel="noopener noreferrer" className="cta-outline" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
-                  {t.contact.meetCta}
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>{lang === "pl" ? "Wyślij maila" : "Send an email"}</h3>
+                <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 28px", maxWidth: 220 }}>{lang === "pl" ? "Odpisuję tego samego dnia — najczęściej w ciągu kilku godzin." : "I reply the same day — usually within a few hours."}</p>
+                <a href="mailto:biuro@projstog.pl" className="cta-outline" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
+                  biuro@projstog.pl →
                 </a>
               </div>
             </AnimateOnScroll>
@@ -415,48 +414,9 @@ export default function Home() {
           </div>
 
           {/* Form */}
-          <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72 }}>
-            <AnimateOnScroll from="left">
-              <h3 style={{ fontSize: 19, fontWeight: 700, color: "#ECE7DD", margin: "0 0 14px" }}>Zostaw numer lub e-mail</h3>
-              <p style={{ fontSize: 15, color: "#6b8068", lineHeight: 1.85, margin: "0 0 32px" }}>
-                Odezwę się tego samego dnia lub następnego ranka.{" "}
-                <strong style={{ color: "#ECE7DD" }}>Bez automatycznych odpowiedzi</strong>{" "}
-                — piszę i dzwonię osobiście.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <a href="tel:+48730771568" className="contact-row-link">
-                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
-                    <IconPhone />
-                  </div>
-                  <div>
-                    <div className="contact-row-label">Telefon</div>
-                    <span className="contact-row-value">+48 730 771 568</span>
-                  </div>
-                </a>
-                <a href="mailto:biuro@projstog.pl" className="contact-row-link">
-                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
-                    <IconMail />
-                  </div>
-                  <div>
-                    <div className="contact-row-label">E-mail</div>
-                    <span className="contact-row-value">biuro@projstog.pl</span>
-                  </div>
-                </a>
-                <a href="https://maps.google.com/?q=Mielec,+Podkarpackie" target="_blank" rel="noopener noreferrer" className="contact-row-link">
-                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
-                    <IconMapPin />
-                  </div>
-                  <div>
-                    <div className="contact-row-label">Lokalizacja</div>
-                    <span className="contact-row-value" style={{ color: "#b8d4b2" }}>Mielec, Podkarpackie</span>
-                  </div>
-                </a>
-              </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll from="right">
-              <ContactForm />
-            </AnimateOnScroll>
-          </div>
+          <AnimateOnScroll>
+            <ContactForm />
+          </AnimateOnScroll>
         </div>
       </section>
 
@@ -578,10 +538,6 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
               <a href="/polityka-prywatnosci" className="footer-link" style={{ fontSize: 12 }}>
                 {lang === "pl" ? "Polityka prywatności" : "Privacy Policy"}
-              </a>
-              <span style={{ color: "#1d3a1a", fontSize: 12 }}>·</span>
-              <a href="/regulamin" className="footer-link" style={{ fontSize: 12 }}>
-                {lang === "pl" ? "Regulamin" : "Terms"}
               </a>
             </div>
           </div>
