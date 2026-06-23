@@ -373,28 +373,68 @@ body {
   transform: translateY(-2px);
 }
 
-/* ── Contact section info links ───────────────────────── */
-.contact-info-link {
-  color: #34E12E;
+/* ── Contact row links ─────────────────────────────────── */
+.contact-row-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   text-decoration: none;
-  font-size: 14.5px;
-  font-weight: 500;
-  transition: color 0.22s, text-shadow 0.22s;
-  position: relative;
-  display: inline-block;
+  transition: transform 0.22s cubic-bezier(0.22,1,0.36,1);
 }
-.contact-info-link::after {
+.contact-row-link:hover { transform: translateX(6px); }
+.contact-row-link:hover .contact-row-icon {
+  background: rgba(52,225,46,0.14) !important;
+  border-color: rgba(52,225,46,0.32) !important;
+}
+.contact-row-icon {
+  transition: background 0.22s, border-color 0.22s;
+}
+.contact-row-label {
+  font-size: 10px; color: #4a6347; margin-bottom: 3px;
+  text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700;
+}
+.contact-row-value {
+  color: #34E12E; font-size: 14.5px; font-weight: 500;
+  transition: color 0.22s;
+}
+.contact-row-link:hover .contact-row-value { color: #a8f5a5; }
+
+/* ── CTA green button hover ───────────────────────────── */
+.cta-green {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s;
+}
+.cta-green::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #34E12E;
-  transition: width 0.28s;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  border-radius: inherit;
 }
-.contact-info-link:hover { color: #a8f5a5; text-shadow: 0 0 14px rgba(52,225,46,0.4); }
-.contact-info-link:hover::after { width: 100%; }
+.cta-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(52,225,46,0.45), 0 4px 16px rgba(52,225,46,0.22);
+}
+.cta-green:hover::after { opacity: 1; }
+.cta-green:active { transform: translateY(0); box-shadow: none; }
+
+/* ── CTA outline button hover ─────────────────────────── */
+.cta-outline {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s, color 0.2s;
+}
+.cta-outline:hover {
+  background: rgba(52,225,46,0.10) !important;
+  border-color: rgba(52,225,46,0.60) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(52,225,46,0.18);
+}
+.cta-outline:active { transform: translateY(0); }
 
 /* ── Form ─────────────────────────────────────────────── */
 .form-field {

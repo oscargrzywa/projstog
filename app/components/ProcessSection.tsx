@@ -14,7 +14,6 @@ const METAS_EN = ["Free · 30–60 min", "Mockup · Quote · Timeline", "Tests �
 
 type Step = { step: string; title: string; desc: string };
 
-/* Circuit-board dot-grid background */
 function BgPattern() {
   return (
     <svg
@@ -49,7 +48,7 @@ function ProcessCard({ title, desc, icon, meta, active }: {
         ? "0 0 0 1px rgba(52,225,46,0.08), 0 8px 48px rgba(0,0,0,0.4), 0 0 48px rgba(52,225,46,0.12)"
         : "0 2px 16px rgba(0,0,0,0.2)",
       transform: active ? "scale(1.03)" : "scale(1)",
-      transition: "all 0.5s cubic-bezier(0.22,1,0.36,1)",
+      transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
         <div className="process-icon-wrap" style={{
@@ -58,7 +57,7 @@ function ProcessCard({ title, desc, icon, meta, active }: {
           border: `1px solid ${active ? "rgba(52,225,46,0.28)" : "rgba(52,225,46,0.07)"}`,
           display: "flex", alignItems: "center", justifyContent: "center",
           color: active ? "#34E12E" : "#4a6347",
-          transition: "all 0.5s cubic-bezier(0.22,1,0.36,1)",
+          transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
         }}>
           {icon}
         </div>
@@ -66,20 +65,20 @@ function ProcessCard({ title, desc, icon, meta, active }: {
           fontSize: 17, fontWeight: 800,
           color: active ? "#ECE7DD" : "#4a5e44",
           margin: 0, letterSpacing: "-0.02em", lineHeight: 1.2,
-          transition: "color 0.5s",
+          transition: "color 0.4s",
         }}>{title}</h3>
       </div>
       <p style={{
         fontSize: 13, color: active ? "#6b8068" : "#333f31",
         lineHeight: 1.8, margin: "0 0 14px",
-        transition: "color 0.5s",
+        transition: "color 0.4s",
       }}>{desc}</p>
       <div style={{ borderTop: `1px solid ${active ? "rgba(52,225,46,0.09)" : "rgba(52,225,46,0.03)"}`, paddingTop: 11 }}>
         <span style={{
           fontSize: 10, fontWeight: 600,
           color: active ? "rgba(52,225,46,0.65)" : "rgba(52,225,46,0.18)",
           letterSpacing: 1.5, textTransform: "uppercase",
-          transition: "color 0.5s",
+          transition: "color 0.4s",
         }}>{meta}</span>
       </div>
     </div>
@@ -97,30 +96,24 @@ export function ProcessSection({ steps, label, h2, lang }: {
   const total     = steps.length;
 
   useEffect(() => {
-    /* ── wheel handler ── */
     const onWheel = (e: WheelEvent) => {
       const wrap = wrapRef.current;
       if (!wrap) return;
       const rect = wrap.getBoundingClientRect();
-      /* section must be in sticky zone (top ≤ 0, bottom still in view) */
       if (rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
 
       const down = e.deltaY > 0;
 
-      /* at last step going down → jump past section in one shot */
       if (down && stepRef.current >= total - 1) {
         e.preventDefault();
-        const wrap = wrapRef.current;
         if (wrap) {
           const abs = wrap.getBoundingClientRect().bottom + window.scrollY;
           window.scrollTo({ top: abs - window.innerHeight + 2, behavior: "instant" as ScrollBehavior });
         }
         return;
       }
-      /* at step 0 going up → jump before section in one shot */
       if (!down && stepRef.current <= 0) {
         e.preventDefault();
-        const wrap = wrapRef.current;
         if (wrap) {
           const abs = wrap.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({ top: Math.max(0, abs - 2), behavior: "instant" as ScrollBehavior });
@@ -128,11 +121,10 @@ export function ProcessSection({ steps, label, h2, lang }: {
         return;
       }
 
-      /* eat this event — handle ourselves */
       e.preventDefault();
       if (coolRef.current) return;
       coolRef.current = true;
-      setTimeout(() => { coolRef.current = false; }, 550);
+      setTimeout(() => { coolRef.current = false; }, 260);
 
       const next = down
         ? Math.min(total - 1, stepRef.current + 1)
@@ -148,13 +140,12 @@ export function ProcessSection({ steps, label, h2, lang }: {
   const fillPct = total > 1 ? (activeStep / (total - 1)) * 100 : 100;
 
   return (
-    /* outer wrapper: tall spacer keeps sticky alive through the full section */
     <div ref={wrapRef} id="proces" style={{ height: `${total * 100}vh`, position: "relative" }}>
       <div style={{
         position: "sticky", top: 0, height: "100vh",
         background: "rgba(7,12,7,0.92)",
         display: "flex", flexDirection: "column", justifyContent: "center",
-        overflow: "hidden", padding: "0 24px",
+        overflow: "hidden", padding: "0 40px",
       }}>
         <BgPattern />
 
@@ -167,13 +158,12 @@ export function ProcessSection({ steps, label, h2, lang }: {
               <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.4rem,3vw,2.2rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.15, margin: 0 }}>
                 {h2}
               </h2>
-              {/* Step pills */}
               <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
                 {steps.map((_, i) => (
                   <div key={i} style={{
                     width: i === activeStep ? 28 : 8, height: 8, borderRadius: 4,
                     background: i === activeStep ? "#34E12E" : i < activeStep ? "rgba(52,225,46,0.35)" : "rgba(52,225,46,0.12)",
-                    transition: "all 0.45s cubic-bezier(0.22,1,0.36,1)",
+                    transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
                     boxShadow: i === activeStep ? "0 0 12px rgba(52,225,46,0.5)" : "none",
                   }} />
                 ))}
@@ -184,7 +174,7 @@ export function ProcessSection({ steps, label, h2, lang }: {
           {/* Zig-zag rows + center line */}
           <div className="process-zz" style={{ position: "relative" }}>
             <div aria-hidden style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 3, background: "rgba(52,225,46,0.06)", transform: "translateX(-50%)", borderRadius: 2 }} />
-            <div aria-hidden style={{ position: "absolute", left: "50%", top: 0, width: 3, height: `${fillPct}%`, background: "linear-gradient(to bottom, #34E12E, rgba(52,225,46,0.35))", transform: "translateX(-50%)", borderRadius: 2, transition: "height 0.5s cubic-bezier(0.22,1,0.36,1)", boxShadow: "0 0 10px rgba(52,225,46,0.35)" }} />
+            <div aria-hidden style={{ position: "absolute", left: "50%", top: 0, width: 3, height: `${fillPct}%`, background: "linear-gradient(to bottom, #34E12E, rgba(52,225,46,0.35))", transform: "translateX(-50%)", borderRadius: 2, transition: "height 0.4s cubic-bezier(0.22,1,0.36,1)", boxShadow: "0 0 10px rgba(52,225,46,0.35)" }} />
 
             {steps.map(({ step, title, desc }, i) => {
               const isLeft   = i % 2 === 0;
@@ -206,7 +196,7 @@ export function ProcessSection({ steps, label, h2, lang }: {
                       fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 900,
                       color: isActive ? "#34E12E" : "rgba(52,225,46,0.22)",
                       letterSpacing: "0.05em",
-                      transition: "all 0.5s cubic-bezier(0.22,1,0.36,1)",
+                      transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
                     }}>
                       {step}
                     </div>

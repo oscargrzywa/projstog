@@ -284,7 +284,7 @@ export function ServicesSection() {
     const spacer = spacerRef.current; if (!spacer) return;
     setIsActive(false); isActiveRef.current = false;
     exitCooldown.current = true;
-    setTimeout(() => { exitCooldown.current = false; }, 1100);
+    setTimeout(() => { exitCooldown.current = false; }, 600);
     if (dir === "down") window.scrollTo({ top: spacer.getBoundingClientRect().top + window.scrollY + spacer.offsetHeight + 10, behavior: "smooth" });
     else { setCurrentCard(0); currentRef.current = 0; window.scrollTo({ top: spacer.getBoundingClientRect().top + window.scrollY - 10, behavior: "smooth" }); }
   };
@@ -306,8 +306,8 @@ export function ServicesSection() {
     const onWheel = (e: WheelEvent) => {
       if (!isActiveRef.current) return; e.preventDefault();
       accum += e.deltaY;
-      const dir = accum > 55 ? 1 : accum < -55 ? -1 : 0; if (!dir) return;
-      accum = 0; if (cd) return; cd = true; setTimeout(() => { cd = false; }, 540);
+      const dir = accum > 40 ? 1 : accum < -40 ? -1 : 0; if (!dir) return;
+      accum = 0; if (cd) return; cd = true; setTimeout(() => { cd = false; }, 300);
       const next = currentRef.current + dir;
       if (next < 0) exitSection("up"); else if (next >= TOTAL) exitSection("down");
       else { setCurrentCard(next); currentRef.current = next; }
@@ -316,7 +316,6 @@ export function ServicesSection() {
     return () => window.removeEventListener("wheel", onWheel);
   }, [TOTAL]);
 
-  /* Touch swipe for mobile */
   useEffect(() => {
     let startY = 0, cd = false;
     const onStart = (e: TouchEvent) => { startY = e.touches[0].clientY; };
@@ -324,7 +323,7 @@ export function ServicesSection() {
       if (!isActiveRef.current) return;
       const dy = startY - e.changedTouches[0].clientY;
       if (Math.abs(dy) < 40) return;
-      if (cd) return; cd = true; setTimeout(() => { cd = false; }, 600);
+      if (cd) return; cd = true; setTimeout(() => { cd = false; }, 400);
       const dir = dy > 0 ? 1 : -1;
       const next = currentRef.current + dir;
       if (next < 0) exitSection("up"); else if (next >= TOTAL) exitSection("down");
@@ -356,44 +355,78 @@ export function ServicesSection() {
             <div style={{ display: "flex", gap: 6, overflowX: "auto", padding: "0 16px 0", scrollbarWidth: "none" }}>
               {svc.categories.map((cat, i) => (
                 <button key={i} onClick={() => jumpToCategory(i)} style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 100, background: i === activeCat ? `${CAT_ACCENTS[i]}18` : "transparent", border: `1px solid ${i === activeCat ? CAT_ACCENTS[i] : "rgba(52,225,46,0.12)"}`, color: i === activeCat ? CAT_ACCENTS[i] : "#4a6347", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, whiteSpace: "nowrap", transition: "all 0.22s" }}>
-                  {CAT_EMOJIS[i]} {cat.label}
+                  {cat.label}
                 </button>
               ))}
             </div>
           </div>
 
           {/* SIDEBAR — desktop only */}
-          <div className="svc-sidebar" style={{ width: 288, flexShrink: 0, height: "100%", borderRight: "1px solid rgba(52,225,46,0.07)", display: "flex", flexDirection: "column", padding: "80px 26px 32px", background: "rgba(6,8,7,0.88)", overflowY: "auto" }}>
-            <p style={{ fontSize: 10, fontWeight: 700, color: "#34E12E", letterSpacing: 3, textTransform: "uppercase", margin: "0 0 12px" }}>{svc.label}</p>
-            <h2 style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 900, fontSize: "clamp(1.1rem,1.5vw,1.5rem)", color: "#fff", lineHeight: 1.2, margin: "0 0 10px", letterSpacing: "-0.02em" }}>{svc.h2}</h2>
-            <p style={{ fontSize: 12.5, color: "#6b8068", lineHeight: 1.75, margin: "0 0 22px" }}>{svc.sub}</p>
-            <div style={{ height: 1, background: "rgba(52,225,46,0.08)", marginBottom: 18 }} />
-            <div style={{ borderRadius: 12, border: "1px solid rgba(52,225,46,0.09)", background: "#0e130e", overflow: "hidden", marginBottom: 18 }}>
+          <div className="svc-sidebar" style={{ width: 280, flexShrink: 0, height: "100%", borderRight: "1px solid rgba(52,225,46,0.06)", display: "flex", flexDirection: "column", background: "rgba(5,7,5,0.95)" }}>
+
+            {/* Top section */}
+            <div style={{ padding: "80px 28px 0" }}>
+              <p style={{ fontSize: 9, fontWeight: 700, color: "#34E12E", letterSpacing: 4, textTransform: "uppercase", margin: "0 0 4px", opacity: 0.7 }}>{svc.label}</p>
+              <h2 style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 800, fontSize: "1.15rem", color: "#ECE7DD", lineHeight: 1.25, margin: "0 0 28px", letterSpacing: "-0.02em" }}>{svc.h2}</h2>
+            </div>
+
+            {/* Category nav */}
+            <div style={{ padding: "0 16px", flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 4 }}>
               {svc.categories.map((cat, i) => {
                 const active = i === activeCat;
+                const acc = CAT_ACCENTS[i];
                 return (
-                  <button key={i} onClick={() => jumpToCategory(i)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", background: active ? `${CAT_ACCENTS[i]}0d` : "transparent", border: "none", borderLeft: `3px solid ${active ? CAT_ACCENTS[i] : "transparent"}`, borderBottom: i < svc.categories.length - 1 ? "1px solid rgba(52,225,46,0.06)" : "none", cursor: "pointer", textAlign: "left", transition: "background 0.22s" }}>
-                    <span style={{ fontSize: 16, lineHeight: 1, flexShrink: 0 }}>{CAT_EMOJIS[i]}</span>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: active ? CAT_ACCENTS[i] : "#6b8068", transition: "color 0.22s" }}>{cat.label}</div>
-                      {active && <div style={{ display: "flex", gap: 5, marginTop: 6 }}>
-                        {Array.from({ length: cat.services.length }).map((_, j) => (
-                          <div key={j} style={{ width: 5, height: 5, borderRadius: "50%", background: j <= activeInCat ? CAT_ACCENTS[i] : "rgba(52,225,46,0.15)", transition: "background 0.25s" }} />
-                        ))}
-                      </div>}
+                  <button
+                    key={i}
+                    onClick={() => jumpToCategory(i)}
+                    style={{
+                      width: "100%", display: "flex", flexDirection: "column", gap: 8,
+                      padding: "14px 16px", borderRadius: 12,
+                      background: active ? `${acc}0c` : "transparent",
+                      border: `1px solid ${active ? `${acc}22` : "transparent"}`,
+                      cursor: "pointer", textAlign: "left",
+                      transition: "all 0.22s cubic-bezier(0.22,1,0.36,1)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: active ? acc : "#4a6347", transition: "color 0.22s", letterSpacing: "-0.01em" }}>
+                        {cat.label}
+                      </span>
+                      <span style={{ fontSize: 10, fontWeight: 600, color: active ? `${acc}99` : "rgba(52,225,46,0.2)", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>
+                        {cat.services.length}
+                      </span>
                     </div>
-                    {active && <div style={{ width: 5, height: 5, borderRadius: "50%", background: CAT_ACCENTS[i], flexShrink: 0, animationName: "live-blink", animationDuration: "2s", animationIterationCount: "infinite" }} />}
+                    {active && (
+                      <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                        {Array.from({ length: cat.services.length }).map((_, j) => (
+                          <div key={j} style={{
+                            height: 3, borderRadius: 2,
+                            flex: j <= activeInCat ? 2 : 1,
+                            background: j <= activeInCat ? acc : `${acc}25`,
+                            transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)",
+                          }} />
+                        ))}
+                      </div>
+                    )}
                   </button>
                 );
               })}
             </div>
-            <div style={{ flex: 1 }} />
-            <div style={{ fontSize: 11, color: "#2d4a2a", fontFamily: "var(--font-geist-mono)", marginBottom: 14, letterSpacing: 0.5 }}>
-              {String(currentCard + 1).padStart(2, "0")} / {String(TOTAL).padStart(2, "0")}
+
+            {/* Bottom */}
+            <div style={{ padding: "20px 28px 32px", borderTop: "1px solid rgba(52,225,46,0.06)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 20 }}>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 32, fontWeight: 900, color: "#34E12E", lineHeight: 1, letterSpacing: "-0.04em" }}>
+                  {String(currentCard + 1).padStart(2, "0")}
+                </span>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "#2d4a2a", fontWeight: 500 }}>
+                  / {String(TOTAL).padStart(2, "0")}
+                </span>
+              </div>
+              <a href="#kontakt" className="cta-green" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 13, padding: "13px 16px", borderRadius: 10, textDecoration: "none", textAlign: "center" }}>
+                {lang === "pl" ? "Wycień projekt" : "Get a quote"} <span aria-hidden>→</span>
+              </a>
             </div>
-            <a href="#kontakt" style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 13, padding: "13px 16px", borderRadius: 10, textDecoration: "none", textAlign: "center" }}>
-              {lang === "pl" ? "Wycień projekt →" : "Get a quote →"}
-            </a>
           </div>
 
           {/* CARD STAGE */}

@@ -201,41 +201,6 @@ export default function Home() {
       {/* ═══ SERVICES ════════════════════════════════════════════════════════════ */}
       <ServicesSection />
 
-      {/* ─── Green accent separator ───────────────────────────────────────────── */}
-      <div style={{ position: "relative", height: 160, background: "rgba(7,12,7,0.92)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {/* Animated bars */}
-        {[...Array(7)].map((_, i) => (
-          <div key={i} style={{
-            position: "absolute", bottom: 0,
-            left: `${8 + i * 12}%`,
-            width: `clamp(3px,0.6vw,8px)`,
-            background: `rgba(52,225,46,${0.08 + (i % 3) * 0.06})`,
-            borderRadius: "3px 3px 0 0",
-            transformOrigin: "bottom",
-            animationName: "bar-grow",
-            animationDuration: `${1.2 + i * 0.18}s`,
-            animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
-            animationFillMode: "both",
-            animationDelay: `${i * 0.08}s`,
-            animationIterationCount: "1",
-            height: `${38 + ((i * 37) % 52)}%`,
-          }} />
-        ))}
-        {/* Central glow line */}
-        <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: 1, background: "linear-gradient(90deg,transparent,rgba(52,225,46,0.18),transparent)", transform: "translateY(-50%)" }} />
-        {/* Center brand mark */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 14, background: "rgba(6,8,7,0.9)", border: "1px solid rgba(52,225,46,0.14)", borderRadius: 100, padding: "10px 24px" }}>
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, color: "#4a6347", letterSpacing: 3, textTransform: "uppercase" }}>
-            {lang === "pl" ? "Obsługiwane technologie" : "Technologies"}
-          </span>
-          {["Next.js", "GPT-4", "Make", "n8n", "Shopify", "Google Ads"].map((t2, i) => (
-            <span key={t2} style={{ fontSize: 10, fontWeight: 700, color: "rgba(52,225,46,0.45)", letterSpacing: 1.5, textTransform: "uppercase" }}>
-              {i > 0 && <span style={{ marginRight: 8, color: "rgba(52,225,46,0.15)" }}>·</span>}
-              {t2}
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* ═══ NOT AGENCY + OWNER + COMPARE ═══════════════════════════════════════ */}
       <section id="o-mnie" style={{ padding: "120px 0 120px", background: "rgba(7,12,7,0.88)", overflow: "hidden" }}>
@@ -305,7 +270,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <a href="mailto:biuro@projstog.pl" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "14px 24px", borderRadius: 12, textDecoration: "none" }}>
+                <a href="mailto:biuro@projstog.pl" className="cta-green" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "14px 24px", borderRadius: 12, textDecoration: "none" }}>
                   <IconMail />Napisz do mnie
                 </a>
               </div>
@@ -423,7 +388,7 @@ export default function Home() {
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>{lang === "pl" ? "Zadzwoń" : "Call"}</h3>
                 <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 24px", maxWidth: 200 }}>{t.contact.availableText}</p>
                 <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 19, fontWeight: 700, color: "#34E12E", marginBottom: 24 }}>{t.nav.phone}</div>
-                <a href={`tel:${t.nav.phone.replace(/\s/g,"")}`} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
+                <a href={`tel:${t.nav.phone.replace(/\s/g,"")}`} className="cta-green" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
                   {t.contact.phoneCta}
                 </a>
               </div>
@@ -436,7 +401,7 @@ export default function Home() {
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>Google Meet</h3>
                 <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 24px", maxWidth: 200 }}>{t.contact.meetText}</p>
                 <div style={{ fontSize: 13, color: "#4a6347", fontStyle: "italic", marginBottom: 24 }}>{t.contact.meetSub}</div>
-                <a href="https://calendar.app.google/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
+                <a href="https://calendar.app.google/" target="_blank" rel="noopener noreferrer" className="cta-outline" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
                   {t.contact.meetCta}
                 </a>
               </div>
@@ -459,33 +424,33 @@ export default function Home() {
                 — piszę i dzwonię osobiście.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <a href="tel:+48730771568" className="contact-row-link">
+                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
                     <IconPhone />
                   </div>
                   <div>
-                    <div style={{ fontSize: 10, color: "#4a6347", marginBottom: 3, textTransform: "uppercase", letterSpacing: 1.2, fontWeight: 700 }}>Telefon</div>
-                    <a href="tel:+48730771568" className="contact-info-link">+48 730 771 568</a>
+                    <div className="contact-row-label">Telefon</div>
+                    <span className="contact-row-value">+48 730 771 568</span>
                   </div>
-                </div>
-                <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                </a>
+                <a href="mailto:biuro@projstog.pl" className="contact-row-link">
+                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
                     <IconMail />
                   </div>
                   <div>
-                    <div style={{ fontSize: 10, color: "#4a6347", marginBottom: 3, textTransform: "uppercase", letterSpacing: 1.2, fontWeight: 700 }}>E-mail</div>
-                    <a href="mailto:biuro@projstog.pl" className="contact-info-link">biuro@projstog.pl</a>
+                    <div className="contact-row-label">E-mail</div>
+                    <span className="contact-row-value">biuro@projstog.pl</span>
                   </div>
-                </div>
-                <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                </a>
+                <a href="https://maps.google.com/?q=Mielec,+Podkarpackie" target="_blank" rel="noopener noreferrer" className="contact-row-link">
+                  <div className="contact-row-icon" style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#34E12E" }}>
                     <IconMapPin />
                   </div>
                   <div>
-                    <div style={{ fontSize: 10, color: "#4a6347", marginBottom: 3, textTransform: "uppercase", letterSpacing: 1.2, fontWeight: 700 }}>Lokalizacja</div>
-                    <span style={{ color: "#b8d4b2", fontSize: 14.5, fontWeight: 500 }}>Mielec, Podkarpackie</span>
+                    <div className="contact-row-label">Lokalizacja</div>
+                    <span className="contact-row-value" style={{ color: "#b8d4b2" }}>Mielec, Podkarpackie</span>
                   </div>
-                </div>
+                </a>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll from="right">

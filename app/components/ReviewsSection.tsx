@@ -103,7 +103,7 @@ export function ReviewsSection() {
                 <div style={{ display: "flex", gap: 3, justifyContent: "center", margin: "6px 0 4px" }}>
                   {[0,1,2,3,4].map(i => <span key={i} style={{ fontSize: 16, color: "#febc2e" }}>★</span>)}
                 </div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 0.5 }}>48 {reviewsLbl}</div>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 0.5 }}>7 {reviewsLbl}</div>
               </div>
               <div style={{ width: 1, height: 56, background: "rgba(52,225,46,0.1)" }} />
               <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-start" }}>
