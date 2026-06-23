@@ -39,10 +39,18 @@ export function ReviewsSection() {
   const isManual  = useRef(false);
   const nextFnRef = useRef<() => void>(() => {});
 
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const measure = () => {
-      if (containerRef.current)
-        setCw((containerRef.current.offsetWidth - GAP * 2) / 3);
+      if (containerRef.current) {
+        const mobile = window.innerWidth <= 768;
+        setIsMobile(mobile);
+        setCw(mobile
+          ? containerRef.current.offsetWidth - 32
+          : (containerRef.current.offsetWidth - GAP * 2) / 3
+        );
+      }
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -80,8 +88,8 @@ export function ReviewsSection() {
     return () => clearInterval(id);
   }, []);
 
-  // translateX: center the active card in the 3-card window
-  const tx = cw > 0 ? -(active * (cw + GAP)) + (cw + GAP) : 0;
+  // translateX: center active card (offset by 1 card on desktop to show prev/active/next)
+  const tx = cw > 0 ? -(active * (cw + GAP)) + (isMobile ? 16 : (cw + GAP)) : 0;
 
   // Touch / mouse drag
   const touchStart = useRef(0);
@@ -180,7 +188,7 @@ export function ReviewsSection() {
                       flex: `0 0 ${cw > 0 ? cw : "calc(33.333% - 14px)"}px`,
                       transition: animated ? "transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.55s, box-shadow 0.45s, border-color 0.45s" : "none",
                       transform: isActive ? "scale(1.06)" : "scale(0.90)",
-                      opacity: isActive ? 1 : isSide ? 0.5 : 0.15,
+                      opacity: isActive ? 1 : isMobile ? 0 : (isSide ? 0.5 : 0.15),
                       cursor: isActive ? "default" : "pointer",
                       position: "relative", zIndex: isActive ? 3 : isSide ? 2 : 1,
                       background: isActive ? "rgba(14,22,14,0.72)" : "rgba(10,15,10,0.35)",

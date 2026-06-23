@@ -75,7 +75,7 @@ export function ContactForm() {
       </div>
 
       {/* Telefon + E-mail side by side */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="contact-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
           <label htmlFor="cf-phone" style={label}>Telefon *</label>
           <input id="cf-phone" type="tel" required value={phone} onChange={e => setPhone(e.target.value)}

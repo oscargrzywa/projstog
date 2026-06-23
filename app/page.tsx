@@ -111,8 +111,8 @@ const SOCIAL_ITEMS = [
   },
   {
     key: "instagram", label: "Instagram",
-    href: "https://www.instagram.com/projstog",
-    display: "@projstog",
+    href: "https://www.instagram.com/oscargrzywa",
+    display: "@oscargrzywa",
     title: "Instagram",
     desc: "Obserwuj PROJSTOG na Instagramie",
     cta: "Otwórz Instagram →",
@@ -121,7 +121,7 @@ const SOCIAL_ITEMS = [
   },
   {
     key: "linkedin", label: "LinkedIn",
-    href: "https://www.linkedin.com/in/oscar-grzywa",
+    href: "https://www.linkedin.com/in/oscar-grzywa-2885942a3/",
     display: "Oscar Grzywa",
     title: "LinkedIn",
     desc: "Połącz się ze mną na LinkedIn",
@@ -154,14 +154,23 @@ const SOCIAL_ITEMS = [
 ];
 
 function SocialModal({ item, onClose }: { item: typeof SOCIAL_ITEMS[number]; onClose: () => void }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(item.display).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div
       onClick={onClose}
-      style={{ position: "fixed", inset: 0, zIndex: 500, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "20px" }}
+      style={{ position: "fixed", inset: 0, zIndex: 500, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "20px", animation: "backdropIn 0.2s ease" }}
     >
       <div
         onClick={e => e.stopPropagation()}
-        style={{ background: "rgba(5,10,5,0.97)", border: "1px solid rgba(52,225,46,0.20)", borderRadius: 24, padding: "36px 32px", maxWidth: 340, width: "100%", position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(52,225,46,0.08)" }}
+        style={{ background: "rgba(5,10,5,0.97)", border: "1px solid rgba(52,225,46,0.20)", borderRadius: 24, padding: "36px 32px", maxWidth: 340, width: "100%", position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(52,225,46,0.08)", animation: "modalIn 0.28s cubic-bezier(0.22,1,0.36,1)" }}
       >
         {/* Close X */}
         <button onClick={onClose} style={{ position: "absolute", top: 14, right: 14, width: 32, height: 32, borderRadius: 8, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#4a6347" }}>
@@ -183,10 +192,10 @@ function SocialModal({ item, onClose }: { item: typeof SOCIAL_ITEMS[number]; onC
           <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 15, fontWeight: 700, color: "#ECE7DD" }}>{item.display}</span>
           {(item as { isContact?: boolean }).isContact && (
             <button
-              onClick={() => { navigator.clipboard?.writeText(item.display); }}
-              style={{ background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.16)", borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontSize: 10, color: "#34E12E", fontWeight: 600 }}
+              onClick={handleCopy}
+              style={{ background: copied ? "rgba(52,225,46,0.18)" : "rgba(52,225,46,0.08)", border: `1px solid ${copied ? "rgba(52,225,46,0.4)" : "rgba(52,225,46,0.16)"}`, borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontSize: 10, color: copied ? "#34E12E" : "#34E12E", fontWeight: 700, transition: "all 0.2s", minWidth: 72, textAlign: "center" }}
             >
-              Kopiuj
+              {copied ? "Skopiowano ✓" : "Kopiuj"}
             </button>
           )}
         </div>
@@ -585,17 +594,6 @@ export default function Home() {
               <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#3d5e3a", marginBottom: 24 }}>
                 <IconMapPin />
                 <span>Mielec, Podkarpackie</span>
-              </div>
-              {/* Social icons */}
-              <div style={{ display: "flex", gap: 10 }}>
-                {[
-                  { label: "LinkedIn", href: "#", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg> },
-                  { label: "Instagram", href: "#", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" strokeWidth="0" /></svg> },
-                ].map(({ label, href, icon }) => (
-                  <a key={label} href={href} aria-label={label} className="footer-social">
-                    {icon}
-                  </a>
-                ))}
               </div>
             </div>
 

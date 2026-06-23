@@ -102,6 +102,14 @@ export function ProcessSection({ steps, label, h2, lang }: {
       const rect = wrap.getBoundingClientRect();
       if (rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
 
+      // Sync step with scroll position — fixes entering section from below
+      const scrolled = Math.max(0, -rect.top);
+      const synced = Math.max(0, Math.min(total - 1, Math.round(scrolled / window.innerHeight)));
+      if (synced !== stepRef.current) {
+        stepRef.current = synced;
+        setActiveStep(synced);
+      }
+
       const down = e.deltaY > 0;
 
       if (down && stepRef.current >= total - 1) {
