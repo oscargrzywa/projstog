@@ -377,6 +377,7 @@ export function ServicesSection() {
   const [currentCard, setCurrentCard] = useState(0);
   const [isActive, setIsActive]       = useState(false);
   const spacerRef    = useRef<HTMLDivElement>(null);
+  const catScrollRef = useRef<HTMLDivElement>(null);
   const currentRef   = useRef(0);
   const isActiveRef  = useRef(false);
   const exitCooldown = useRef(false);
@@ -387,6 +388,14 @@ export function ServicesSection() {
   const activeCat    = allCards[currentCard]?.catIndex ?? 0;
   const activeInCat  = allCards[currentCard]?.catServiceIndex ?? 0;
   const isLast       = currentCard === TOTAL - 1;
+
+  // Auto-scroll mobile category bar to active tab
+  useEffect(() => {
+    const bar = catScrollRef.current;
+    if (!bar) return;
+    const btn = bar.children[activeCat] as HTMLElement | undefined;
+    if (btn) btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [activeCat]);
 
   const exitSection = (dir: "up" | "down") => {
     const spacer = spacerRef.current; if (!spacer) return;
@@ -460,7 +469,7 @@ export function ServicesSection() {
 
           {/* MOBILE: compact category bar */}
           <div className="svc-mobile-cats">
-            <div style={{ display: "flex", gap: 6, overflowX: "auto", padding: "0 16px 0", scrollbarWidth: "none" }}>
+            <div ref={catScrollRef} style={{ display: "flex", gap: 6, overflowX: "auto", padding: "0 16px 0", scrollbarWidth: "none" }}>
               {svc.categories.map((cat, i) => (
                 <button key={i} onClick={() => jumpToCategory(i)} style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 100, background: i === activeCat ? `${CAT_ACCENTS[i]}18` : "transparent", border: `1px solid ${i === activeCat ? CAT_ACCENTS[i] : "rgba(52,225,46,0.12)"}`, color: i === activeCat ? CAT_ACCENTS[i] : "#4a6347", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, whiteSpace: "nowrap", transition: "all 0.22s" }}>
                   {cat.label}

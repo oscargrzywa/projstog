@@ -486,8 +486,15 @@ body {
   }
   /* adjust text padding and push down for the mobile cat bar */
   .svc-text {
-    padding: 60px 20px 12px !important;
+    padding: 48px 20px 10px !important;
     justify-content: flex-start !important;
+  }
+  /* smaller card on mobile: add inset from top (category bar ~52px) */
+  .svc-card {
+    top: 52px !important;
+    bottom: 12px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
   }
   /* shrink visual on mobile */
   .svc-visual {
@@ -499,7 +506,7 @@ body {
 
 @media (max-width: 480px) {
   .svc-text {
-    padding: 56px 16px 8px !important;
+    padding: 40px 14px 8px !important;
   }
   .svc-visual {
     flex: 0 0 38vw !important;
