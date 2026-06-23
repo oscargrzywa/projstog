@@ -95,6 +95,29 @@ export function ProcessSection({ steps, label, h2, lang }: {
   const metas     = lang === "en" ? METAS_EN : METAS_PL;
   const total     = steps.length;
 
+  // Initialize step from scroll position when section enters/leaves view (handles entering from below)
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    let wasInSection = false;
+
+    const checkEntry = () => {
+      const rect = wrap.getBoundingClientRect();
+      const inSection = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+      if (inSection && !wasInSection) {
+        const scrolled = Math.max(0, -rect.top);
+        const step = Math.max(0, Math.min(total - 1, Math.round(scrolled / window.innerHeight)));
+        stepRef.current = step;
+        setActiveStep(step);
+      }
+      wasInSection = inSection;
+    };
+
+    window.addEventListener("scroll", checkEntry, { passive: true });
+    checkEntry();
+    return () => window.removeEventListener("scroll", checkEntry);
+  }, [total]);
+
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       const wrap = wrapRef.current;
@@ -102,30 +125,18 @@ export function ProcessSection({ steps, label, h2, lang }: {
       const rect = wrap.getBoundingClientRect();
       if (rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
 
-      // Sync step with scroll position — fixes entering section from below
-      const scrolled = Math.max(0, -rect.top);
-      const synced = Math.max(0, Math.min(total - 1, Math.round(scrolled / window.innerHeight)));
-      if (synced !== stepRef.current) {
-        stepRef.current = synced;
-        setActiveStep(synced);
-      }
-
       const down = e.deltaY > 0;
 
       if (down && stepRef.current >= total - 1) {
         e.preventDefault();
-        if (wrap) {
-          const abs = wrap.getBoundingClientRect().bottom + window.scrollY;
-          window.scrollTo({ top: abs - window.innerHeight + 2, behavior: "instant" as ScrollBehavior });
-        }
+        const abs = wrap.getBoundingClientRect().bottom + window.scrollY;
+        window.scrollTo({ top: abs - window.innerHeight + 2, behavior: "instant" as ScrollBehavior });
         return;
       }
       if (!down && stepRef.current <= 0) {
         e.preventDefault();
-        if (wrap) {
-          const abs = wrap.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({ top: Math.max(0, abs - 2), behavior: "instant" as ScrollBehavior });
-        }
+        const abs = wrap.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: Math.max(0, abs - 2), behavior: "instant" as ScrollBehavior });
         return;
       }
 
