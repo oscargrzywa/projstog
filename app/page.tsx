@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Nav } from "./components/Nav";
 import { ContactForm } from "./components/ContactForm";
 import { AnimateOnScroll } from "./components/AnimateOnScroll";
@@ -96,6 +97,117 @@ const SERVICE_CATEGORIES: {
 ];
 
 
+// ── Social popup data ────────────────────────────────────────────────────────
+const SOCIAL_ITEMS = [
+  {
+    key: "facebook", label: "Facebook",
+    href: "https://www.facebook.com/oscar.grzywa",
+    display: "Oscar Grzywa",
+    title: "Facebook",
+    desc: "Odwiedź mój prywatny profil na Facebooku",
+    cta: "Przejdź na Facebooka →",
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>,
+    btnIcon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>,
+  },
+  {
+    key: "instagram", label: "Instagram",
+    href: "https://www.instagram.com/projstog",
+    display: "@projstog",
+    title: "Instagram",
+    desc: "Obserwuj PROJSTOG na Instagramie",
+    cta: "Otwórz Instagram →",
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#ig)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#fd5949"/><stop offset="50%" stopColor="#d6249f"/><stop offset="100%" stopColor="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>,
+    btnIcon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>,
+  },
+  {
+    key: "linkedin", label: "LinkedIn",
+    href: "https://www.linkedin.com/in/oscar-grzywa",
+    display: "Oscar Grzywa",
+    title: "LinkedIn",
+    desc: "Połącz się ze mną na LinkedIn",
+    cta: "Przejdź na LinkedIn →",
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
+    btnIcon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
+  },
+  {
+    key: "mail", label: "E-mail",
+    href: "mailto:biuro@projstog.pl",
+    display: "biuro@projstog.pl",
+    title: "Napisz wiadomość",
+    desc: "Odpiszę tego samego dnia lub rano",
+    cta: "Napisz maila →",
+    isContact: true,
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34E12E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+    btnIcon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+  },
+  {
+    key: "phone", label: "Telefon",
+    href: "tel:+48730771568",
+    display: "+48 730 771 568",
+    title: "Zadzwoń",
+    desc: "Odbieram osobiście — bez pośredników",
+    cta: "Zadzwoń teraz →",
+    isContact: true,
+    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34E12E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.3a16 16 0 0 0 6 6l.85-1.04a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 15h.52a2 2 0 0 1 0 1.92z"/></svg>,
+    btnIcon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.3a16 16 0 0 0 6 6l.85-1.04a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 15h.52a2 2 0 0 1 0 1.92z"/></svg>,
+  },
+];
+
+function SocialModal({ item, onClose }: { item: typeof SOCIAL_ITEMS[number]; onClose: () => void }) {
+  return (
+    <div
+      onClick={onClose}
+      style={{ position: "fixed", inset: 0, zIndex: 500, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "20px" }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{ background: "rgba(5,10,5,0.97)", border: "1px solid rgba(52,225,46,0.20)", borderRadius: 24, padding: "36px 32px", maxWidth: 340, width: "100%", position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(52,225,46,0.08)" }}
+      >
+        {/* Close X */}
+        <button onClick={onClose} style={{ position: "absolute", top: 14, right: 14, width: 32, height: 32, borderRadius: 8, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#4a6347" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        {/* Icon */}
+        <div style={{ width: 56, height: 56, borderRadius: 16, background: "rgba(52,225,46,0.06)", border: "1px solid rgba(52,225,46,0.14)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+          {item.icon}
+        </div>
+
+        {/* Title + desc */}
+        <p style={{ fontSize: 10, color: "#34E12E", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", margin: "0 0 6px" }}>{item.label}</p>
+        <h3 style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 800, fontSize: "1.25rem", color: "#ECE7DD", margin: "0 0 8px", letterSpacing: "-0.02em" }}>{item.title}</h3>
+        <p style={{ fontSize: 14, color: "#6b8068", margin: "0 0 20px", lineHeight: 1.6 }}>{item.desc}</p>
+
+        {/* Display value */}
+        <div style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.12)", borderRadius: 12, padding: "14px 18px", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 15, fontWeight: 700, color: "#ECE7DD" }}>{item.display}</span>
+          {(item as { isContact?: boolean }).isContact && (
+            <button
+              onClick={() => { navigator.clipboard?.writeText(item.display); }}
+              style={{ background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.16)", borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontSize: 10, color: "#34E12E", fontWeight: 600 }}
+            >
+              Kopiuj
+            </button>
+          )}
+        </div>
+
+        {/* CTA */}
+        <a
+          href={item.href}
+          target={item.href.startsWith("http") ? "_blank" : undefined}
+          rel="noopener noreferrer"
+          onClick={onClose}
+          className="cta-green"
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "13px 20px", borderRadius: 11, textDecoration: "none" }}
+        >
+          {item.btnIcon}
+          {item.cta}
+        </a>
+      </div>
+    </div>
+  );
+}
+
 const PROCESS = [
   { step: "01", title: "Rozmowa", desc: "Bezpłatna, bez agendy. Mówisz mi co chcesz osiągnąć — ja słucham i zadaję właściwe pytania." },
   { step: "02", title: "Strategia", desc: "Proponuję rozwiązanie szyte pod Twój przypadek. Makieta, zakres, termin i jasna cena. Zero niespodzianek." },
@@ -190,9 +302,12 @@ function BrowserMock({ bg, accentBg, url }: { bg: string; accentBg: string; url:
 export default function Home() {
   const { lang } = useLang();
   const t = content[lang];
+  const [socialKey, setSocialKey] = useState<string | null>(null);
+  const activeSocial = SOCIAL_ITEMS.find(s => s.key === socialKey) ?? null;
 
   return (
     <div style={{ color: "#ECE7DD", position: "relative", zIndex: 1 }}>
+      {activeSocial && <SocialModal item={activeSocial} onClose={() => setSocialKey(null)} />}
       <Nav />
 
       {/* ═══ HERO ═══════════════════════════════════════════════════════════════ */}
@@ -259,10 +374,19 @@ export default function Home() {
                 </div>
                 <h2 style={{ fontSize: 22, fontWeight: 800, color: "#ECE7DD", marginBottom: 4, margin: "0 0 4px" }}>Oscar Grzywa</h2>
                 <div style={{ fontSize: 14, color: "#34E12E", fontWeight: 600, marginBottom: 8 }}>{t.owner.role}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "#4a6347", marginBottom: 32 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "#4a6347", marginBottom: 20 }}>
                   <IconMapPin /><span>{t.owner.city}</span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 28 }}>
+                {/* Social links — above stats */}
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                  {SOCIAL_ITEMS.map(item => (
+                    <button key={item.key} onClick={() => setSocialKey(item.key)} aria-label={item.label} className="owner-social-btn" style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.14)", display: "flex", alignItems: "center", justifyContent: "center", color: "#4a6347", cursor: "pointer", transition: "all 0.22s cubic-bezier(0.22,1,0.36,1)" }}>
+                      {item.btnIcon}
+                    </button>
+                  ))}
+                </div>
+                {/* Stats grid */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
                   {[["14+", "Usług cyfrowych"], ["24h", "Czas reakcji"], ["3+", "Lata doświadczenia"], ["100%", "Realizuję osobiście"]].map(([n, l]) => (
                     <div key={l} className="stat-card" style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 14, padding: "16px 18px", cursor: "default" }}>
                       <div className="stat-card-num" style={{ fontSize: 26, fontWeight: 900, color: "#34E12E", fontFamily: "var(--font-geist-mono)", lineHeight: 1 }}>{n}</div>
@@ -270,15 +394,16 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <a href="mailto:biuro@projstog.pl" className="cta-green" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "14px 24px", borderRadius: 12, textDecoration: "none" }}>
-                  <IconMail />Napisz do mnie
+                <a href="#kontakt" className="cta-green" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "14px 24px", borderRadius: 12, textDecoration: "none" }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  {lang === "pl" ? "Skontaktuj się" : "Get in touch"}
                 </a>
               </div>
             </AnimateOnScroll>
 
             <AnimateOnScroll from="right">
               <div>
-                <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.9rem,3.5vw,3rem)", fontWeight: 700, color: "#ECE7DD", margin: "0 0 28px", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+                <h2 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.9rem,3.5vw,3rem)", fontWeight: 900, color: "#ECE7DD", margin: "0 0 28px", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
                   {t.owner.h2}
                 </h2>
                 <p style={{ fontSize: 16, color: "#6b8068", lineHeight: 1.9, margin: "0 0 18px" }}>{t.owner.p1}</p>
@@ -331,8 +456,8 @@ export default function Home() {
         <div style={{ maxWidth: 1500, margin: "0 auto" }}>
           <AnimateOnScroll>
             <SectionLabel>Realizacje</SectionLabel>
-            <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.2, margin: "0 0 8px" }}>
-              Projekty, które pracują
+            <h2 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 900, color: "#ECE7DD", lineHeight: 1.1, margin: "0 0 8px", letterSpacing: "-0.03em" }}>
+              {t.portfolio.h2}
             </h2>
             <p style={{ fontSize: 15, color: "#6b8068", margin: "0 0 72px", maxWidth: 440 }}>
               Każdy projekt to wymierne rezultaty — nie piękna strona dla samej estetyki.
@@ -375,12 +500,12 @@ export default function Home() {
         <div style={{ maxWidth: 1360, margin: "0 auto" }}>
           <AnimateOnScroll>
             <SectionLabel>{t.contact.label}</SectionLabel>
-            <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.2, margin: "0 0 12px" }}>{t.contact.h2}</h2>
+            <h2 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 900, color: "#ECE7DD", lineHeight: 1.1, margin: "0 0 12px", letterSpacing: "-0.03em" }}>{t.contact.h2}</h2>
             <p style={{ fontSize: 15, color: "#6b8068", margin: "0 0 60px", maxWidth: 480 }}>{t.contact.sub}</p>
           </AnimateOnScroll>
 
-          <div className="booking-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 56 }}>
-            <AnimateOnScroll from="left">
+          <div className="booking-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 56, alignItems: "stretch" }}>
+            <AnimateOnScroll from="left" style={{ height: "100%" }}>
               <div className="booking-card" style={{ borderRadius: 20, padding: "44px 36px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", height: "100%" }}>
                 <div style={{ width: 68, height: 68, borderRadius: 18, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.16)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22 }}>
                   <IconPhone />
@@ -393,7 +518,7 @@ export default function Home() {
                 </a>
               </div>
             </AnimateOnScroll>
-            <AnimateOnScroll from="right">
+            <AnimateOnScroll from="right" style={{ height: "100%" }}>
               <div className="booking-card" style={{ borderRadius: 20, padding: "44px 36px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", height: "100%" }}>
                 <div style={{ width: 68, height: 68, borderRadius: 18, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.16)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22 }}>
                   <IconMail />
@@ -434,20 +559,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Floating phone button ────────────────────────────────────────────── */}
-      <a
-        href="tel:+48730771568"
-        aria-label="Zadzwoń: +48 730 771 568"
-        style={{
-          position: "fixed", bottom: 28, right: 28, width: 58, height: 58,
-          borderRadius: "50%", background: "linear-gradient(135deg,#1B9D17,#34E12E)",
-          color: "#060807", display: "flex", alignItems: "center", justifyContent: "center",
-          zIndex: 200, textDecoration: "none",
-          animationName: "phone-pulse", animationDuration: "2.8s", animationIterationCount: "infinite",
-        }}
-      >
-        <IconPhone />
-      </a>
 
       {/* ═══ FOOTER — premium ════════════════════════════════════════════════════ */}
       <footer style={{ background: "rgba(4,7,4,0.96)", borderTop: "1px solid rgba(52,225,46,0.10)", position: "relative", overflow: "hidden" }}>

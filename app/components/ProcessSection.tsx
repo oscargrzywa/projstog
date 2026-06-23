@@ -155,7 +155,7 @@ export function ProcessSection({ steps, label, h2, lang }: {
           <div style={{ marginBottom: 36 }}>
             <p style={{ fontSize: 11, fontWeight: 700, color: "#34E12E", letterSpacing: 3, textTransform: "uppercase", margin: "0 0 10px" }}>{label}</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-              <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.4rem,3vw,2.2rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "clamp(1.4rem,3vw,2.2rem)", fontWeight: 900, color: "#ECE7DD", lineHeight: 1.1, margin: 0, letterSpacing: "-0.025em" }}>
                 {h2}
               </h2>
               <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>

@@ -678,9 +678,55 @@ body {
   html { font-size: 18px; }
 }
 
+/* ── Global overflow guard ────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: hidden; }
+
 /* ── Portfolio 2-col on tablet ────────────────────────── */
 @media (max-width: 1024px) and (min-width: 541px) {
   .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ══ COMPREHENSIVE MOBILE FIXES (max-width: 768px) ═══════ */
+@media (max-width: 768px) {
+  /* Inner page container padding — overrides inline padding: 0 40px */
+  section[id] > div { padding-left: 16px !important; padding-right: 16px !important; }
+
+  /* ServicesSection: stack text over visual */
+  .svc-card    { flex-direction: column !important; }
+  .svc-text    { padding: 68px 18px 20px !important; justify-content: flex-start !important; overflow-y: auto !important; }
+  .svc-visual  { display: none !important; }
+  .svc-actions { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+
+  /* Staircase section — prevent text overflow */
+  .staircase-t1 { overflow-wrap: anywhere !important; }
+  .staircase-sub { overflow-wrap: anywhere !important; }
+
+  /* Hero gadgets — don't overflow */
+  .hero-gadgets { display: none !important; }
+
+  /* Owner left column social + stats full width */
+  .owner-social-btns { width: 100%; }
+
+  /* Reviews header — stack on mobile */
+  #opinie > div > div:first-child > div { flex-direction: column !important; align-items: flex-start !important; }
+
+  /* Form glass padding on mobile */
+  .form-glass { padding: 28px 20px 32px !important; }
+
+  /* Booking cards full width */
+  .booking-card { padding: 28px 20px !important; }
+
+  /* General padding reduction for inner wrappers with padding: 0 40px */
+  [class*="inner"], [class*="container"] { padding-left: 16px !important; padding-right: 16px !important; }
+}
+
+@media (max-width: 480px) {
+  /* Even smaller phones */
+  section[id] > div { padding-left: 12px !important; padding-right: 12px !important; }
+  .svc-text { padding: 64px 14px 18px !important; }
+  .stat-card { padding: 12px 14px !important; }
+  .stat-card-num { font-size: 22px !important; }
 }
 
 /* ── Stat cards hover ─────────────────────────────────── */
@@ -695,6 +741,21 @@ body {
 }
 .stat-card:hover .stat-card-num {
   text-shadow: 0 0 24px rgba(52,225,46,0.55);
+}
+
+/* ── Owner social buttons ─────────────────────────────── */
+.owner-social-btn {
+  transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s;
+}
+.owner-social-btn:hover {
+  background: rgba(52,225,46,0.14) !important;
+  border-color: rgba(52,225,46,0.50) !important;
+  color: #34E12E !important;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 22px rgba(52,225,46,0.18);
+}
+.owner-social-btn:active {
+  transform: translateY(0) scale(1);
 }
 
 /* ── Google Maps reviews link hover ───────────────────── */

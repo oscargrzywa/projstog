@@ -475,7 +475,7 @@ export function ServicesSection() {
             {/* Top section */}
             <div style={{ padding: "80px 28px 0" }}>
               <p style={{ fontSize: 9, fontWeight: 700, color: "#34E12E", letterSpacing: 4, textTransform: "uppercase", margin: "0 0 4px", opacity: 0.7 }}>{svc.label}</p>
-              <h2 style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 800, fontSize: "1.15rem", color: "#ECE7DD", lineHeight: 1.25, margin: "0 0 28px", letterSpacing: "-0.02em" }}>{svc.h2}</h2>
+              <h2 style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 900, fontSize: "1.15rem", color: "#ECE7DD", lineHeight: 1.25, margin: "0 0 28px", letterSpacing: "-0.03em" }}>{svc.h2}</h2>
             </div>
 
             {/* Category nav */}
@@ -543,10 +543,10 @@ export function ServicesSection() {
               const active = i === currentCard, above = i < currentCard;
               const V = card.Visual;
               return (
-                <div key={card.title} style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "row", opacity: active ? 1 : 0, transform: `translateY(${active ? 0 : above ? -28 : 28}px)`, transition: "opacity 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.42s cubic-bezier(0.22,1,0.36,1)", pointerEvents: active ? "auto" : "none" }}>
+                <div key={card.title} className="svc-card" style={{ position: "absolute", inset: "28px 0", display: "flex", flexDirection: "row", opacity: active ? 1 : 0, transform: `translateY(${active ? 0 : above ? -28 : 28}px)`, transition: "opacity 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.42s cubic-bezier(0.22,1,0.36,1)", pointerEvents: active ? "auto" : "none", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(52,225,46,0.07)" }}>
 
                   {/* LEFT — service info */}
-                  <div className="svc-text" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 52px 60px", overflowY: "auto" }}>
+                  <div className="svc-text" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "40px 48px 32px", overflowY: "auto" }}>
                     {/* Icon + category + index */}
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
                       <div style={{ width: 46, height: 46, borderRadius: 13, background: `${card.accent}0d`, border: `1px solid ${card.accent}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -567,7 +567,7 @@ export function ServicesSection() {
                     </div>
 
                     {/* CTA + scroll hint */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <div className="svc-actions" style={{ display: "flex", alignItems: "center", gap: 14 }}>
                       <a href="#kontakt" className="cta-green" style={{ display: "inline-flex", alignItems: "center", gap: 7, background: `linear-gradient(135deg,#1B9D17,${card.accent})`, color: "#060807", fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 9, textDecoration: "none" }}>
                         {lang === "pl" ? "Zapytaj o wycenę" : "Get a quote"} →
                       </a>
