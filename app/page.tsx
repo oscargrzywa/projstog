@@ -415,7 +415,9 @@ export default function Home() {
 
           {/* Form */}
           <AnimateOnScroll>
-            <ContactForm />
+            <div style={{ maxWidth: 640, margin: "0 auto" }}>
+              <ContactForm />
+            </div>
           </AnimateOnScroll>
         </div>
       </section>

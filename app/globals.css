@@ -299,6 +299,9 @@ body {
 .nav-link:hover { color: var(--green-bright); text-shadow: 0 0 20px rgba(52,225,46,0.22); }
 .nav-link:hover::after { width: 100%; left: 0; }
 
+/* ── Mobile menu link hover ───────────────────────────── */
+.mobile-menu-link:hover { color: #34E12E; }
+
 /* ── Phone float pulse ────────────────────────────────── */
 @keyframes phone-pulse {
   0%,100% { box-shadow: 0 6px 24px rgba(52,225,46,0.45), 0 0 0 0 rgba(52,225,46,0.28); }
