@@ -227,7 +227,7 @@ export function HeroZoom() {
 
         {/* Content */}
         <div ref={contentRef} style={{ position: "absolute", inset: 0, zIndex: 4, display: "flex", alignItems: "center", paddingTop: 68, willChange: "transform, opacity", transformOrigin: "center 38%" }}>
-          <div style={{ maxWidth: 1100, width: "100%", margin: "0 auto", padding: "0 48px" }}>
+          <div style={{ maxWidth: 1500, width: "100%", margin: "0 auto", padding: "0 48px" }}>
             <div className="hero-content" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
               {t.chips.map((chip, i) => (
                 <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, color: "#34E12E", letterSpacing: 2, textTransform: "uppercase", background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.2)", borderRadius: 100, padding: "5px 14px" }}>

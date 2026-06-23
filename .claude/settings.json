@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd C:\\Users\\Computer\\Desktop\\projstog\\my-app && git add -A && git diff --cached --quiet || git commit -m \"Auto-commit: update files\" && git push origin main"
+          }
+        ]
+      }
+    ]
+  }
+}

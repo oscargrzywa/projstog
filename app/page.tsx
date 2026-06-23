@@ -239,7 +239,7 @@ export default function Home() {
 
       {/* ═══ NOT AGENCY + OWNER + COMPARE ═══════════════════════════════════════ */}
       <section id="o-mnie" style={{ padding: "120px 0 120px", background: "rgba(7,12,7,0.88)", overflow: "hidden" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ maxWidth: 1500, margin: "0 auto", padding: "0 40px" }}>
 
           {/* Staircase headlines */}
           <div style={{ marginBottom: 80 }}>
@@ -283,7 +283,7 @@ export default function Home() {
           </AnimateOnScroll>
 
           {/* Owner — left: avatar/stats, right: bio/points */}
-          <div className="owner-full-grid" style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 80, marginBottom: 96, alignItems: "start" }}>
+          <div className="owner-full-grid" style={{ display: "grid", gridTemplateColumns: "400px 1fr", gap: 96, marginBottom: 96, alignItems: "start" }}>
 
             <AnimateOnScroll from="left">
               <div>
@@ -362,8 +362,8 @@ export default function Home() {
       <ProcessSection steps={t.process.steps} label={t.process.label} h2={t.process.h2} lang={lang} />
 
       {/* ═══ PORTFOLIO ═══════════════════════════════════════════════════════════ */}
-      <section id="portfolio" style={{ padding: "120px 24px", background: "rgba(7,12,7,0.88)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section id="portfolio" style={{ padding: "120px 40px", background: "rgba(7,12,7,0.88)" }}>
+        <div style={{ maxWidth: 1500, margin: "0 auto" }}>
           <AnimateOnScroll>
             <SectionLabel>Realizacje</SectionLabel>
             <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.2, margin: "0 0 8px" }}>
@@ -406,8 +406,8 @@ export default function Home() {
       <ReviewsSection />
 
       {/* ═══ CONTACT ═════════════════════════════════════════════════════════════ */}
-      <section id="kontakt" style={{ padding: "120px 24px", background: "rgba(7,12,7,0.88)" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+      <section id="kontakt" style={{ padding: "120px 40px", background: "rgba(7,12,7,0.88)" }}>
+        <div style={{ maxWidth: 1360, margin: "0 auto" }}>
           <AnimateOnScroll>
             <SectionLabel>{t.contact.label}</SectionLabel>
             <h2 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 700, color: "#ECE7DD", lineHeight: 1.2, margin: "0 0 12px" }}>{t.contact.h2}</h2>
@@ -518,7 +518,7 @@ export default function Home() {
         <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "30%", height: 80, background: "radial-gradient(ellipse at top, rgba(52,225,46,0.08) 0%, transparent 70%)", pointerEvents: "none" }} aria-hidden />
 
         {/* Main columns */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "72px 24px 48px" }}>
+        <div style={{ maxWidth: 1600, margin: "0 auto", padding: "72px 40px 48px" }}>
           <div className="footer-cols" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1.4fr", gap: 48, marginBottom: 56 }}>
 
             {/* Col 1 — Brand */}

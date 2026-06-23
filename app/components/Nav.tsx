@@ -56,7 +56,7 @@ export function Nav() {
         transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.3s, border-color 0.3s",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
 
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }} aria-label="PROJSTOG">

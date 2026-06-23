@@ -44,7 +44,7 @@ function ProcessCard({ title, desc, icon, meta, active }: {
       borderRadius: 18,
       padding: "20px 24px",
       width: "100%",
-      maxWidth: 400,
+      maxWidth: 540,
       boxShadow: active
         ? "0 0 0 1px rgba(52,225,46,0.08), 0 8px 48px rgba(0,0,0,0.4), 0 0 48px rgba(52,225,46,0.12)"
         : "0 2px 16px rgba(0,0,0,0.2)",
@@ -158,7 +158,7 @@ export function ProcessSection({ steps, label, h2, lang }: {
       }}>
         <BgPattern />
 
-        <div style={{ maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: 1500, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
 
           {/* Header */}
           <div style={{ marginBottom: 36 }}>

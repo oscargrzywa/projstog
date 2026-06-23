@@ -77,7 +77,7 @@ export function ReviewsSection() {
 
   return (
     <section id="opinie" style={{ padding: "120px 24px", background: "rgba(6,8,7,0.88)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto" }}>
 
         {/* Header */}
         <AnimateOnScroll>

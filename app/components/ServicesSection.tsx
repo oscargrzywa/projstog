@@ -349,7 +349,7 @@ export function ServicesSection() {
   return (
     <div ref={spacerRef} id="uslugi" style={{ position: "relative", height: "100vh" }}>
       <div style={{ ...panelStyle, display: "flex", background: "rgba(6,8,7,0.88)", zIndex: 10, justifyContent: "center" }}>
-        <div className="svc-inner" style={{ maxWidth: 1440, width: "100%", display: "flex" }}>
+        <div className="svc-inner" style={{ maxWidth: 1700, width: "100%", display: "flex" }}>
 
           {/* MOBILE: compact category bar */}
           <div className="svc-mobile-cats">
