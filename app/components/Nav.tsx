@@ -20,14 +20,6 @@ function ProjstogIcon({ size = 28 }: { size?: number }) {
   );
 }
 
-function PhoneIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34E12E" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.3a16 16 0 0 0 6 6l.85-1.04a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 15h.52a2 2 0 0 1 0 1.92z" />
-    </svg>
-  );
-}
-
 export function Nav() {
   const { lang, setLang } = useLang();
   const t = content[lang].nav;
@@ -48,11 +40,12 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
     <>
@@ -97,149 +90,156 @@ export function Nav() {
             <a href="#kontakt" style={{ background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 13, padding: "9px 20px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap", boxShadow: "0 4px 16px rgba(52,225,46,0.2)" }}>{t.cta}</a>
           </div>
 
-          {/* Hamburger button */}
+          {/* Hamburger button — 3 bars, always */}
           <button
             className="nav-burger"
-            onClick={() => setOpen(o => !o)}
-            aria-label={open ? "Zamknij menu" : "Otwórz menu"}
+            onClick={() => setOpen(true)}
+            aria-label="Otwórz menu"
             aria-expanded={open}
             style={{
               display: "none", alignItems: "center", justifyContent: "center",
               width: 44, height: 44, borderRadius: 12, cursor: "pointer",
-              background: open ? "rgba(52,225,46,0.12)" : "rgba(52,225,46,0.06)",
-              border: `1px solid ${open ? "rgba(52,225,46,0.32)" : "rgba(52,225,46,0.14)"}`,
-              transition: "background 0.25s, border-color 0.25s",
-              position: "relative", zIndex: 200,
+              background: "rgba(52,225,46,0.06)",
+              border: "1px solid rgba(52,225,46,0.14)",
               flexShrink: 0,
             }}
           >
-            <div style={{ position: "relative", width: 22, height: 15 }}>
-              {/* Line 1 */}
-              <span style={{
-                position: "absolute", left: 0, width: "100%", height: 2, borderRadius: 2,
-                background: "#34E12E",
-                top: open ? "50%" : 0,
-                transform: open ? "translateY(-50%) rotate(45deg)" : "translateY(0)",
-                transformOrigin: "center",
-                transition: "top 0.32s cubic-bezier(0.22,1,0.36,1), transform 0.32s cubic-bezier(0.22,1,0.36,1)",
-              }} />
-              {/* Line 2 */}
-              <span style={{
-                position: "absolute", left: 0, height: 2, borderRadius: 2,
-                background: "#34E12E",
-                top: "50%", transform: "translateY(-50%)",
-                width: open ? 0 : "70%",
-                opacity: open ? 0 : 1,
-                transition: "width 0.22s ease 0.05s, opacity 0.18s ease 0.05s",
-              }} />
-              {/* Line 3 */}
-              <span style={{
-                position: "absolute", left: 0, width: "100%", height: 2, borderRadius: 2,
-                background: "#34E12E",
-                bottom: open ? "50%" : 0,
-                transform: open ? "translateY(50%) rotate(-45deg)" : "translateY(0)",
-                transformOrigin: "center",
-                transition: "bottom 0.32s cubic-bezier(0.22,1,0.36,1), transform 0.32s cubic-bezier(0.22,1,0.36,1)",
-              }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <span style={{ display: "block", width: 22, height: 2, borderRadius: 2, background: "#34E12E" }} />
+              <span style={{ display: "block", width: 16, height: 2, borderRadius: 2, background: "#34E12E" }} />
+              <span style={{ display: "block", width: 22, height: 2, borderRadius: 2, background: "#34E12E" }} />
             </div>
           </button>
         </div>
       </nav>
 
-      {/* Full-screen mobile overlay */}
+      {/* Backdrop */}
+      <div
+        onClick={close}
+        style={{
+          position: "fixed", inset: 0, zIndex: 148,
+          background: "rgba(0,0,0,0.55)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 0.35s ease",
+        }}
+        aria-hidden
+      />
+
+      {/* Drawer — slides in from right */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Menu nawigacji"
         style={{
-          position: "fixed", inset: 0, zIndex: 150,
-          background: "rgba(4,6,4,0.97)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
+          position: "fixed", top: 0, right: 0, bottom: 0,
+          width: "min(340px, 92vw)",
+          zIndex: 149,
+          background: "rgba(5,8,5,0.98)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderLeft: "1px solid rgba(52,225,46,0.10)",
           transform: open ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
+          transition: "transform 0.42s cubic-bezier(0.22,1,0.36,1)",
           display: "flex",
           flexDirection: "column",
-          padding: "88px 40px 48px",
           overflowY: "auto",
         }}
       >
-        {/* Decorative watermark */}
-        <div aria-hidden style={{
-          position: "absolute", bottom: "5%", right: "-5%",
-          fontFamily: "var(--font-geist-mono)", fontSize: "38vw", fontWeight: 900,
-          color: "#34E12E", opacity: 0.025, pointerEvents: "none",
-          lineHeight: 0.9, letterSpacing: "-4vw", userSelect: "none",
-        }}>P<br/>S</div>
+        {/* Drawer header — logo + X */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", height: 68, borderBottom: "1px solid rgba(52,225,46,0.07)", flexShrink: 0 }}>
+          <a href="#" onClick={close} style={{ display: "flex", alignItems: "center", gap: 9, textDecoration: "none" }}>
+            <ProjstogIcon size={24} />
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 800, fontSize: 13, color: "#ECE7DD", letterSpacing: 2.5 }}>PROJSTOG</span>
+          </a>
+          {/* X close button */}
+          <button
+            onClick={close}
+            aria-label="Zamknij menu"
+            style={{
+              width: 40, height: 40, borderRadius: 10, cursor: "pointer",
+              background: "rgba(52,225,46,0.07)",
+              border: "1px solid rgba(52,225,46,0.18)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0, color: "#34E12E",
+              transition: "background 0.2s, border-color 0.2s, transform 0.2s",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,225,46,0.14)"; (e.currentTarget as HTMLButtonElement).style.transform = "rotate(90deg)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,225,46,0.07)"; (e.currentTarget as HTMLButtonElement).style.transform = "rotate(0deg)"; }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
 
-        {/* Top accent line */}
-        <div aria-hidden style={{ position: "absolute", top: 68, left: 40, right: 40, height: 1, background: "linear-gradient(90deg,rgba(52,225,46,0.25),rgba(52,225,46,0.05))" }} />
-
-        {/* Navigation links */}
-        <nav style={{ flex: 1, marginTop: 16 }}>
+        {/* Nav links */}
+        <nav style={{ flex: 1, padding: "8px 0" }}>
           {t.links.map(({ label, href }, i) => (
             <a
               key={href}
               href={href}
-              onClick={() => setOpen(false)}
+              onClick={close}
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 20,
-                padding: "16px 0",
+                display: "flex", alignItems: "center", gap: 14,
+                padding: "14px 22px",
                 textDecoration: "none",
-                borderBottom: "1px solid rgba(52,225,46,0.07)",
+                borderBottom: "1px solid rgba(52,225,46,0.05)",
                 color: "#ECE7DD",
-                fontSize: "clamp(1.5rem,6vw,2.4rem)",
-                fontWeight: 800,
-                fontFamily: "var(--font-geist-mono)",
-                letterSpacing: "-0.02em",
-                transform: open ? "translateX(0)" : "translateX(28px)",
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                fontFamily: "var(--font-geist-sans)",
+                letterSpacing: "-0.01em",
+                transform: open ? "translateX(0)" : "translateX(18px)",
                 opacity: open ? 1 : 0,
-                transition: `transform 0.45s cubic-bezier(0.22,1,0.36,1) ${i * 0.07}s, opacity 0.35s ease ${i * 0.07}s, color 0.2s`,
+                transition: `transform 0.38s cubic-bezier(0.22,1,0.36,1) ${i * 0.06}s, opacity 0.3s ease ${i * 0.06}s, color 0.18s`,
               }}
               className="mobile-menu-link"
             >
               <span style={{
-                fontFamily: "var(--font-geist-mono)", fontSize: "0.45em",
-                color: "#34E12E", opacity: 0.45, minWidth: "2.2em", textAlign: "right",
-                fontWeight: 600, letterSpacing: 0, lineHeight: 1,
+                fontFamily: "var(--font-geist-mono)", fontSize: "0.6em",
+                color: "#34E12E", opacity: 0.5, minWidth: "2em", textAlign: "right",
+                fontWeight: 600, letterSpacing: 0.5, lineHeight: 1,
               }}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               {label}
+              <span style={{ marginLeft: "auto", fontSize: 12, color: "rgba(52,225,46,0.3)" }}>→</span>
             </a>
           ))}
         </nav>
 
-        {/* Bottom section */}
+        {/* Bottom — lang + CTA */}
         <div style={{
-          display: "flex", flexDirection: "column", gap: 16, marginTop: 32,
-          transform: open ? "translateY(0)" : "translateY(20px)",
+          padding: "16px 20px 28px", borderTop: "1px solid rgba(52,225,46,0.07)",
+          display: "flex", flexDirection: "column", gap: 12, flexShrink: 0,
+          transform: open ? "translateY(0)" : "translateY(16px)",
           opacity: open ? 1 : 0,
-          transition: `transform 0.45s cubic-bezier(0.22,1,0.36,1) ${t.links.length * 0.07 + 0.08}s, opacity 0.35s ease ${t.links.length * 0.07 + 0.08}s`,
+          transition: `transform 0.38s cubic-bezier(0.22,1,0.36,1) ${t.links.length * 0.06 + 0.06}s, opacity 0.3s ease ${t.links.length * 0.06 + 0.06}s`,
         }}>
-          {/* Language + CTA */}
-          <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
-            <div style={{ display: "flex", gap: 4, background: "rgba(52,225,46,0.04)", border: "1px solid rgba(52,225,46,0.1)", borderRadius: 10, padding: 4, flexShrink: 0 }}>
-              {(["pl","en"] as const).map(l => (
-                <button key={l} onClick={() => setLang(l)} style={{
-                  background: lang === l ? "rgba(52,225,46,0.13)" : "none",
-                  border: "none", borderRadius: 7, cursor: "pointer",
-                  fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase",
-                  color: lang === l ? "#34E12E" : "#4a6347",
-                  padding: "8px 14px", transition: "all 0.2s",
-                }}>{l}</button>
-              ))}
-            </div>
-            <a
-              href="#kontakt"
-              onClick={() => setOpen(false)}
-              style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 15, borderRadius: 10, textDecoration: "none" }}
-            >
-              {t.cta}
-            </a>
+          {/* Lang toggle */}
+          <div style={{ display: "flex", gap: 4, background: "rgba(52,225,46,0.04)", border: "1px solid rgba(52,225,46,0.09)", borderRadius: 9, padding: 3, alignSelf: "flex-start" }}>
+            {(["pl","en"] as const).map(l => (
+              <button key={l} onClick={() => setLang(l)} style={{
+                background: lang === l ? "rgba(52,225,46,0.13)" : "none",
+                border: "none", borderRadius: 6, cursor: "pointer",
+                fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase",
+                color: lang === l ? "#34E12E" : "#4a6347",
+                padding: "7px 14px", transition: "all 0.2s",
+              }}>{l}</button>
+            ))}
           </div>
+          {/* CTA */}
+          <a
+            href="#kontakt"
+            onClick={close}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: "none", padding: "14px 20px" }}
+          >
+            {t.cta}
+          </a>
         </div>
       </div>
     </>
