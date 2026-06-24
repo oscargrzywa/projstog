@@ -196,8 +196,23 @@ body {
   to   { stroke-dashoffset: 0; }
 }
 
-/* ── Gadget visibility (hide on mobile) ───────────────── */
-.hero-gadget { opacity: 0; animation: gadget-reveal 0.6s 0.8s ease forwards; }
+/* ── Gadget visibility + hover ────────────────────────── */
+.hero-gadget {
+  opacity: 0;
+  animation: gadget-reveal 0.6s 0.8s ease forwards;
+  cursor: default;
+  transition: box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.35s cubic-bezier(0.22,1,0.36,1),
+              background 0.35s ease;
+}
+.hero-gadget:hover {
+  border-color: rgba(52,225,46,0.55) !important;
+  background: rgba(6,14,6,0.94) !important;
+  box-shadow: 0 20px 56px rgba(0,0,0,0.70),
+              0 0 0 1px rgba(52,225,46,0.22),
+              0 0 40px rgba(52,225,46,0.18),
+              inset 0 1px 0 rgba(255,255,255,0.07) !important;
+}
 @keyframes gadget-reveal {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; }

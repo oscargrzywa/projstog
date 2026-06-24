@@ -20,7 +20,7 @@ function GadgetCard({ icon, label, sub, color, posStyle, animName, animDelay }: 
   color: string; posStyle: React.CSSProperties; animName: string; animDelay: string;
 }) {
   return (
-    <div aria-hidden className="hero-gadget" style={{ position: "absolute", ...posStyle, animationName: animName, animationDuration: "7s", animationDelay: animDelay, animationTimingFunction: "ease-in-out", animationIterationCount: "infinite", background: "rgba(8,14,8,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: `1px solid ${color}28`, borderRadius: 14, padding: "11px 14px", display: "flex", alignItems: "center", gap: 10, minWidth: 172, boxShadow: "0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)", userSelect: "none", pointerEvents: "none", zIndex: 3 }}>
+    <div aria-hidden className="hero-gadget" style={{ position: "absolute", ...posStyle, animationName: animName, animationDuration: "7s", animationDelay: animDelay, animationTimingFunction: "ease-in-out", animationIterationCount: "infinite", background: "rgba(8,14,8,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: `1px solid ${color}28`, borderRadius: 14, padding: "11px 14px", display: "flex", alignItems: "center", gap: 10, minWidth: 172, boxShadow: "0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)", userSelect: "none", pointerEvents: "auto", zIndex: 3 }}>
       <div style={{ width: 30, height: 30, borderRadius: 8, background: `${color}1a`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color }}>{icon}</div>
       <div>
         <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.25, fontFamily: "var(--font-geist-mono)" }}>{label}</div>

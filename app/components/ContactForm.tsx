@@ -146,14 +146,15 @@ export function ContactForm() {
       {err && <p style={{ fontSize: 12, color: "#f87171", margin: 0 }}>{err}</p>}
 
       <button type="submit" disabled={loading}
+        className="cta-green"
         style={{
           background: "linear-gradient(135deg,#1B9D17,#34E12E)",
           color: "#060807", fontWeight: 700, fontSize: 15,
           padding: "15px", borderRadius: 10, border: "none",
           cursor: loading ? "not-allowed" : "pointer",
           opacity: loading ? 0.7 : 1,
-          transition: "opacity 0.2s, transform 0.2s",
           boxShadow: "0 0 28px rgba(52,225,46,0.25)", letterSpacing: 0.3,
+          width: "100%",
         }}>
         {loading ? "Wysyłanie..." : "Wyślij →"}
       </button>
