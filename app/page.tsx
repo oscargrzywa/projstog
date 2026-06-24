@@ -190,11 +190,11 @@ function SocialModal({ item, onClose }: { item: typeof SOCIAL_ITEMS[number]; onC
 
         {/* Display value */}
         <div style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.12)", borderRadius: 12, padding: "14px 18px", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 15, fontWeight: 700, color: "#ECE7DD" }}>{item.display}</span>
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "#ECE7DD", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.display}</span>
           {(item as { isContact?: boolean }).isContact && (
             <button
               onClick={handleCopy}
-              style={{ background: copied ? "rgba(52,225,46,0.18)" : "rgba(52,225,46,0.08)", border: `1px solid ${copied ? "rgba(52,225,46,0.4)" : "rgba(52,225,46,0.16)"}`, borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontSize: 10, color: copied ? "#34E12E" : "#34E12E", fontWeight: 700, transition: "all 0.2s", minWidth: 72, textAlign: "center" }}
+              style={{ background: copied ? "rgba(52,225,46,0.18)" : "rgba(52,225,46,0.08)", border: `1px solid ${copied ? "rgba(52,225,46,0.4)" : "rgba(52,225,46,0.16)"}`, borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontSize: 10, color: "#34E12E", fontWeight: 700, transition: "all 0.2s", width: 88, flexShrink: 0, textAlign: "center" }}
             >
               {copied ? "Skopiowano ✓" : "Kopiuj"}
             </button>
