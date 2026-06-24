@@ -521,23 +521,12 @@ body {
 }
 
 @media (max-width: 480px) {
+  .svc-visual { display: none !important; }
   .svc-text {
-    padding: 40px 14px 8px !important;
+    padding: 56px 16px 16px !important;
+    justify-content: flex-start !important;
   }
-  .svc-visual {
-    flex: 0 0 38vw !important;
-    min-height: 140px;
-  }
-  .svc-vwrap {
-    padding: 14px 16px 12px !important;
-    gap: 10px !important;
-  }
-  .svc-vheadline {
-    font-size: clamp(1.4rem, 10vw, 2.2rem) !important;
-  }
-  .svc-vsub {
-    font-size: 10px !important;
-  }
+  .svc-card { flex-direction: column !important; }
 }
 
 @media (max-width: 768px) {

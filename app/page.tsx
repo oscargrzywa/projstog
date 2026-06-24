@@ -523,7 +523,7 @@ export default function Home() {
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>{lang === "pl" ? "Zadzwoń" : "Call"}</h3>
                 <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 24px", maxWidth: 200 }}>{t.contact.availableText}</p>
                 <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 19, fontWeight: 700, color: "#34E12E", marginBottom: 24 }}>{t.nav.phone}</div>
-                <a href={`tel:${t.nav.phone.replace(/\s/g,"")}`} className="cta-green" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
+                <a href={`tel:${t.nav.phone.replace(/\s/g,"")}`} className="cta-green" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%", marginTop: "auto" }}>
                   {t.contact.phoneCta}
                 </a>
               </div>
@@ -535,7 +535,7 @@ export default function Home() {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: "#ECE7DD", margin: "0 0 10px" }}>{lang === "pl" ? "Wyślij maila" : "Send an email"}</h3>
                 <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 28px", maxWidth: 220 }}>{lang === "pl" ? "Odpisuję tego samego dnia — najczęściej w ciągu kilku godzin." : "I reply the same day — usually within a few hours."}</p>
-                <a href="mailto:biuro@projstog.pl" className="cta-outline" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%" }}>
+                <a href="mailto:biuro@projstog.pl" className="cta-outline" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(52,225,46,0.32)", color: "#34E12E", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none", width: "100%", marginTop: "auto" }}>
                   biuro@projstog.pl →
                 </a>
               </div>

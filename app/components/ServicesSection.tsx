@@ -448,9 +448,12 @@ export function ServicesSection() {
       if (top <= 0 && bottom > 0) e.preventDefault();
     };
     const onEnd   = (e: TouchEvent) => {
-      if (!isActiveRef.current) return;
+      if (exitCooldown.current) return;
+      const spacer = spacerRef.current; if (!spacer) return;
+      const { top, bottom } = spacer.getBoundingClientRect();
+      if (!(top <= 0 && bottom > 0)) return;
       const dy = startY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) < 40) return;
+      if (Math.abs(dy) < 30) return;
       if (cd) return; cd = true; setTimeout(() => { cd = false; }, 400);
       const dir = dy > 0 ? 1 : -1;
       const next = currentRef.current + dir;
