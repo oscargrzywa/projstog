@@ -384,7 +384,7 @@ export default function Home() {
                 </div>
                 <h2 style={{ fontSize: 22, fontWeight: 800, color: "#ECE7DD", marginBottom: 4, margin: "0 0 4px" }}>Oscar Grzywa</h2>
                 <div style={{ fontSize: 14, color: "#34E12E", fontWeight: 600, marginBottom: 8 }}>{t.owner.role}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "#4a6347", marginBottom: 20 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "#6b8068", marginBottom: 20 }}>
                   <IconMapPin /><span>{t.owner.city}</span>
                 </div>
                 {/* Social links — above stats */}
@@ -437,7 +437,7 @@ export default function Home() {
           <AnimateOnScroll>
             <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(52,225,46,0.10)", background: "rgba(14,19,14,0.5)" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", padding: "14px 20px", background: "rgba(52,225,46,0.04)", borderBottom: "1px solid rgba(52,225,46,0.09)" }}>
-                <span style={{ fontSize: 10, fontWeight: 700, color: "#3d5e3a", letterSpacing: 2, textTransform: "uppercase" }}>{t.notAgency.compare.col1}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: "#6b8068", letterSpacing: 2, textTransform: "uppercase" }}>{t.notAgency.compare.col1}</span>
                 <span style={{ fontSize: 10, fontWeight: 700, color: "#34E12E", letterSpacing: 2, textTransform: "uppercase" }}>{t.notAgency.compare.col2}</span>
               </div>
               {t.notAgency.compare.rows.map(({ a, b }) => (
@@ -487,7 +487,7 @@ export default function Home() {
                     <div style={{ fontSize: 12, color: "#6b8068", lineHeight: 1.6, marginBottom: 14, flex: 1 }}>{result}</div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                        {[...tech].map((t) => <span key={t} style={{ fontSize: 9, fontWeight: 600, padding: "2px 7px", borderRadius: 5, background: "rgba(255,255,255,0.04)", color: "#4a6347" }}>{t}</span>)}
+                        {[...tech].map((t) => <span key={t} style={{ fontSize: 9, fontWeight: 600, padding: "2px 7px", borderRadius: 5, background: "rgba(255,255,255,0.04)", color: "#6b8068" }}>{t}</span>)}
                       </div>
                       <span style={{ fontSize: 11, color: "#34E12E", fontWeight: 600, whiteSpace: "nowrap", marginLeft: 8 }}>Otwórz →</span>
                     </div>
