@@ -8,6 +8,7 @@ import { HeroZoom } from "./components/HeroZoom";
 import { ServicesSection } from "./components/ServicesSection";
 import { ReviewsSection } from "./components/ReviewsSection";
 import { ProcessSection } from "./components/ProcessSection";
+import { Footer } from "./components/Footer";
 import { useLang } from "./components/LangContext";
 import { content } from "./lib/content";
 
@@ -569,99 +570,7 @@ export default function Home() {
       </section>
 
 
-      {/* ═══ FOOTER — premium ════════════════════════════════════════════════════ */}
-      <footer style={{ background: "rgba(4,7,4,0.96)", borderTop: "1px solid rgba(52,225,46,0.10)", position: "relative", overflow: "hidden" }}>
-
-        {/* Top glow accent */}
-        <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "60%", height: 1, background: "linear-gradient(90deg, transparent, rgba(52,225,46,0.4), transparent)" }} aria-hidden />
-        <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "30%", height: 80, background: "radial-gradient(ellipse at top, rgba(52,225,46,0.08) 0%, transparent 70%)", pointerEvents: "none" }} aria-hidden />
-
-        {/* Main columns */}
-        <div style={{ maxWidth: 1600, margin: "0 auto", padding: "72px 40px 48px" }}>
-          <div className="footer-cols" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1.4fr", gap: 48, marginBottom: 56 }}>
-
-            {/* Col 1 — Brand */}
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <ProjstogIcon size={36} />
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 900, fontSize: 17, color: "#ECE7DD", letterSpacing: 3 }}>PROJSTOG</span>
-              </div>
-              <p style={{ fontSize: 14, color: "#4a6347", lineHeight: 1.75, margin: "0 0 20px", maxWidth: 260 }}>
-                {lang === "pl"
-                  ? "Cyfrowe rozwiązania, które zarabiają na Ciebie — strony, AI, automatyzacje i marketing z jednego miejsca."
-                  : "Digital solutions that earn for you — websites, AI, automations and marketing from one place."}
-              </p>
-            </div>
-
-            {/* Col 2 — Services */}
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "#34E12E", letterSpacing: 2.5, textTransform: "uppercase", margin: "0 0 18px" }}>
-                {lang === "pl" ? "Usługi" : "Services"}
-              </p>
-              <nav style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                {(lang === "pl"
-                  ? ["Strony internetowe", "Sklepy e-commerce", "Automatyzacje AI", "Chatboty AI", "Marketing & SEO", "Systemy CRM"]
-                  : ["Websites", "E-commerce shops", "AI Automations", "AI Chatbots", "Marketing & SEO", "CRM Systems"]
-                ).map(s => (
-                  <a key={s} href="#uslugi" className="footer-link">{s}</a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Col 3 — Navigation */}
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "#34E12E", letterSpacing: 2.5, textTransform: "uppercase", margin: "0 0 18px" }}>
-                {lang === "pl" ? "Nawigacja" : "Navigation"}
-              </p>
-              <nav style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                {t.footer.links.map(([l, h]) => (
-                  <a key={l} href={h} className="footer-link">{l}</a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Col 4 — Contact */}
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "#34E12E", letterSpacing: 2.5, textTransform: "uppercase", margin: "0 0 18px" }}>
-                {lang === "pl" ? "Kontakt" : "Contact"}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <a href="tel:+48730771568" className="footer-contact-link">
-                  <IconPhone /><span>+48 730 771 568</span>
-                </a>
-                <a href="mailto:biuro@projstog.pl" className="footer-contact-link">
-                  <IconMail /><span>biuro@projstog.pl</span>
-                </a>
-                <a href="https://maps.google.com/?q=Mielec,Podkarpackie" target="_blank" rel="noopener noreferrer" className="footer-contact-link footer-map-link">
-                  <IconMapPin /><span>Mielec, Podkarpackie</span>
-                </a>
-              </div>
-
-              {/* CTA */}
-              <a href="mailto:biuro@projstog.pl" className="footer-cta" style={{ marginTop: 24 }}>
-                <IconMail />
-                {lang === "pl" ? "Napisz do mnie" : "Get in touch"}
-              </a>
-            </div>
-
-          </div>
-
-          {/* Separator */}
-          <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(52,225,46,0.12), transparent)", marginBottom: 28 }} />
-
-          {/* Bottom bar */}
-          <div className="footer-bottom" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-            <p style={{ fontSize: 12, color: "#2d4a2a", margin: 0 }}>
-              &copy; {new Date().getFullYear()} PROJSTOG · Oscar Grzywa · Mielec, Polska
-            </p>
-            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-              <a href="/polityka-prywatnosci" className="footer-link" style={{ fontSize: 12 }}>
-                {lang === "pl" ? "Polityka prywatności" : "Privacy Policy"}
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

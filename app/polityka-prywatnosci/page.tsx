@@ -1,21 +1,14 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Polityka prywatności — PROJSTOG",
-  description: "Zasady przetwarzania danych osobowych i plików cookies przez PROJSTOG.",
-};
+import { Nav } from "../components/Nav";
+import { Footer } from "../components/Footer";
 
 export default function PolitykaPrywatnosci() {
   return (
-    <div style={{ minHeight: "100vh", background: "#060807", color: "#ECE7DD", padding: "120px 24px 80px" }}>
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+    <div style={{ color: "#ECE7DD", background: "#060807", minHeight: "100vh" }}>
+      <Nav />
 
-        {/* Back link */}
-        <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#34E12E", textDecoration: "none", fontSize: 13, fontWeight: 600, marginBottom: 48, letterSpacing: 0.3 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          Powrót do strony głównej
-        </Link>
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "120px 24px 80px" }}>
 
         <h1 style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 900, fontSize: "clamp(1.8rem, 5vw, 3rem)", color: "#ECE7DD", marginBottom: 12, letterSpacing: "-0.03em" }}>
           Polityka prywatności
@@ -153,14 +146,9 @@ export default function PolitykaPrywatnosci() {
           </ol>
         </div>
 
-        <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid rgba(52,225,46,0.08)", display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 14, padding: "12px 24px", borderRadius: 10, textDecoration: "none" }}>
-            ← Wróć do strony głównej
-          </Link>
-          <a href="mailto:biuro@projstog.pl" style={{ color: "#34E12E", fontSize: 14, fontWeight: 600 }}>biuro@projstog.pl</a>
-        </div>
-
       </div>
+
+      <Footer />
     </div>
   );
 }
