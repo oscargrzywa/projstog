@@ -56,20 +56,20 @@ function ProcessCard({ title, desc, icon, meta, active }: {
           background: active ? "rgba(52,225,46,0.10)" : "rgba(52,225,46,0.04)",
           border: `1px solid ${active ? "rgba(52,225,46,0.28)" : "rgba(52,225,46,0.07)"}`,
           display: "flex", alignItems: "center", justifyContent: "center",
-          color: active ? "#34E12E" : "#4a6347",
+          color: active ? "#34E12E" : "#6b8068",
           transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
         }}>
           {icon}
         </div>
         <h3 style={{
           fontSize: 17, fontWeight: 800,
-          color: active ? "#ECE7DD" : "#4a5e44",
+          color: active ? "#ECE7DD" : "#6b8068",
           margin: 0, letterSpacing: "-0.02em", lineHeight: 1.2,
           transition: "color 0.4s",
         }}>{title}</h3>
       </div>
       <p style={{
-        fontSize: 13, color: active ? "#6b8068" : "#333f31",
+        fontSize: 13, color: "#6b8068",
         lineHeight: 1.8, margin: "0 0 14px",
         transition: "color 0.4s",
       }}>{desc}</p>
@@ -213,7 +213,7 @@ export function ProcessSection({ steps, label, h2, lang }: {
                       boxShadow: isActive ? "0 0 0 5px rgba(52,225,46,0.08), 0 0 28px rgba(52,225,46,0.35)" : "none",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 900,
-                      color: isActive ? "#34E12E" : "rgba(52,225,46,0.22)",
+                      color: isActive ? "#34E12E" : "rgba(52,225,46,0.65)",
                       letterSpacing: "0.05em",
                       transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
                     }}>

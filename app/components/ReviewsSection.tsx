@@ -239,24 +239,30 @@ export function ReviewsSection() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 36 }}>
             <button
               onClick={() => prev(true)}
+              aria-label={lang === "pl" ? "Poprzednia opinia" : "Previous review"}
               style={{ width: 42, height: 42, borderRadius: "50%", background: "rgba(14,19,14,0.8)", border: "1px solid rgba(52,225,46,0.18)", color: "#34E12E", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", backdropFilter: "blur(8px)", transition: "all 0.2s", flexShrink: 0 }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              {REVIEWS.map((_, i) => (
+            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              {REVIEWS.map((r, i) => (
                 <button
                   key={i}
                   onClick={() => goTo(i, true)}
-                  style={{ width: i === active ? 28 : 8, height: 8, borderRadius: 4, background: i === active ? "#34E12E" : "rgba(52,225,46,0.22)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)", boxShadow: i === active ? "0 0 12px rgba(52,225,46,0.5)" : "none" }}
-                />
+                  aria-label={`${r.name}`}
+                  aria-current={i === active ? "true" : undefined}
+                  style={{ width: 44, height: 44, background: "transparent", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}
+                >
+                  <div style={{ width: i === active ? 28 : 8, height: 8, borderRadius: 4, background: i === active ? "#34E12E" : "rgba(52,225,46,0.22)", transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)", boxShadow: i === active ? "0 0 12px rgba(52,225,46,0.5)" : "none" }} />
+                </button>
               ))}
             </div>
             <button
               onClick={() => next(true)}
+              aria-label={lang === "pl" ? "Następna opinia" : "Next review"}
               style={{ width: 42, height: 42, borderRadius: "50%", background: "rgba(14,19,14,0.8)", border: "1px solid rgba(52,225,46,0.18)", color: "#34E12E", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", backdropFilter: "blur(8px)", transition: "all 0.2s", flexShrink: 0 }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6"/></svg>
             </button>
           </div>
 

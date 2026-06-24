@@ -326,7 +326,7 @@ body {
 /* ── Footer links ─────────────────────────────────────── */
 .footer-link {
   font-size: 13px;
-  color: #4a6347;
+  color: #6b8068;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -352,7 +352,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #4a6347;
+  color: #6b8068;
   text-decoration: none;
   font-size: 13px;
   transition: color 0.22s, transform 0.22s;
@@ -365,7 +365,7 @@ body {
   border-radius: 9px;
   border: 1px solid rgba(52,225,46,0.12);
   display: flex; align-items: center; justify-content: center;
-  color: #4a6347; text-decoration: none;
+  color: #6b8068; text-decoration: none;
   transition: border-color 0.25s, color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 .footer-social:hover {
@@ -409,7 +409,7 @@ body {
   transition: background 0.22s, border-color 0.22s;
 }
 .contact-row-label {
-  font-size: 10px; color: #4a6347; margin-bottom: 3px;
+  font-size: 10px; color: #6b8068; margin-bottom: 3px;
   text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700;
 }
 .contact-row-value {
@@ -772,7 +772,7 @@ html { overflow-x: hidden; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #4a6347;
+  color: #6b8068;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;

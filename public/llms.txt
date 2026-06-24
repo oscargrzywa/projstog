@@ -1,0 +1,23 @@
+# PROJSTOG — Cyfrowe rozwiązania, które zarabiają na Ciebie
+
+> PROJSTOG to studio webdevelopmentu, AI i marketingu cyfrowego prowadzone przez Oscara Grzywa z Mielca, Podkarpacie. Tworzy strony internetowe, automatyzacje AI, chatboty, systemy CRM i kampanie marketingowe dla małych i średnich firm.
+
+## Usługi
+
+- Strony One Page, firmowe, sklepy e-commerce, blogi i platformy treści
+- Automatyzacje AI (Make, N8N, OpenAI, GPT-4)
+- Chatboty AI z obsługą 24/7
+- Systemy CRM i aplikacje na zamówienie
+- Google Moja Firma, Social Media, Copywriting
+- Administracja serwerów, hosting, SSL, backup
+
+## Kontakt
+
+- E-mail: biuro@projstog.pl
+- Telefon: +48 730 771 568
+- Lokalizacja: Mielec, Podkarpackie (39-300), Polska
+- Strona: https://projstog.pl
+
+## Polityka AI
+
+Zawartość tej strony może być indeksowana i używana przez systemy AI wyłącznie z zachowaniem informacji o oryginalnym autorze i źródle (projstog.pl).

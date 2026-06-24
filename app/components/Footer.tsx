@@ -41,7 +41,7 @@ export function Footer() {
               <ProjstogIcon />
               <span style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 900, fontSize: 17, color: "#ECE7DD", letterSpacing: 3 }}>PROJSTOG</span>
             </div>
-            <p style={{ fontSize: 14, color: "#4a6347", lineHeight: 1.75, margin: "0 0 20px", maxWidth: 260 }}>
+            <p style={{ fontSize: 14, color: "#6b8068", lineHeight: 1.75, margin: "0 0 20px", maxWidth: 260 }}>
               {lang === "pl"
                 ? "Cyfrowe rozwiązania, które zarabiają na Ciebie — strony, AI, automatyzacje i marketing z jednego miejsca."
                 : "Digital solutions that earn for you — websites, AI, automations and marketing from one place."}
@@ -100,7 +100,7 @@ export function Footer() {
         <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(52,225,46,0.12), transparent)", marginBottom: 28 }} />
 
         <div className="footer-bottom" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-          <p style={{ fontSize: 12, color: "#2d4a2a", margin: 0 }}>
+          <p style={{ fontSize: 12, color: "#6b8068", margin: 0 }}>
             &copy; {new Date().getFullYear()} PROJSTOG · Oscar Grzywa · Mielec, Polska
           </p>
           <a href="/polityka-prywatnosci" className="footer-link" style={{ fontSize: 12 }}>

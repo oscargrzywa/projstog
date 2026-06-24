@@ -499,7 +499,7 @@ export function ServicesSection() {
           <div className="svc-mobile-cats">
             <div ref={catScrollRef} style={{ display: "flex", gap: 6, overflowX: "auto", padding: "0 16px 0", scrollbarWidth: "none" }}>
               {svc.categories.map((cat, i) => (
-                <button key={i} onClick={() => jumpToCategory(i)} style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 100, background: i === activeCat ? `${CAT_ACCENTS[i]}18` : "transparent", border: `1px solid ${i === activeCat ? CAT_ACCENTS[i] : "rgba(52,225,46,0.12)"}`, color: i === activeCat ? CAT_ACCENTS[i] : "#4a6347", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, whiteSpace: "nowrap", transition: "all 0.22s" }}>
+                <button key={i} onClick={() => jumpToCategory(i)} style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 100, background: i === activeCat ? `${CAT_ACCENTS[i]}18` : "transparent", border: `1px solid ${i === activeCat ? CAT_ACCENTS[i] : "rgba(52,225,46,0.12)"}`, color: i === activeCat ? CAT_ACCENTS[i] : "#6b8068", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, whiteSpace: "nowrap", transition: "all 0.22s" }}>
                   {cat.label}
                 </button>
               ))}
@@ -534,7 +534,7 @@ export function ServicesSection() {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: active ? acc : "#4a6347", transition: "color 0.22s", letterSpacing: "-0.01em" }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: active ? acc : "#6b8068", transition: "color 0.22s", letterSpacing: "-0.01em" }}>
                         {cat.label}
                       </span>
                       <span style={{ fontSize: 10, fontWeight: 600, color: active ? `${acc}99` : "rgba(52,225,46,0.2)", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>
@@ -564,7 +564,7 @@ export function ServicesSection() {
                 <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 32, fontWeight: 900, color: "#34E12E", lineHeight: 1, letterSpacing: "-0.04em" }}>
                   {String(currentCard + 1).padStart(2, "0")}
                 </span>
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "#2d4a2a", fontWeight: 500 }}>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "#6b8068", fontWeight: 500 }}>
                   / {String(TOTAL).padStart(2, "0")}
                 </span>
               </div>
@@ -593,7 +593,7 @@ export function ServicesSection() {
                       </div>
                       <div>
                         <div style={{ fontSize: 9, color: card.accent, letterSpacing: 2.5, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>{card.catLabel}</div>
-                        <div style={{ fontSize: 10, color: "#2d4a2a", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>{String(card.catServiceIndex + 1).padStart(2, "0")} / {String(card.catTotal).padStart(2, "0")}</div>
+                        <div style={{ fontSize: 10, color: "#6b8068", fontFamily: "var(--font-geist-mono)", letterSpacing: 0.5 }}>{String(card.catServiceIndex + 1).padStart(2, "0")} / {String(card.catTotal).padStart(2, "0")}</div>
                       </div>
                       <div style={{ flex: 1, height: 1, background: "rgba(52,225,46,0.06)", marginLeft: 8 }} />
                     </div>
@@ -614,7 +614,7 @@ export function ServicesSection() {
                         <div style={{ width: 24, height: 24, borderRadius: "50%", border: `1px solid ${card.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, animationName: isLast ? undefined : "scroll-hint-bounce", animationDuration: "1.8s", animationIterationCount: "infinite" }}>
                           <span style={{ fontSize: 11, color: card.accent }}>{isLast ? "✓" : "↓"}</span>
                         </div>
-                        <span style={{ fontSize: 12, color: "#4a6347" }}>
+                        <span style={{ fontSize: 12, color: "#6b8068" }}>
                           {isLast ? (lang === "pl" ? "koniec — przewiń dalej" : "end — scroll on") : (lang === "pl" ? "następna usługa" : "next service")}
                         </span>
                       </div>

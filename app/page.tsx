@@ -366,7 +366,7 @@ export default function Home() {
                 <IconMapPin />
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#ECE7DD" }}>Mielec, Podkarpackie</div>
-                  <div style={{ fontSize: 11, color: "#4a6347", marginTop: 2 }}>Polska · 39-300</div>
+                  <div style={{ fontSize: 11, color: "#6b8068", marginTop: 2 }}>Polska · 39-300</div>
                 </div>
               </div>
             </div>
@@ -400,7 +400,7 @@ export default function Home() {
                   {[["14+", "Usług cyfrowych"], ["24h", "Czas reakcji"], ["3+", "Lata doświadczenia"], ["100%", "Realizuję osobiście"]].map(([n, l]) => (
                     <div key={l} className="stat-card" style={{ background: "rgba(52,225,46,0.05)", border: "1px solid rgba(52,225,46,0.10)", borderRadius: 14, padding: "16px 18px", cursor: "default" }}>
                       <div className="stat-card-num" style={{ fontSize: 26, fontWeight: 900, color: "#34E12E", fontFamily: "var(--font-geist-mono)", lineHeight: 1 }}>{n}</div>
-                      <div style={{ fontSize: 11, color: "#4a6347", marginTop: 6, lineHeight: 1.4 }}>{l}</div>
+                      <div style={{ fontSize: 11, color: "#6b8068", marginTop: 6, lineHeight: 1.4 }}>{l}</div>
                     </div>
                   ))}
                 </div>
@@ -444,7 +444,7 @@ export default function Home() {
                 <div key={a} className="compare-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", padding: "16px 20px", gap: 12 }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                     <div style={{ marginTop: 3, flexShrink: 0 }}><IconX /></div>
-                    <span style={{ fontSize: 13, color: "#4a5e44", lineHeight: 1.6 }}>{a}</span>
+                    <span style={{ fontSize: 13, color: "#6b8068", lineHeight: 1.6 }}>{a}</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                     <div style={{ marginTop: 3, flexShrink: 0 }}><IconCheck /></div>
@@ -497,7 +497,7 @@ export default function Home() {
             ))}
           </div>
           <AnimateOnScroll>
-            <p style={{ textAlign: "center", fontSize: 13, color: "#2d4a2a", marginTop: 44 }}>{t.portfolio.soon}</p>
+            <p style={{ textAlign: "center", fontSize: 13, color: "#6b8068", marginTop: 44 }}>{t.portfolio.soon}</p>
           </AnimateOnScroll>
         </div>
       </section>
@@ -544,7 +544,7 @@ export default function Home() {
 
           <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 56 }}>
             <div style={{ flex: 1, height: 1, background: "rgba(52,225,46,0.07)" }} />
-            <span style={{ fontSize: 12, color: "#3d5e3a", fontWeight: 500, whiteSpace: "nowrap", letterSpacing: 0.5 }}>{t.contact.divider}</span>
+            <span style={{ fontSize: 12, color: "#6b8068", fontWeight: 500, whiteSpace: "nowrap", letterSpacing: 0.5 }}>{t.contact.divider}</span>
             <div style={{ flex: 1, height: 1, background: "rgba(52,225,46,0.07)" }} />
           </div>
 
@@ -560,7 +560,7 @@ export default function Home() {
                 <div style={{ marginBottom: 28, position: "relative" }}>
                   <p style={{ fontSize: 9, fontWeight: 700, color: "#34E12E", letterSpacing: 3, textTransform: "uppercase", margin: "0 0 8px", opacity: 0.8 }}>Szybki kontakt</p>
                   <h3 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(1.25rem,2.5vw,1.6rem)", fontWeight: 800, color: "#ECE7DD", margin: "0 0 8px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{lang === "pl" ? "Napisz — odezwę się tego samego dnia" : "Write — I'll reply the same day"}</h3>
-                  <p style={{ fontSize: 13, color: "#4a6347", margin: 0, lineHeight: 1.6 }}>{lang === "pl" ? "Bez automatycznych odpowiedzi. Piszę osobiście." : "No automated replies. I write personally."}</p>
+                  <p style={{ fontSize: 13, color: "#6b8068", margin: 0, lineHeight: 1.6 }}>{lang === "pl" ? "Bez automatycznych odpowiedzi. Piszę osobiście." : "No automated replies. I write personally."}</p>
                 </div>
                 <ContactForm />
               </div>
