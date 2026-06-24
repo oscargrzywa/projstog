@@ -39,12 +39,24 @@ export function ContactForm() {
   const [sent,     setSent]     = useState(false);
   const [err,      setErr]      = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!gdpr) { setErr("Zaznacz zgodę przed wysłaniem."); return; }
     setErr("");
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSent(true); }, 1200);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, email, service, other, message }),
+      });
+      if (!res.ok) throw new Error();
+      setSent(true);
+    } catch {
+      setErr("Coś poszło nie tak. Napisz bezpośrednio na biuro@projstog.pl");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (sent) {
