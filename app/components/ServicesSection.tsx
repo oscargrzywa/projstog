@@ -421,7 +421,12 @@ export function ServicesSection() {
   useEffect(() => {
     let accum = 0, cd = false;
     const onWheel = (e: WheelEvent) => {
-      if (!isActiveRef.current) return; e.preventDefault();
+      if (exitCooldown.current) return;
+      const spacer = spacerRef.current; if (!spacer) return;
+      const { top, bottom } = spacer.getBoundingClientRect();
+      if (!(top <= 0 && bottom > 0)) return;
+      e.preventDefault();
+      if (!isActiveRef.current) { setIsActive(true); isActiveRef.current = true; }
       accum += e.deltaY;
       const dir = accum > 40 ? 1 : accum < -40 ? -1 : 0; if (!dir) return;
       accum = 0; if (cd) return; cd = true; setTimeout(() => { cd = false; }, 300);
@@ -436,6 +441,12 @@ export function ServicesSection() {
   useEffect(() => {
     let startY = 0, cd = false;
     const onStart = (e: TouchEvent) => { startY = e.touches[0].clientY; };
+    const onMove  = (e: TouchEvent) => {
+      if (exitCooldown.current) return;
+      const spacer = spacerRef.current; if (!spacer) return;
+      const { top, bottom } = spacer.getBoundingClientRect();
+      if (top <= 0 && bottom > 0) e.preventDefault();
+    };
     const onEnd   = (e: TouchEvent) => {
       if (!isActiveRef.current) return;
       const dy = startY - e.changedTouches[0].clientY;
@@ -447,8 +458,13 @@ export function ServicesSection() {
       else { setCurrentCard(next); currentRef.current = next; }
     };
     window.addEventListener("touchstart", onStart, { passive: true });
-    window.addEventListener("touchend", onEnd, { passive: true });
-    return () => { window.removeEventListener("touchstart", onStart); window.removeEventListener("touchend", onEnd); };
+    window.addEventListener("touchmove", onMove,  { passive: false });
+    window.addEventListener("touchend",   onEnd,   { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onStart);
+      window.removeEventListener("touchmove",  onMove);
+      window.removeEventListener("touchend",   onEnd);
+    };
   }, [TOTAL]);
 
   const jumpToCard = (i: number) => {
