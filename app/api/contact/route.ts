@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   const { error } = await resend.emails.send({
     from: "Formularz PROJSTOG <onboarding@resend.dev>",
-    to: "biuro@projstog.pl",
+    to: "oscar.grzywa@gmail.com",
     replyTo: email,
     subject: `Nowe zapytanie: ${serviceLabel} — ${name}`,
     html: `
