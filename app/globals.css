@@ -816,3 +816,32 @@ html { overflow-x: hidden; }
   .booking-grid     { grid-template-columns: 1fr !important; }
 }
 
+/* ── Hero mobile fixes ────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Reduce horizontal padding (was 48px → too wide for phones) */
+  .hero-inner { padding: 0 20px !important; }
+  /* Show only 2 chips on tablet/large phone */
+  .hero-chip:nth-child(n+3) { display: none !important; }
+  /* Tighten spacing */
+  div.hero-content { margin-bottom: 20px !important; gap: 6px !important; }
+  .hero-sub p { margin-bottom: 28px !important; }
+  .hero-cta { gap: 16px !important; }
+}
+
+@media (max-width: 480px) {
+  /* Show only 1 chip on small phones */
+  .hero-chip:nth-child(n+2) { display: none !important; }
+  /* Smaller H1 bottom margin */
+  h1.hero-content { margin-bottom: 16px !important; }
+  /* Hide phone number text — just show icon */
+  .hero-phone-text { display: none !important; }
+  /* Make CTA button full width */
+  .hero-cta-btn { width: 100% !important; justify-content: center !important; }
+}
+
+@media (max-width: 360px) {
+  /* Very small screens: hide phone link entirely */
+  .hero-phone-link { display: none !important; }
+  .hero-inner { padding: 0 14px !important; }
+}
+

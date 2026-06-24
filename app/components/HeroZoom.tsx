@@ -227,10 +227,10 @@ export function HeroZoom() {
 
         {/* Content */}
         <div ref={contentRef} style={{ position: "absolute", inset: 0, zIndex: 4, display: "flex", alignItems: "center", paddingTop: 68, willChange: "transform, opacity", transformOrigin: "center 38%" }}>
-          <div style={{ maxWidth: 1500, width: "100%", margin: "0 auto", padding: "0 48px" }}>
+          <div className="hero-inner" style={{ maxWidth: 1500, width: "100%", margin: "0 auto", padding: "0 48px" }}>
             <div className="hero-content" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
               {t.chips.map((chip, i) => (
-                <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, color: "#34E12E", letterSpacing: 2, textTransform: "uppercase", background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.2)", borderRadius: 100, padding: "5px 14px" }}>
+                <span key={i} className="hero-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, color: "#34E12E", letterSpacing: 2, textTransform: "uppercase", background: "rgba(52,225,46,0.07)", border: "1px solid rgba(52,225,46,0.2)", borderRadius: 100, padding: "5px 14px" }}>
                   {i === 0 && <span aria-hidden style={{ width: 6, height: 6, borderRadius: "50%", background: "#34E12E", boxShadow: "0 0 6px #34E12E", display: "inline-block", animationName: "live-blink", animationDuration: "2s", animationIterationCount: "infinite" }} />}
                   {chip}
                 </span>
@@ -247,14 +247,14 @@ export function HeroZoom() {
             </div>
 
             <div className="hero-cta" style={{ display: "flex", alignItems: "center", gap: 28, flexWrap: "wrap" }}>
-              <a href="#kontakt" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 15, padding: "15px 32px", borderRadius: 10, textDecoration: "none", boxShadow: "0 8px 40px rgba(52,225,46,0.28)", letterSpacing: 0.2 }}>
+              <a href="#kontakt" className="cta-green hero-cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#1B9D17,#34E12E)", color: "#060807", fontWeight: 700, fontSize: 15, padding: "15px 32px", borderRadius: 10, textDecoration: "none", boxShadow: "0 8px 40px rgba(52,225,46,0.28)", letterSpacing: 0.2 }}>
                 {t.cta1} <span aria-hidden>→</span>
               </a>
-              <a href={`tel:${phone.replace(/\s/g, "")}`} style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "#ECE7DD", textDecoration: "none", fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
+              <a href={`tel:${phone.replace(/\s/g, "")}`} className="hero-phone-link" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "#ECE7DD", textDecoration: "none", fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
                 <span style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34E12E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.3a16 16 0 0 0 6 6l.85-1.04a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 15h.52a2 2 0 0 1 0 1.92z" /></svg>
                 </span>
-                {phone}
+                <span className="hero-phone-text">{phone}</span>
               </a>
             </div>
           </div>
