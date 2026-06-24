@@ -174,7 +174,7 @@ function SocialModal({ item, onClose }: { item: typeof SOCIAL_ITEMS[number]; onC
         style={{ background: "rgba(5,10,5,0.97)", border: "1px solid rgba(52,225,46,0.20)", borderRadius: 24, padding: "36px 32px", maxWidth: 340, width: "100%", position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(52,225,46,0.08)", animation: "modalIn 0.28s cubic-bezier(0.22,1,0.36,1)" }}
       >
         {/* Close X */}
-        <button onClick={onClose} style={{ position: "absolute", top: 14, right: 14, width: 32, height: 32, borderRadius: 8, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#4a6347" }}>
+        <button onClick={onClose} aria-label="Zamknij" style={{ position: "absolute", top: 14, right: 14, width: 32, height: 32, borderRadius: 8, background: "rgba(52,225,46,0.08)", border: "1px solid rgba(52,225,46,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#4a6347" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
 
@@ -379,7 +379,7 @@ export default function Home() {
               <div>
                 <div style={{ position: "relative", width: "100%", aspectRatio: "1", borderRadius: 28, border: "1px solid rgba(52,225,46,0.20)", boxShadow: "0 32px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(52,225,46,0.10), 0 0 60px rgba(52,225,46,0.12)", marginBottom: 28, overflow: "hidden", background: "#0d1f0d" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/img/owner.jpg" alt="Oscar Grzywa" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <img src="/img/owner.jpg" alt="Oscar Grzywa" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(7,12,7,0.45) 0%, transparent 50%)", pointerEvents: "none" }} />
                 </div>
                 <h2 style={{ fontSize: 22, fontWeight: 800, color: "#ECE7DD", marginBottom: 4, margin: "0 0 4px" }}>Oscar Grzywa</h2>

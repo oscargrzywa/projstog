@@ -354,7 +354,16 @@ function ServiceDots({ cards, current, onJump }: { cards: DotCard[]; current: nu
             {isCB && <div style={{ width: 9, pointerEvents: "none" }} />}
             <div style={{ position: "relative", pointerEvents: "auto" }}>
               <div style={{ position: "absolute", bottom: "calc(100% + 9px)", left: "50%", transform: `translateX(-50%) translateY(${isHov ? 0 : 5}px)`, opacity: isHov ? 1 : 0, transition: "opacity 0.2s, transform 0.22s", pointerEvents: "none", whiteSpace: "nowrap", background: "#0e130e", border: `1px solid ${c.accent}44`, borderRadius: 8, padding: "5px 11px", fontSize: 11, fontWeight: 600, color: c.accent, boxShadow: "0 4px 20px rgba(0,0,0,0.55)", zIndex: 40 }}>{c.title}</div>
-              <button onClick={() => onJump(i)} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)} style={{ width: sz, height: sz, borderRadius: "50%", background: active ? c.accent : isHov ? `${c.accent}bb` : `${c.accent}44`, border: "none", cursor: "pointer", padding: 0, display: "block", boxShadow: active ? `0 0 0 3px ${c.accent}33, 0 0 14px ${c.accent}55` : "none", outline: "none", transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)" }} />
+              <button
+                onClick={() => onJump(i)}
+                onMouseEnter={() => setHov(i)}
+                onMouseLeave={() => setHov(null)}
+                aria-label={c.title}
+                aria-current={active ? "true" : undefined}
+                style={{ width: 44, height: 44, background: "transparent", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center", outline: "none", flexShrink: 0 }}
+              >
+                <div style={{ width: sz, height: sz, borderRadius: "50%", background: active ? c.accent : isHov ? `${c.accent}bb` : `${c.accent}44`, boxShadow: active ? `0 0 0 3px ${c.accent}33, 0 0 14px ${c.accent}55` : "none", transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)" }} />
+              </button>
             </div>
           </React.Fragment>
         );
@@ -567,6 +576,8 @@ export function ServicesSection() {
 
           {/* CARD STAGE */}
           <div className="svc-stage" style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+            {/* Visually-hidden h2 ensures correct heading hierarchy when sidebar h2 is display:none on mobile */}
+            <h2 aria-hidden="false" style={{ position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>{svc.h2}</h2>
             {allCards.map((card, i) => {
               const active = i === currentCard, above = i < currentCard;
               const V = card.Visual;

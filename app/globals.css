@@ -620,9 +620,12 @@ body {
   .svc-bento-grid { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 900px) {
-  .svc-panel-layout  { flex-direction: column; }
-  .svc-sidebar       { width: 100% !important; position: static !important; padding-top: 120px !important; }
-  .reviews-grid      { grid-template-columns: repeat(2, 1fr) !important; }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* 769–900 px: sidebar narrows, card stage stays visible in row layout */
+@media (max-width: 900px) and (min-width: 769px) {
+  .svc-sidebar { width: 200px !important; }
 }
 @media (max-width: 640px) {
   .reviews-grid      { grid-template-columns: 1fr !important; }
