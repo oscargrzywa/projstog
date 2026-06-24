@@ -553,6 +553,7 @@ body {
   .svc-vheadline {
     font-size: clamp(1.6rem, 8vw, 2.8rem) !important;
   }
+  .svc-scroll-hint { display: none !important; }
 }
 
 /* ── Process section hover ────────────────────────────── */

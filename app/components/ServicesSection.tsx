@@ -411,7 +411,7 @@ export function ServicesSection() {
       if (exitCooldown.current) return;
       const spacer = spacerRef.current; if (!spacer) return;
       const { top, bottom } = spacer.getBoundingClientRect();
-      if (top <= 0 && bottom > 0 && !isActiveRef.current) { setIsActive(true); isActiveRef.current = true; }
+      if (top <= 0 && bottom > 0 && !isActiveRef.current) { setIsActive(true); isActiveRef.current = true; setCurrentCard(0); currentRef.current = 0; }
       else if ((top > 0 || bottom <= 0) && isActiveRef.current) { setIsActive(false); isActiveRef.current = false; }
     };
     window.addEventListener("scroll", check, { passive: true }); check();
@@ -596,7 +596,7 @@ export function ServicesSection() {
                       <a href="#kontakt" className="cta-green" style={{ display: "inline-flex", alignItems: "center", gap: 7, background: `linear-gradient(135deg,#1B9D17,${card.accent})`, color: "#060807", fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 9, textDecoration: "none" }}>
                         {lang === "pl" ? "Zapytaj o wycenę" : "Get a quote"} →
                       </a>
-                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <div className="svc-scroll-hint" style={{ display: "flex", alignItems: "center", gap: 7 }}>
                         <div style={{ width: 24, height: 24, borderRadius: "50%", border: `1px solid ${card.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, animationName: isLast ? undefined : "scroll-hint-bounce", animationDuration: "1.8s", animationIterationCount: "infinite" }}>
                           <span style={{ fontSize: 11, color: card.accent }}>{isLast ? "✓" : "↓"}</span>
                         </div>
