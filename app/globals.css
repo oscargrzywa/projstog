@@ -637,16 +637,9 @@ body {
   .reviews-grid      { grid-template-columns: 1fr !important; }
 }
 
-/* ── Process zig-zag → mobile left timeline ─────────── */
+/* ── Process section: hide on mobile ─────────────────── */
 @media (max-width: 768px) {
-  .process-zz-line { left: 27px !important; transform: none !important; }
-  .process-row {
-    grid-template-columns: 56px 1fr !important;
-    grid-template-areas: "node card" !important;
-  }
-  .process-node { grid-area: node; }
-  .process-left { grid-area: card; padding-right: 0 !important; justify-content: flex-start !important; }
-  .process-right { grid-area: card; padding-left: 0 !important; }
+  #proces { display: none !important; }
 }
 
 @media (max-width: 768px) {
