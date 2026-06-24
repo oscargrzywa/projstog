@@ -591,10 +591,6 @@ export default function Home() {
                   ? "Cyfrowe rozwiązania, które zarabiają na Ciebie — strony, AI, automatyzacje i marketing z jednego miejsca."
                   : "Digital solutions that earn for you — websites, AI, automations and marketing from one place."}
               </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#3d5e3a", marginBottom: 24 }}>
-                <IconMapPin />
-                <span>Mielec, Podkarpackie</span>
-              </div>
             </div>
 
             {/* Col 2 — Services */}
@@ -636,9 +632,9 @@ export default function Home() {
                 <a href="mailto:biuro@projstog.pl" className="footer-contact-link">
                   <IconMail /><span>biuro@projstog.pl</span>
                 </a>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#3d5e3a", fontSize: 13 }}>
+                <a href="https://maps.google.com/?q=Mielec,Podkarpackie" target="_blank" rel="noopener noreferrer" className="footer-contact-link footer-map-link">
                   <IconMapPin /><span>Mielec, Podkarpackie</span>
-                </div>
+                </a>
               </div>
 
               {/* CTA */}
