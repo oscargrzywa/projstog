@@ -4,10 +4,10 @@ export const content = {
   pl: {
     nav: {
       links: [
-        { label: "Usługi",    href: "#uslugi" },
+        { label: "Usługi",     href: "#uslugi" },
         { label: "Realizacje", href: "#portfolio" },
-        { label: "Proces",    href: "#proces" },
-        { label: "O mnie",   href: "#o-mnie" },
+        { label: "O mnie",    href: "#o-mnie" },
+        { label: "Kontakt",   href: "#kontakt" },
       ],
       cta: "Wycena",
       phone: "+48 730 771 568",
@@ -159,10 +159,10 @@ export const content = {
   en: {
     nav: {
       links: [
-        { label: "Services", href: "#uslugi" },
-        { label: "Work",     href: "#portfolio" },
-        { label: "Process",  href: "#proces" },
-        { label: "About",    href: "#o-mnie" },
+        { label: "Services",  href: "#uslugi" },
+        { label: "Work",      href: "#portfolio" },
+        { label: "About",     href: "#o-mnie" },
+        { label: "Contact",   href: "#kontakt" },
       ],
       cta: "Quote",
       phone: "+48 730 771 568",
