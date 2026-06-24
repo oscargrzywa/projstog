@@ -44,7 +44,7 @@ export function ReviewsSection() {
   useEffect(() => {
     const measure = () => {
       if (containerRef.current) {
-        const mobile = window.innerWidth <= 768;
+        const mobile = window.innerWidth <= 1024;
         setIsMobile(mobile);
         setCw(mobile
           ? containerRef.current.offsetWidth - 32
