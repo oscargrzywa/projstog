@@ -64,7 +64,7 @@ export function Nav() {
         <div style={{ maxWidth: 1600, margin: "0 auto", padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
 
           {/* Logo */}
-          <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }} aria-label="PROJSTOG">
+          <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }} aria-label="PROJSTOG">
             <ProjstogIcon size={28} />
             <span style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 800, fontSize: 15, color: "#ECE7DD", letterSpacing: 3 }}>PROJSTOG</span>
           </a>
@@ -150,7 +150,7 @@ export function Nav() {
       >
         {/* Drawer header — logo + X */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", height: 68, borderBottom: "1px solid rgba(52,225,46,0.07)", flexShrink: 0 }}>
-          <a href="#" onClick={close} style={{ display: "flex", alignItems: "center", gap: 9, textDecoration: "none" }}>
+          <a href="/" onClick={close} style={{ display: "flex", alignItems: "center", gap: 9, textDecoration: "none" }}>
             <ProjstogIcon size={24} />
             <span style={{ fontFamily: "var(--font-geist-mono)", fontWeight: 800, fontSize: 13, color: "#ECE7DD", letterSpacing: 2.5 }}>PROJSTOG</span>
           </a>
