@@ -359,11 +359,6 @@ body {
 }
 .footer-contact-link:hover { color: #34E12E; transform: translateX(4px); }
 
-.footer-map-link:hover {
-  color: #a3e635 !important;
-}
-.footer-map-link svg { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }
-.footer-map-link:hover svg { transform: translateY(-3px) scale(1.15); }
 
 .footer-social {
   width: 36px; height: 36px;
