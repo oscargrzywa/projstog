@@ -58,11 +58,40 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 
 1. **Gruntowna rekonstrukcja** — nie refaktor starej strony, tylko projekt od nowa.
 2. **Wielostronicowość** — realne route'y zamiast kotwic `#hash`.
-   `docs/brand-concept.md` (w archiwum) wskazuje docelowe pięć podstron:
-   Home / Oferta / Realizacje / O mnie / Kontakt.
 3. **Nowoczesny klimat** połączony z **mocną pozycją na rynku lokalnym**.
    Estetyka ma być współczesna, ale nie kosztem SEO — treść musi być
    renderowana serwerowo i indeksowalna.
+4. **Cel biznesowy wprost od właściciela:** strona ma wygrywać z lokalną
+   konkurencją w całej okolicy — lepszą stroną i lepszym SEO.
+
+### Decyzje architektoniczne (ustalone)
+
+| Obszar | Decyzja |
+|---|---|
+| Zasięg | Mielec jako baza + 21 miast regionu, docelowo **znacznie więcej** |
+| Oferta | Produkt wiodący „Profit Site" + 4 kategorie usług |
+| Języki | PL bez prefiksu + EN pod `/en/...`, `hreflang`, serwerowo |
+| Wizualia | Restart — zostaje tylko paleta i logo z brand-concept |
+| Blog | **Tak** — pełna sekcja, filar strategii SEO |
+
+### Mapa route'ów
+
+```
+/                                   strona główna
+/oferta                             Profit Site na czele
+/oferta/strony-i-sklepy
+/oferta/sztuczna-inteligencja
+/oferta/marketing-i-widocznosc
+/oferta/opieka-i-wsparcie
+/realizacje            /realizacje/[slug]
+/blog                  /blog/[slug]
+/strony-internetowe/[miasto]        22 podstrony lokalizacyjne
+/o-mnie   /kontakt   /polityka-prywatnosci
+```
+
+Routing i18n: drzewo pod `app/[lang]/`, foldery mają **polskie slugi**,
+publiczne angielskie URL-e mapuje `proxy.ts` (w Next 16 middleware nazywa się
+**proxy**). PL jest przepisywany (rewrite) na `/pl/...` bez zmiany paska adresu.
 
 ### Pozycjonowanie lokalne — priorytet nr 1
 
@@ -70,12 +99,30 @@ Stara strona miała pod to zerowe fundamenty. Nowa musi mieć:
 
 - Server Components dla treści (stara strona miała `"use client"` na `page.tsx` —
   to główny dług SEO, nie powtarzać tego błędu)
-- `metadataBase`, `openGraph`, `alternates.canonical` per route
+- `metadataBase`, `openGraph`, `alternates.canonical` + `alternates.languages`
 - `sitemap.ts` i `robots.ts` (stary `robots.txt` obiecywał sitemapę, której nie było)
 - **JSON-LD `LocalBusiness`** z adresem, telefonem, godzinami, `areaServed`
-  — plus `Service` i `Review` (jest 6 opinii Google 5★)
-- podstrony lokalizacyjne pod frazy typu „strony internetowe Mielec"
 - spójność NAP (nazwa, adres, telefon) z wizytówką Google Moja Firma
+- **blog** budujący topical authority
+
+### Miasta — `content/cities.ts`
+
+22 miasta na start, model danych przygotowany na rozbudowę: dodanie miasta
+= dopisanie wpisu do `CITIES`, route generuje się sam przez `generateStaticParams`.
+
+Rdzeń (`tier: "core"`): Mielec (siedziba), Rzeszów, Tarnów, Dębica, Tarnobrzeg,
+Stalowa Wola, Sandomierz, Łańcut.
+Rozszerzenie (`tier: "extended"`): Ropczyce, Sędziszów Młp., Nisko, Kolbuszowa,
+Nowa Dęba, Staszów, Połaniec, Bochnia, Brzesko, Dąbrowa Tarnowska,
+Głogów Młp., Boguchwała, Tyczyn, Sokołów Młp.
+
+> **⚠ Ryzyko „doorway pages".** Zestaw podstron różniących się wyłącznie nazwą
+> miasta to praktyka karana przez Google. Każdy wpis w `CITIES` ma własne,
+> ręcznie napisane `intro` i `localContext` — **nigdy nie generować tych pól
+> z szablonu przez podmianę nazwy miasta.**
+>
+> Pola `distanceKm` i `population` są przybliżone i **wymagają weryfikacji
+> przed publikacją** — nie opierać na nich twardych deklaracji w treści.
 
 ## Realizacje (portfolio)
 

@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   PROJSTOG 2.0 — system projektowy
+
+   Zasada: jedno miejsce bold, reszta cicha.
+   Elementem wyróżniającym jest MAPA TERYTORIUM w hero — wokół niej
+   wszystko pozostaje zdyscyplinowane.
+
+   Kolory definiujemy wyłącznie tutaj, jako tokeny. Nie wpisywać hexów
+   w komponentach — to był główny dług starej strony (setki powtórzeń).
+   ========================================================================== */
+
+@theme {
+  /* --- Kolor ---------------------------------------------------------- */
+  /* Baza: obsydian. Ciemny, lekko zielonkawy, nie czysta czerń. */
+  --color-obsydian: #060807;
+  /* Powierzchnia podniesiona — karty, panele. */
+  --color-basalt: #0e130e;
+  /* Powierzchnia jeszcze wyżej — hover, aktywne elementy. */
+  --color-slate-moss: #161d16;
+
+  /* Zieleń strukturalna: obramowania, wypełnienia, stany. 5.6:1 na obsydianie. */
+  --color-signal: #1b9d17;
+  /* Zieleń "live": akcent używany oszczędnie — tylko momenty aktywne. 11:1. */
+  --color-voltage: #34e12e;
+
+  /* Tekst podstawowy — ciepła kość. 16:1 na obsydianie. */
+  --color-bone: #ece7dd;
+  /* Tekst drugorzędny. 6:1 — przechodzi AA, w przeciwieństwie do starego #6b8068. */
+  --color-lichen: #7e9479;
+
+  /* Linia włosowa — struktura bez ciężaru ramek. */
+  --color-hairline: #1d261c;
+
+  /* --- Typografia ------------------------------------------------------ */
+  --font-display: var(--font-clash), "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Skala modularna 1.25 (tercja wielka) od 16px.
+     Rozmiary display są płynne — skalują się z szerokością okna. */
+  --text-xs: 0.8125rem;   /* 13 */
+  --text-sm: 0.875rem;    /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-lg: 1.125rem;    /* 18 */
+  --text-xl: 1.25rem;     /* 20 */
+  --text-2xl: 1.5625rem;  /* 25 */
+  --text-3xl: 1.9375rem;  /* 31 */
+  --text-4xl: clamp(2rem, 1.6rem + 2vw, 2.4375rem);
+  --text-5xl: clamp(2.375rem, 1.8rem + 2.9vw, 3.0625rem);
+  --text-6xl: clamp(2.75rem, 1.9rem + 4.2vw, 3.8125rem);
+  --text-7xl: clamp(3.25rem, 2rem + 6.2vw, 4.75rem);
+
+  /* --- Rytm i kształt --------------------------------------------------- */
+  /* Rytm 4px zgodnie z brand-concept. */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;  /* 10px — brand-concept */
+  --radius-lg: 1rem;      /* 16px — brand-concept */
+
+  /* Elevation "hairline-and-glow": nie cień pod kartą, tylko
+     linia włosowa + delikatna poświata zieleni. */
+  --shadow-glow: 0 0 0 1px var(--color-hairline), 0 8px 32px -12px rgb(27 157 23 / 0.25);
+  --shadow-glow-strong: 0 0 0 1px rgb(27 157 23 / 0.4), 0 0 48px -8px rgb(52 225 46 / 0.2);
+}
+
+/* ==========================================================================
+   Podstawy dokumentu
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  /* Bez scroll-behavior: smooth globalnie — na stronie wielostronicowej
+     utrudnia nawigację klawiaturą i skoki do kotwic po przeładowaniu. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-obsydian);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Nagłówki: Clash Display, ciasny tracking, krótki leading.
+   Bez akcentowania pojedynczych słów kolorem — to najczęstszy tell. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Długość wiersza poniżej 80 znaków — czytelność tekstu ciągłego. */
+p {
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   Dostępność
+   ========================================================================== */
+
+/* Widoczny focus dla klawiatury, niewidoczny przy kliknięciu myszą. */
+:focus-visible {
+  outline: 2px solid var(--color-voltage);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background-color: var(--color-signal);
+  color: var(--color-bone);
+}
+
+/* Skip link — pierwszy element w tabulacji, ukryty do momentu focusu. */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -100%;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-basalt);
+  color: var(--color-bone);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-glow-strong);
+  transition: top 150ms ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* Szanuj preferencję ograniczenia ruchu — bezwarunkowo. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
