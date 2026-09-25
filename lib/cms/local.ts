@@ -14,6 +14,8 @@ import type {
   ContentSource,
   Post,
   PostSummary,
+  RichText,
+  RichTextBlock,
   ServiceCategory,
 } from "./types";
 import type { Locale } from "@/lib/routes";
@@ -22,10 +24,30 @@ import { POSTS } from "@/content/posts";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { SERVICE_CATEGORIES } from "@/content/services";
 
+/**
+ * Tekst niesiony przez pojedynczy blok.
+ * `switch` po `type` zamiast zgadywania po polach — dzięki temu dodanie
+ * nowego wariantu bloku w `types.ts` wywoła błąd kompilacji tutaj,
+ * zamiast po cichu zaniżyć czas czytania.
+ */
+function blockText(block: RichTextBlock): string {
+  switch (block.type) {
+    case "paragraph":
+    case "heading":
+    case "quote":
+    case "callout":
+      return block.text;
+    case "list":
+      return block.items.join(" ");
+    case "image":
+      return block.caption ?? "";
+  }
+}
+
 /** Średnie tempo czytania po polsku — ~200 słów na minutę. */
-function readingMinutes(post: { body: { text?: string; items?: string[] }[] }) {
-  const words = post.body
-    .map((block) => block.text ?? block.items?.join(" ") ?? "")
+function readingMinutes(body: RichText): number {
+  const words = body
+    .map(blockText)
     .join(" ")
     .split(/\s+/)
     .filter(Boolean).length;
@@ -45,7 +67,7 @@ function toCaseSummary(study: CaseStudy): CaseStudySummary {
 export const localSource: ContentSource = {
   async listPosts(locale: Locale): Promise<PostSummary[]> {
     return POSTS[locale]
-      .map((post) => ({ ...post, readingMinutes: readingMinutes(post) }))
+      .map((post) => ({ ...post, readingMinutes: readingMinutes(post.body) }))
       .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
       .map(toSummary);
   },
@@ -53,7 +75,7 @@ export const localSource: ContentSource = {
   async getPost(locale: Locale, slug: string): Promise<Post | null> {
     const post = POSTS[locale].find((p) => p.slug === slug);
     if (!post) return null;
-    return { ...post, readingMinutes: readingMinutes(post) };
+    return { ...post, readingMinutes: readingMinutes(post.body) };
   },
 
   async listCaseStudies(locale: Locale): Promise<CaseStudySummary[]> {

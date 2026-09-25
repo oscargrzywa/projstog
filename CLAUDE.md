@@ -168,6 +168,74 @@ Strona jest **wyłącznie ciemna** — brak trybu jasnego.
 
 ---
 
+## Wnioski z badania rynku (wrzesień 2026)
+
+### Gdzie jest przewaga
+
+**Cała konkurencja rankująca na Podkarpaciu siedzi poza regionem.** Firmy
+powtarzające się w TOP10 dla wielu miast mają siedziby w Sochaczewie, Pile,
+Czechowicach-Dziedzicach, Krakowie i na Podlasiu. Większość to farmy podstron
+lokalizacyjnych — jedna z nich ma szacunkowo 1800–2300 podstron miejskich
+z identycznym cennikiem i FAQ.
+
+Z tego wynikają cztery przewagi do wyeksponowania:
+
+1. **Realny adres w Mielcu** — nie do skopiowania przez farmy. Eksponować
+   wysoko, nie w stopce.
+2. **Jawny cennik** — większość konkurencji cen nie podaje.
+3. **Case studies z konkretami** — lokalni konkurenci pokazują wyłącznie
+   logotypy bez żadnych danych.
+4. **Poprawne polskie nazwy miast** — konkurencja myli Głogów Małopolski
+   z dolnośląskim, Sokołów Małopolski z Podlaskim, Tyczyn z Tychami,
+   a jedna strona ma URL `/polancu/` zamiast Połańca.
+
+### Kolejność zdobywania miast
+
+Od najsłabszej konkurencji, nie od największych miast — patrz `PHASE_1/2/3`
+w `content/cities.ts`. Rzeszów, Sandomierz i Łańcut na sam koniec: to jedyne
+miasta z realnymi lokalnymi graczami.
+
+### Twarde zasady SEO — wynikają z dokumentacji Google
+
+| Zasada | Powód |
+|---|---|
+| **Nie publikować 22 podstron miast naraz** | Wzorzec „scaled content abuse". Stąd etapowanie |
+| **Żadnego bloku „obsługujemy także: [22 miasta]"** | Google wymienia to wprost w polityce keyword stuffing |
+| **Nigdy `PostalAddress` z adresem Mielca na stronie innego miasta** | Wprowadzanie w błąd, ryzyko ręcznej kary |
+| **`LocalBusiness` + `Organization`, nie `ProfessionalService`** | schema.org wycofało ten typ |
+| **Bez `aggregateRating` na własnej stronie** | Google nie pokazuje gwiazdek dla opinii kontrolowanych przez opisywany podmiot |
+| **Bez `nosnippet` i `max-snippet:0`** | Wykluczają z AI Overviews |
+| **Nie blokować `GPTBot` / `ClaudeBot` / `Google-Extended`** | To dziś realny kanał pozyskiwania klientów |
+| **Każda strona miasta linkuje do usług, nie tylko do kontaktu** | Inaczej wpada w „test funnela" na doorway |
+| **Hub `/strony-internetowe` ↔ miasta, dwukierunkowo** | Google wymaga „clearly defined, browseable hierarchy" |
+| **`lastModified` w sitemapie tylko prawdziwe** | Fałszywe daty podważają zaufanie do całej sitemapy |
+| **Pominąć `priority` i `changefreq`** | Google ich nie używa |
+
+### Czego NIE robić
+
+- **Wirtualne biuro** dla wejścia do Local Packa innego miasta — wprost
+  zakazane w regulaminie Google Moja Firma, grozi zawieszeniem wizytówki.
+- **Review gating** (filtrowanie: zadowolony → Google, niezadowolony →
+  formularz) — zakazane. Od kwietnia 2026 zakazane jest też proszenie
+  o wymienienie konkretnej osoby z imienia i stawianie pracownikom limitów opinii.
+- **Pakiety „100 katalogów"** — martwe domeny generujące rozjazdy NAP.
+  Wystarczy 6 miejsc zrobionych porządnie, z identycznym formatem danych.
+- **`llms.txt` jako priorytet** — Google go nie używa i potwierdziło to wprost.
+
+### Realistyczne oczekiwania
+
+Są **dwa osobne rankingi**. Podstrony miast walczą o wyniki **organiczne** —
+i tam mogą wygrać. W **Local Packu / Mapach** bez adresu w danym mieście
+realnie się nie wejdzie; tam gramy o Mielec i najbliższą okolicę.
+Mylenie tych dwóch rzeczy to źródło rozczarowań.
+
+### Otwarta rekomendacja: wersja EN
+
+Badanie sugeruje **odłożenie publikacji EN** — przy rynku podkarpackim
+podwaja pracę przy każdej treści i rozprasza wysiłek. Architektura i18n jest
+już gotowa i nic nie kosztuje, więc decyzja dotyczy wyłącznie momentu
+publikacji. Do ustalenia z właścicielem.
+
 ## Praca
 
 - **Subagenci** — używać tam, gdzie realnie pomagają: równoległe niezależne
