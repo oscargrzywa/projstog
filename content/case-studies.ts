@@ -358,7 +358,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -408,7 +408,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -458,7 +458,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -510,7 +510,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -562,7 +562,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -613,7 +613,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What we built",
+          text: "What I built",
         },
         {
           type: "list",
@@ -628,7 +628,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         },
         {
           type: "paragraph",
-          text: "The emphasis went on being local and being trusted. This is an office clients walk into, so showing the actual people and the actual room works harder than stock photography. It runs on WordPress, which lets the team add products and refresh seasonal offers without coming back to us.",
+          text: "The emphasis went on being local and being trusted. This is an office clients walk into, so showing the actual people and the actual room works harder than stock photography. It runs on WordPress, which lets the team add products and refresh seasonal offers without coming back to me.",
         },
       ],
       seo: {
