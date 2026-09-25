@@ -449,6 +449,9 @@ export type Phase = 1 | 2 | 3;
 export function getPhase(slug: string): Phase {
   if (PHASE_1.includes(slug)) return 1;
   if (PHASE_2.includes(slug)) return 2;
+  if (PHASE_3.includes(slug)) return 3;
+  /* Miasto dopisane do CITIES, ale nieprzypisane do żadnej fali.
+     Trafia na koniec kolejki — nie publikujemy go przez przeoczenie. */
   return 3;
 }
 

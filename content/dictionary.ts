@@ -42,7 +42,7 @@ const pl = {
       heading: "Gdzie pracuję",
       lead:
         "Jestem z Mielca i stąd jeżdżę do klientów. Poniżej miasta, które obsługuję — kliknij swoje, żeby zobaczyć, jak wygląda tam rynek i czego potrzebuje lokalna firma.",
-      base: "Mielec — moja baza",
+      baseLabel: "moja baza",
       distanceFromBase: "km od Mielca",
       allCities: "Wszystkie miasta",
     },
@@ -102,7 +102,7 @@ const en: Dictionary = {
       heading: "Where I work",
       lead:
         "I am based in Mielec and drive out to clients from here. Below are the cities I serve — pick yours to see what the local market looks like and what a business there actually needs.",
-      base: "Mielec — home base",
+      baseLabel: "home base",
       distanceFromBase: "km from Mielec",
       allCities: "All cities",
     },

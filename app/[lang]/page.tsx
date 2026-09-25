@@ -104,7 +104,7 @@ export default async function HomePage({
                 <li key={city.slug} className="text-lichen">
                   {city.isBase ? (
                     <span className="font-medium text-bone">
-                      {city.name} — {t.home.territory.base.split("—")[1]?.trim()}
+                      {city.name} — {t.home.territory.baseLabel}
                     </span>
                   ) : (
                     <>

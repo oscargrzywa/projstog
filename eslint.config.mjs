@@ -1,21 +1,42 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+/**
+ * ESLint — flat config.
+ *
+ * W Next 16 `eslint-config-next` eksportuje gotowe konfiguracje flat, więc
+ * importujemy je wprost. Poprzednie podejście przez `FlatCompat` z
+ * `@eslint/eslintrc` wywalało się z „Converting circular structure to JSON".
+ */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
-const compat = new FlatCompat({ baseDirectory: __dirname });
+const asArray = (config) => (Array.isArray(config) ? config : [config]);
 
-const eslintConfig = [
+const config = [
   {
     ignores: [
+      /* Archiwum starej strony — nie lintujemy go. */
       "old_projstog/**",
       ".next/**",
       "node_modules/**",
     ],
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...asArray(nextCoreWebVitals),
+  ...asArray(nextTypescript),
+  {
+    rules: {
+      /* Podkreślenie na początku nazwy = celowo odrzucone.
+         Używamy tego przy destrukturyzacji, żeby odciąć pola
+         (np. `const { body: _body, ...summary } = post`). */
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
 ];
 
-export default eslintConfig;
+export default config;

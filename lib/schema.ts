@@ -7,7 +7,7 @@
  */
 
 import { SITE, HAS_STREET_ADDRESS } from "@/content/site";
-import { BASE_CITY, CITIES, type City } from "@/content/cities";
+import { BASE_CITY, PUBLISHED_CITIES, type City } from "@/content/cities";
 import { publicPath, type Locale } from "./routes";
 
 function absolute(path: string): string {
@@ -188,7 +188,14 @@ export function articleSchema(
   };
 }
 
-/** Lista wszystkich obsługiwanych miast — wspiera zrozumienie zasięgu. */
+/**
+ * Lista obsługiwanych miast — wspiera zrozumienie zasięgu.
+ *
+ * ⚠ Iterujemy po `PUBLISHED_CITIES`, nie po `CITIES`. Przy
+ * `dynamicParams = false` miasta spoza bieżącego etapu publikacji nie mają
+ * podstrony i zwracają 404 — wystawienie ich URL-i w danych strukturalnych
+ * kierowałoby roboty na nieistniejące adresy.
+ */
 export function serviceAreaListSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
@@ -197,7 +204,7 @@ export function serviceAreaListSchema(locale: Locale) {
       locale === "pl"
         ? `Miasta, w których działa ${SITE.name}`
         : `Cities served by ${SITE.name}`,
-    itemListElement: CITIES.map((city, index) => ({
+    itemListElement: PUBLISHED_CITIES.map((city, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: city.name,
