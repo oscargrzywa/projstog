@@ -10,7 +10,7 @@
 
 import Link from "next/link";
 
-import { LogoMark, Wordmark } from "./Logo";
+import { Logo } from "./Logo";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
 import { BASE_CITY } from "@/content/cities";
@@ -33,10 +33,7 @@ export async function Footer({ locale }: { locale: Locale }) {
       <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2.5">
-              <LogoMark className="h-6 w-6" />
-              <Wordmark />
-            </div>
+            <Logo className="h-7 w-auto" />
             <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-lichen">
               {t.footer.tagline}
             </p>

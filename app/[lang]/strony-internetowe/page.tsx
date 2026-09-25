@@ -16,7 +16,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/JsonLd";
-import { TerritoryMap } from "@/components/TerritoryMap";
 import { BASE_CITY, PUBLISHED_CITIES, type City } from "@/content/cities";
 import { getCitiesCopy } from "@/content/pages/cities-page";
 import { SITE } from "@/content/site";
@@ -95,20 +94,14 @@ export default async function TerritoryHubPage({
           </ol>
         </nav>
 
-        <div className="mt-8 grid items-center gap-12 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <h1 className="text-5xl">{copy.hub.h1}</h1>
-            <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-lichen">
-              {copy.hub.lead}
-            </p>
-            <p className="mt-4 text-sm text-lichen">
-              {BASE_CITY.name}, {copy.voivodeshipFull[BASE_CITY.voivodeship]}
-            </p>
-          </div>
-
-          <div>
-            <TerritoryMap locale={lang} label={copy.hub.mapLabel} />
-          </div>
+        <div className="mt-8 max-w-3xl">
+          <h1 className="text-6xl">{copy.hub.h1}</h1>
+          <p className="mt-6 max-w-[56ch] text-lg leading-relaxed text-lichen">
+            {copy.hub.lead}
+          </p>
+          <p className="mt-4 text-sm text-lichen">
+            {BASE_CITY.name}, {copy.voivodeshipFull[BASE_CITY.voivodeship]}
+          </p>
         </div>
       </section>
 

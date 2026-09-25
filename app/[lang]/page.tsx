@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { TerritoryMap } from "@/components/TerritoryMap";
 import { JsonLd } from "@/components/JsonLd";
 import { getDictionary } from "@/content/dictionary";
-import { BASE_CITY, CITIES } from "@/content/cities";
-import { listServiceCategories, listCaseStudies } from "@/lib/cms";
+import { ABOUT_PAGE } from "@/content/pages/about";
+import { BASE_CITY, PUBLISHED_CITIES, CITIES } from "@/content/cities";
+import { SITE } from "@/content/site";
+import { listServiceCategories, listCaseStudies, listPosts } from "@/lib/cms";
 import { personSchema } from "@/lib/schema";
 import { isLocale, metadataAlternates, publicPath } from "@/lib/routes";
 
@@ -21,11 +22,11 @@ export async function generateMetadata({
   const pl = lang === "pl";
   return {
     title: pl
-      ? "PROJSTOG — strony internetowe, które zarabiają | Mielec"
-      : "PROJSTOG — websites that pay for themselves | Mielec, Poland",
+      ? "Strony internetowe Mielec i Podkarpacie — PROJSTOG"
+      : "Web design in Mielec and south-eastern Poland — PROJSTOG",
     description: pl
-      ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Podkarpacia. Robię je sam, z Mielca — jeden kontakt od rozmowy po wsparcie po uruchomieniu."
-      : "Websites, online stores and AI automation for companies in south-eastern Poland. Built by one person from Mielec, start to finish.",
+      ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Mielca, Rzeszowa, Dębicy i całego Podkarpacia. Robi je jedna osoba — od rozmowy po wsparcie po wdrożeniu."
+      : "Websites, online stores and AI automation for companies in Mielec, Rzeszów, Dębica and the wider region. Built by one person, start to finish.",
     alternates: metadataAlternates(lang, []),
   };
 }
@@ -39,155 +40,369 @@ export default async function HomePage({
   if (!isLocale(lang)) notFound();
 
   const t = getDictionary(lang);
-  const [categories, work] = await Promise.all([
+  const about = ABOUT_PAGE[lang];
+
+  const [categories, work, posts] = await Promise.all([
     listServiceCategories(lang),
     listCaseStudies(lang),
+    listPosts(lang),
   ]);
+
+  const latestPosts = posts.slice(0, 3);
+  const dateFormat = new Intl.DateTimeFormat(lang === "pl" ? "pl-PL" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
   return (
     <>
       <JsonLd data={personSchema(lang)} />
 
-      {/* ---------------------------------------------------------- hero */}
-      <section className="mx-auto max-w-6xl px-5 pt-16 pb-20 lg:pt-24">
-        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <h1 className="text-6xl">{t.home.h1}</h1>
+      {/* =============================================================== hero */}
+      <section className="relative isolate overflow-hidden border-b border-hairline">
+        <div className="grid-texture" aria-hidden="true" />
+        <div className="glow" aria-hidden="true" />
 
-            <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-lichen">
-              {t.home.lead}
+        <div className="mx-auto max-w-4xl px-5 pt-20 pb-16 text-center lg:pt-28">
+          <p className="inline-flex items-center gap-2 rounded-full border border-hairline bg-basalt px-3.5 py-1.5 text-xs text-lichen">
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-voltage"
+              aria-hidden="true"
+            />
+            {t.home.badge}
+          </p>
+
+          <h1 className="mt-7 text-7xl">{t.home.h1}</h1>
+
+          <p className="mx-auto mt-7 max-w-[58ch] text-lg leading-relaxed text-lichen">
+            {t.home.lead}
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={publicPath(lang, ["kontakt"])}
+              className="rounded-md bg-signal px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
+            >
+              {t.home.ctaPrimary}
+            </Link>
+            <Link
+              href={publicPath(lang, ["realizacje"])}
+              className="rounded-md border border-hairline px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:border-signal"
+            >
+              {t.home.ctaSecondary}
+            </Link>
+          </div>
+
+          <p className="mt-5 text-sm text-lichen">
+            {t.home.orCall}{" "}
+            <a
+              href={`tel:${SITE.phoneRaw}`}
+              className="font-medium text-bone transition-colors hover:text-voltage"
+            >
+              {SITE.phone}
+            </a>
+          </p>
+
+          {/* Liczby, które da się zweryfikować — realizacje liczone z danych. */}
+          <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline">
+            <div className="bg-obsydian px-4 py-6">
+              <dt className="sr-only">{t.home.stats.sinceLabel}</dt>
+              <dd>
+                <span className="font-display text-4xl text-bone">
+                  {SITE.foundedYear}
+                </span>
+                <span className="mt-1.5 block text-xs text-lichen">
+                  {t.home.stats.sinceLabel}
+                </span>
+              </dd>
+            </div>
+            <div className="bg-obsydian px-4 py-6">
+              <dt className="sr-only">{t.home.stats.baseLabel}</dt>
+              <dd>
+                <span className="font-display text-4xl text-voltage">
+                  {BASE_CITY.name}
+                </span>
+                <span className="mt-1.5 block text-xs text-lichen">
+                  {t.home.stats.baseLabel}
+                </span>
+              </dd>
+            </div>
+            <div className="bg-obsydian px-4 py-6">
+              <dt className="sr-only">{t.home.stats.replyLabel}</dt>
+              <dd>
+                <span className="font-display text-4xl text-bone">
+                  {t.home.stats.replyValue}
+                </span>
+                <span className="mt-1.5 block text-xs text-lichen">
+                  {t.home.stats.replyLabel}
+                </span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      {/* ============================================================= usługi */}
+      <section className="mx-auto max-w-6xl px-5 py-28">
+        <div className="section-head">
+          <h2 className="text-5xl">{t.home.services.heading}</h2>
+          <Link
+            href={publicPath(lang, ["oferta"])}
+            className="text-sm font-medium text-voltage underline-offset-4 hover:underline"
+          >
+            {t.home.services.all}
+          </Link>
+        </div>
+        <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          {t.home.services.lead}
+        </p>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          {categories.map((category) => (
+            <Link
+              key={category.slug}
+              href={publicPath(lang, ["oferta", category.slug])}
+              className="card flex flex-col p-7"
+            >
+              <h3 className="text-2xl">{category.title}</h3>
+              <p className="mt-3 max-w-[50ch] text-sm leading-relaxed text-lichen">
+                {category.lead}
+              </p>
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {category.services.map((service) => (
+                  <li key={service.slug} className="chip">
+                    {service.title}
+                  </li>
+                ))}
+              </ul>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================================= nie agencja */}
+      <section className="border-y border-hairline bg-basalt">
+        <div className="mx-auto max-w-6xl px-5 py-20">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-16">
+            <div>
+              <h2 className="max-w-[16ch] text-5xl">
+                {t.home.notAgency.heading}
+              </h2>
+              <p className="mt-6 max-w-[56ch] leading-relaxed text-lichen">
+                {t.home.notAgency.lead}
+              </p>
+              <p className="mt-8 max-w-[24ch] font-display text-3xl text-voltage">
+                {t.home.notAgency.punchline}
+              </p>
+              <p className="mt-6 max-w-[58ch] leading-relaxed text-lichen">
+                {t.home.notAgency.detail}
+              </p>
+            </div>
+
+            {/* Skąd naprawdę są firmy rankujące na podkarpackie frazy. */}
+            <ul className="divide-y divide-hairline self-start rounded-lg border border-hairline">
+              {about.competitorOrigins.map((origin) => (
+                <li
+                  key={origin.city}
+                  className="flex items-baseline justify-between gap-4 px-5 py-4"
+                >
+                  <span className="font-display text-lg text-bone">
+                    {origin.city}
+                  </span>
+                  <span className="text-right text-xs text-lichen">
+                    {origin.distance}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================== lokalizacje (hub SEO) */}
+      <section className="mx-auto max-w-6xl px-5 py-28">
+        <div className="section-head">
+          <h2 className="text-5xl">{t.home.local.heading}</h2>
+          <Link
+            href={publicPath(lang, ["strony-internetowe"])}
+            className="text-sm font-medium text-voltage underline-offset-4 hover:underline"
+          >
+            {t.home.local.all}
+          </Link>
+        </div>
+        <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          {t.home.local.lead}
+        </p>
+
+        {/* Miasta z gotową podstroną są linkami — to hub linkowania
+            wewnętrznego. Pozostałe tylko jako tekst, bo nie mają jeszcze
+            własnej strony i link prowadziłby na 404. */}
+        <ul className="mt-12 flex flex-wrap gap-2.5">
+          {PUBLISHED_CITIES.map((city) => (
+            <li key={city.slug}>
+              <Link
+                href={publicPath(lang, ["strony-internetowe", city.slug])}
+                className="card card-interactive inline-block px-4 py-2.5 text-sm text-bone"
+              >
+                {city.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-6 max-w-[70ch] text-sm leading-relaxed text-lichen">
+          {CITIES.filter((c) => !PUBLISHED_CITIES.includes(c))
+            .map((c) => c.name)
+            .join(", ")}
+          .
+        </p>
+      </section>
+
+      {/* ============================================================= proces */}
+      <section className="border-y border-hairline">
+        <div className="mx-auto max-w-6xl px-5 py-20">
+          <h2 className="text-5xl">{t.home.process.heading}</h2>
+
+          {/* Numeracja jest tu uzasadniona — to faktyczna kolejność etapów. */}
+          <ol className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {t.home.process.steps.map((step, index) => (
+              <li key={step.title} className="border-t border-hairline pt-5">
+                <span className="font-display text-sm text-signal">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 text-xl">{step.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-lichen">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ========================================================= realizacje */}
+      <section className="mx-auto max-w-6xl px-5 py-28">
+        <div className="section-head">
+          <h2 className="text-5xl">{t.home.work.heading}</h2>
+          <Link
+            href={publicPath(lang, ["realizacje"])}
+            className="text-sm font-medium text-voltage underline-offset-4 hover:underline"
+          >
+            {t.home.work.all}
+          </Link>
+        </div>
+        <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          {t.home.work.lead}
+        </p>
+
+        {/* Lista, nie siatka kart — każdy wiersz niesie nazwę, branżę,
+            efekt i stack, więc czyta się jak spis dokonań, a nie jak
+            kolejna galeria kafelków. */}
+        <ul className="mt-14 divide-y divide-hairline border-y border-hairline">
+          {work.map((study) => (
+            <li key={study.slug}>
+              <Link
+                href={publicPath(lang, ["realizacje", study.slug])}
+                className="group grid gap-x-8 gap-y-3 py-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto]"
+              >
+                <div>
+                  <h3 className="text-2xl transition-colors group-hover:text-voltage">
+                    {study.name}
+                  </h3>
+                  <span className="mt-1 block text-xs text-lichen">
+                    {study.industry}
+                  </span>
+                </div>
+
+                <p className="max-w-[56ch] text-sm leading-relaxed text-lichen">
+                  {study.outcome}
+                </p>
+
+                <div className="flex flex-col items-start gap-2 md:items-end">
+                  <span className="font-display text-sm text-bone transition-colors group-hover:text-voltage">
+                    {study.domain}
+                  </span>
+                  <ul className="flex flex-wrap gap-1.5 md:justify-end">
+                    {study.tech.slice(0, 3).map((tech) => (
+                      <li key={tech} className="chip">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* =============================================================== blog */}
+      {latestPosts.length > 0 && (
+        <section className="border-y border-hairline bg-basalt">
+          <div className="mx-auto max-w-6xl px-5 py-28">
+            <div className="section-head">
+              <h2 className="text-5xl">{t.home.blog.heading}</h2>
+              <Link
+                href={publicPath(lang, ["blog"])}
+                className="text-sm font-medium text-voltage underline-offset-4 hover:underline"
+              >
+                {t.home.blog.all}
+              </Link>
+            </div>
+            <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
+              {t.home.blog.lead}
             </p>
 
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                href={publicPath(lang, ["kontakt"])}
-                className="rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
-              >
-                {t.home.ctaPrimary}
-              </Link>
-              <Link
-                href={publicPath(lang, ["realizacje"])}
-                className="rounded-md border border-hairline px-5 py-3 text-sm font-medium text-bone transition-colors hover:border-signal"
-              >
-                {t.home.ctaSecondary}
-              </Link>
-            </div>
-          </div>
-
-          {/* Mapa zasięgu — jedyne miejsce, gdzie strona pozwala sobie na efekt. */}
-          <div>
-            <TerritoryMap locale={lang} label={t.a11y.territoryMap} />
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------ terytorium */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-16">
-            <div>
-              <h2 className="text-4xl">{t.home.territory.heading}</h2>
-              <p className="mt-5 max-w-[52ch] leading-relaxed text-lichen">
-                {t.home.territory.lead}
-              </p>
-              <Link
-                href={publicPath(lang, ["strony-internetowe"])}
-                className="mt-6 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
-              >
-                {t.home.territory.allCities}
-              </Link>
-            </div>
-
-            {/* Lista miast jako tekst — dostępna też bez odczytu mapy. */}
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm sm:grid-cols-3">
-              {CITIES.map((city) => (
-                <li key={city.slug} className="text-lichen">
-                  {city.isBase ? (
-                    <span className="font-medium text-bone">
-                      {city.name} — {t.home.territory.baseLabel}
-                    </span>
-                  ) : (
-                    <>
-                      {city.name}{" "}
-                      <span className="text-xs opacity-60">
-                        {city.distanceKm} {t.home.territory.distanceFromBase}
-                      </span>
-                    </>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- oferta */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="text-4xl">{t.nav.offer}</h2>
-
-          <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-            {categories.map((category) => (
-              <Link
-                key={category.slug}
-                href={publicPath(lang, ["oferta", category.slug])}
-                className="group border-t border-hairline pt-5 transition-colors hover:border-signal"
-              >
-                <h3 className="text-2xl transition-colors group-hover:text-voltage">
-                  {category.title}
-                </h3>
-                <p className="mt-3 max-w-[52ch] text-sm leading-relaxed text-lichen">
-                  {category.lead}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------ realizacje */}
-      {work.length > 0 && (
-        <section className="border-t border-hairline">
-          <div className="mx-auto max-w-6xl px-5 py-16">
-            <h2 className="text-4xl">{t.nav.work}</h2>
-
-            <ul className="mt-10 divide-y divide-hairline border-y border-hairline">
-              {work.slice(0, 6).map((study) => (
-                <li key={study.slug}>
-                  <Link
-                    href={publicPath(lang, ["realizacje", study.slug])}
-                    className="group flex flex-wrap items-baseline gap-x-5 gap-y-1 py-5 transition-colors"
+            <div className="mt-14 grid gap-8 md:grid-cols-3">
+              {latestPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={publicPath(lang, ["blog", post.slug])}
+                  className="group border-t border-hairline pt-5 transition-colors hover:border-signal"
+                >
+                  <time
+                    dateTime={post.publishedAt}
+                    className="text-xs text-lichen"
                   >
-                    <span className="font-display text-xl text-bone transition-colors group-hover:text-voltage">
-                      {study.name}
-                    </span>
-                    <span className="text-sm text-lichen">
-                      {study.industry}
-                    </span>
-                    <span className="ml-auto text-sm text-lichen opacity-70">
-                      {study.domain}
-                    </span>
-                  </Link>
-                </li>
+                    {dateFormat.format(new Date(post.publishedAt))}
+                  </time>
+                  <h3 className="mt-2 text-xl transition-colors group-hover:text-voltage">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-lichen">
+                    {post.excerpt}
+                  </p>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
       )}
 
-      {/* --------------------------------------------------------- kontakt */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="max-w-[18ch] text-5xl">{t.home.ctaPrimary}</h2>
-          <p className="mt-5 max-w-[50ch] leading-relaxed text-lichen">
-            {BASE_CITY.intro}
+      {/* ============================================================ kontakt */}
+      <section className="relative isolate overflow-hidden">
+        <div className="glow" aria-hidden="true" />
+        <div className="mx-auto max-w-3xl px-5 py-24 text-center">
+          <h2 className="text-6xl">{t.home.contact.heading}</h2>
+          <p className="mx-auto mt-6 max-w-[54ch] leading-relaxed text-lichen">
+            {t.home.contact.lead}
           </p>
-          <Link
-            href={publicPath(lang, ["kontakt"])}
-            className="mt-8 inline-block rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
-          >
-            {t.nav.cta}
-          </Link>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={publicPath(lang, ["kontakt"])}
+              className="rounded-md bg-signal px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
+            >
+              {t.home.contact.cta}
+            </Link>
+            <a
+              href={`tel:${SITE.phoneRaw}`}
+              className="rounded-md border border-hairline px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:border-signal"
+            >
+              {SITE.phone}
+            </a>
+          </div>
         </div>
       </section>
     </>

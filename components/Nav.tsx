@@ -9,7 +9,7 @@
 
 import Link from "next/link";
 
-import { LogoMark, Wordmark } from "./Logo";
+import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
@@ -28,12 +28,8 @@ export function Nav({ locale }: { locale: Locale }) {
   return (
     <header className="sticky top-0 z-50 border-b border-hairline bg-obsydian/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
-        <Link
-          href={publicPath(locale)}
-          className="flex items-center gap-2.5 rounded-md"
-        >
-          <LogoMark className="h-6 w-6" />
-          <Wordmark />
+        <Link href={publicPath(locale)} className="rounded-md" aria-label="PROJSTOG">
+          <Logo className="h-7 w-auto" />
         </Link>
 
         <nav

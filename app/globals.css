@@ -114,6 +114,129 @@ p {
 }
 
 /* ==========================================================================
+   Powierzchnie i światło
+
+   Elevation „hairline-and-glow" z brand-concept: karta nie ma cienia pod
+   spodem, tylko linię włosową i delikatną poświatę zieleni.
+   ========================================================================== */
+
+.card {
+  position: relative;
+  /* Delikatny gradient od góry — powierzchnia łapie światło zamiast być
+     płaskim prostokątem. To jest cała różnica między „ramka" a „karta". */
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-bone) 3.5%, var(--color-basalt)) 0%,
+    var(--color-basalt) 55%
+  );
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+a.card:hover,
+.card-interactive:hover {
+  border-color: color-mix(in srgb, var(--color-signal) 60%, transparent);
+  box-shadow: 0 0 40px -14px rgb(27 157 23 / 0.55);
+}
+
+/* Linia światła na górnej krawędzi karty. */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-bone) 14%, transparent) 50%,
+    transparent
+  );
+}
+
+/* Nagłówek sekcji: tytuł i odnośnik na wspólnej linii bazowej. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 2.5rem;
+  row-gap: 0.75rem;
+}
+
+/* Tag/chip — nazwa usługi, technologia, branża. */
+.chip {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: var(--color-lichen);
+  background-color: color-mix(in srgb, var(--color-signal) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-signal) 22%, transparent);
+  border-radius: 999px;
+}
+
+/* Poświata za sekcją hero. Czysto dekoracyjna, nie przechwytuje kliknięć. */
+.glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glow::before,
+.glow::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+}
+
+.glow::before {
+  width: 46rem;
+  height: 34rem;
+  top: -14rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle,
+    rgb(27 157 23 / 0.3) 0%,
+    rgb(27 157 23 / 0) 70%
+  );
+}
+
+.glow::after {
+  width: 30rem;
+  height: 22rem;
+  top: 6rem;
+  right: -8rem;
+  background: radial-gradient(
+    circle,
+    rgb(52 225 46 / 0.13) 0%,
+    rgb(52 225 46 / 0) 70%
+  );
+}
+
+/* Siatka linii — subtelna tekstura pod hero, żeby czerń nie była martwa. */
+.grid-texture {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--color-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  opacity: 0.45;
+}
+
+/* ==========================================================================
    Dostępność
    ========================================================================== */
 

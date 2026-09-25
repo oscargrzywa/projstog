@@ -31,20 +31,88 @@ const pl = {
   },
 
   home: {
-    /* Nagłówek bez akcentowania pojedynczych słów kolorem. */
+    badge: "Mielec, Podkarpacie",
     h1: "Strony, które zarabiają.",
     lead:
-      "Robię strony internetowe dla firm z Podkarpacia i okolic. Sam — od rozmowy, przez projekt, po wsparcie po uruchomieniu. Bez account managerów i bez przerzucania się mailami między działami.",
+      "Robię strony internetowe, sklepy i automatyzacje dla firm z Podkarpacia. Sam — od pierwszej rozmowy, przez projekt, po wsparcie po uruchomieniu. Jeden numer telefonu, jedna osoba odpowiedzialna.",
     ctaPrimary: "Umów rozmowę",
     ctaSecondary: "Zobacz realizacje",
+    orCall: "albo zadzwoń",
 
-    territory: {
-      heading: "Gdzie pracuję",
+    stats: {
+      /* ⚠ Liczba zrealizowanych projektów — DO PODANIA przez właściciela.
+         Nie wpisywać tu liczby realizacji z portfolio: na stronie pokazujemy
+         tylko wybrane, a zrobionych jest znacznie więcej. Dopóki nie znamy
+         prawdziwej liczby, pokazujemy rok startu. */
+      sinceLabel: "robię to od",
+      baseLabel: "baza i dojazd",
+      replyValue: "do 24 h",
+      replyLabel: "czas odpowiedzi",
+    },
+
+    services: {
+      heading: "Co dla Ciebie zrobię",
       lead:
-        "Jestem z Mielca i stąd jeżdżę do klientów. Poniżej miasta, które obsługuję — kliknij swoje, żeby zobaczyć, jak wygląda tam rynek i czego potrzebuje lokalna firma.",
-      baseLabel: "moja baza",
-      distanceFromBase: "km od Mielca",
-      allCities: "Wszystkie miasta",
+        "Cztery obszary, trzynaście konkretnych usług. Zakres i cenę ustalamy przed startem, żeby nie było niespodzianek w trakcie.",
+      all: "Pełna oferta",
+    },
+
+    notAgency: {
+      heading: "Nie agencja. Człowiek z Mielca.",
+      lead:
+        "Sprawdziłem, kto wyświetla się w Google na strony internetowe w podkarpackich miastach. Prawie żadna z tych firm nie ma tu siedziby:",
+      punchline: "Ja mam. Dojadę, usiądziemy i pogadamy.",
+      detail:
+        "To nie jest argument marketingowy, tylko różnica w tym, jak wygląda współpraca. Nie przekazuję projektu dalej i nie tłumaczę Ci, że „to inny dział”. Odbieram telefon i znam Twój projekt na pamięć, bo zrobiłem go sam.",
+    },
+
+    local: {
+      heading: "Obsługuję firmy z całego regionu",
+      lead:
+        "Jestem z Mielca i stąd dojeżdżam do klientów. Wybierz swoje miasto — opisuję tam, jak wygląda lokalny rynek i czego zwykle potrzebuje firma z okolicy.",
+      all: "Zobacz obszar działania",
+    },
+
+    process: {
+      heading: "Jak to wygląda",
+      steps: [
+        {
+          title: "Rozmowa",
+          body: "Telefon albo spotkanie. Mówisz, co ma robić strona i dla kogo. Ja mówię, co się da zrobić i w jakim zakresie.",
+        },
+        {
+          title: "Wycena i zakres",
+          body: "Dostajesz spisany zakres i jedną kwotę za całość. Bez rozliczania godzin i bez dopłat w trakcie.",
+        },
+        {
+          title: "Projekt i realizacja",
+          body: "Pokazuję układ strony, potem buduję. Na bieżąco masz podgląd, więc uwagi zgłaszasz zanim będzie za późno.",
+        },
+        {
+          title: "Uruchomienie i opieka",
+          body: "Wdrożenie, wizytówka Google, indeksacja. Potem hosting, kopie zapasowe i zmiany w treści, jeśli chcesz.",
+        },
+      ],
+    },
+
+    work: {
+      heading: "Realizacje",
+      lead: "Strony, które działają na żywo. Każdą zrobiłem od początku do końca.",
+      all: "Wszystkie realizacje",
+      visit: "Otwórz stronę",
+    },
+
+    blog: {
+      heading: "Z bloga",
+      lead: "Konkretne odpowiedzi na pytania, które słyszę najczęściej.",
+      all: "Wszystkie wpisy",
+    },
+
+    contact: {
+      heading: "Porozmawiajmy o Twojej stronie",
+      lead:
+        "Napisz albo zadzwoń. Powiem wprost, czy umiem pomóc, ile to będzie kosztować i ile potrwa. Jeśli to nie jest robota dla mnie — też to usłyszysz.",
+      cta: "Napisz do mnie",
     },
   },
 
@@ -92,19 +160,84 @@ const en: Dictionary = {
   },
 
   home: {
+    badge: "Mielec, south-eastern Poland",
     h1: "Websites that pay for themselves.",
     lead:
-      "I build websites for companies across south-eastern Poland. On my own — from the first conversation through design to support after launch. No account managers, no messages bouncing between departments.",
+      "I build websites, online stores and automation for companies across south-eastern Poland. On my own — from the first conversation through design to support after launch. One phone number, one person accountable.",
     ctaPrimary: "Book a call",
     ctaSecondary: "See the work",
+    orCall: "or call",
 
-    territory: {
-      heading: "Where I work",
+    stats: {
+      sinceLabel: "building sites since",
+      baseLabel: "base and travel",
+      replyValue: "under 24 h",
+      replyLabel: "reply time",
+    },
+
+    services: {
+      heading: "What I can build for you",
       lead:
-        "I am based in Mielec and drive out to clients from here. Below are the cities I serve — pick yours to see what the local market looks like and what a business there actually needs.",
-      baseLabel: "home base",
-      distanceFromBase: "km from Mielec",
-      allCities: "All cities",
+        "Four areas, thirteen concrete services. Scope and price are agreed before we start, so nothing changes halfway through.",
+      all: "Full service list",
+    },
+
+    notAgency: {
+      heading: "Not an agency. A person from Mielec.",
+      lead:
+        "I checked who ranks in Google for web design in this region's towns. Almost none of those companies are based here:",
+      punchline: "I am. I can drive over and we can talk in person.",
+      detail:
+        "This is not a marketing line, it changes how the work actually goes. I do not hand your project to someone else and I never tell you it belongs to another department. I answer the phone and I know your project by heart, because I built it.",
+    },
+
+    local: {
+      heading: "Working across the region",
+      lead:
+        "I am based in Mielec and drive out to clients from here. Pick your town — each page describes the local market and what a business there usually needs.",
+      all: "See the service area",
+    },
+
+    process: {
+      heading: "How it works",
+      steps: [
+        {
+          title: "Conversation",
+          body: "A call or a meeting. You say what the site has to do and who it is for. I say what is realistic and what it takes.",
+        },
+        {
+          title: "Scope and quote",
+          body: "You get the scope in writing and one price for the whole thing. No hourly billing, no extras added along the way.",
+        },
+        {
+          title: "Design and build",
+          body: "I show the layout first, then build it. You can follow progress throughout, so feedback lands while it still costs nothing.",
+        },
+        {
+          title: "Launch and care",
+          body: "Deployment, Google Business Profile, indexing. Then hosting, backups and content changes whenever you need them.",
+        },
+      ],
+    },
+
+    work: {
+      heading: "Work",
+      lead: "Sites running live right now. I built each one end to end.",
+      all: "All projects",
+      visit: "Open the site",
+    },
+
+    blog: {
+      heading: "From the blog",
+      lead: "Straight answers to the questions I hear most often.",
+      all: "All posts",
+    },
+
+    contact: {
+      heading: "Let's talk about your site",
+      lead:
+        "Write or call. I will tell you plainly whether I can help, what it costs and how long it takes. If it is not a job for me, you will hear that too.",
+      cta: "Get in touch",
     },
   },
 
