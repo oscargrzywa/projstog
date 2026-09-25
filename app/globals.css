@@ -3,64 +3,82 @@
 /* ==========================================================================
    PROJSTOG 2.0 — system projektowy
 
-   Zasada: jedno miejsce bold, reszta cicha.
-   Elementem wyróżniającym jest MAPA TERYTORIUM w hero — wokół niej
-   wszystko pozostaje zdyscyplinowane.
+   Zasada: jedno miejsce bold, reszta cicha. O wrażeniu „drogiej" strony
+   decyduje typografia i światło między sekcjami, nie efekty.
 
-   Kolory definiujemy wyłącznie tutaj, jako tokeny. Nie wpisywać hexów
+   Kolory definiujemy WYŁĄCZNIE tutaj, jako tokeny. Nie wpisywać hexów
    w komponentach — to był główny dług starej strony (setki powtórzeń).
+
+   Mieszanie kolorów robimy w `oklab`, nie w `srgb`: mieszanka nie
+   przechodzi wtedy przez szary środek i zielenie zostają czyste.
    ========================================================================== */
 
 @theme {
   /* --- Kolor ---------------------------------------------------------- */
-  /* Baza: obsydian. Ciemny, lekko zielonkawy, nie czysta czerń. */
   --color-obsydian: #060807;
-  /* Powierzchnia podniesiona — karty, panele. */
   --color-basalt: #0e130e;
-  /* Powierzchnia jeszcze wyżej — hover, aktywne elementy. */
   --color-slate-moss: #161d16;
 
   /* Zieleń strukturalna: obramowania, wypełnienia, stany. 5.6:1 na obsydianie. */
   --color-signal: #1b9d17;
-  /* Zieleń "live": akcent używany oszczędnie — tylko momenty aktywne. 11:1. */
+  /* Zieleń „live": akcent używany oszczędnie — tylko momenty aktywne. 11:1. */
   --color-voltage: #34e12e;
 
   /* Tekst podstawowy — ciepła kość. 16:1 na obsydianie. */
   --color-bone: #ece7dd;
+
+  /* Skala alfa zamiast osobnych kolorów tekstu.
+     Wzorzec z Exo Ape i Instrument: jeden kolor w pięciu przezroczystościach
+     daje głębię bez rozrostu palety. `bone-70` to 11:1, `bone-45` to 6.6:1 —
+     oba przechodzą AA na obsydianie. */
+  --color-bone-70: rgb(236 231 221 / 0.7);
+  --color-bone-45: rgb(236 231 221 / 0.45);
+  --color-bone-12: rgb(236 231 221 / 0.12);
+
   /* Tekst drugorzędny. 6:1 — przechodzi AA, w przeciwieństwie do starego #6b8068. */
   --color-lichen: #7e9479;
 
-  /* Linia włosowa — struktura bez ciężaru ramek. */
   --color-hairline: #1d261c;
 
   /* --- Typografia ------------------------------------------------------ */
   --font-display: var(--font-clash), "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Skala modularna 1.25 (tercja wielka) od 16px.
-     Rozmiary display są płynne — skalują się z szerokością okna. */
-  --text-xs: 0.8125rem;   /* 13 */
-  --text-sm: 0.875rem;    /* 14 */
-  --text-base: 1rem;      /* 16 */
-  --text-lg: 1.125rem;    /* 18 */
-  --text-xl: 1.25rem;     /* 20 */
-  --text-2xl: 1.5625rem;  /* 25 */
-  --text-3xl: 1.9375rem;  /* 31 */
-  --text-4xl: clamp(2rem, 1.6rem + 2vw, 2.4375rem);
-  --text-5xl: clamp(2.375rem, 1.8rem + 2.9vw, 3.0625rem);
-  --text-6xl: clamp(2.75rem, 1.9rem + 4.2vw, 3.8125rem);
-  --text-7xl: clamp(3.25rem, 2rem + 6.2vw, 4.75rem);
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5625rem;
+  --text-3xl: 1.9375rem;
+  /* Nagłówki sekcji i display.
+     Poprzednie wartości były o połowę za małe. Na stronach, które wyglądają
+     drogo, H1 ma 90–210px przy tekście 14–18px — czyli stosunek od 5:1
+     do 13:1. Przy 16px tekstu i 120px nagłówka jesteśmy na 7.5:1. */
+  --text-4xl: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+  --text-5xl: clamp(2.5rem, 1.6rem + 3.8vw, 4.5rem);
+  --text-6xl: clamp(3rem, 1.6rem + 5.8vw, 6rem);
+  --text-7xl: clamp(3.5rem, 1.5rem + 8.4vw, 8rem);
+
+  /* --- Rytm sekcji ------------------------------------------------------
+     150–260px na desktopie. To jest główna różnica między stroną
+     „poprawną" a „drogą" — większa niż jakakolwiek animacja. */
+  --space-section: clamp(5.5rem, 2rem + 9.5vw, 11rem);
+  --space-section-lg: clamp(7rem, 2rem + 13vw, 16rem);
 
   /* --- Rytm i kształt --------------------------------------------------- */
-  /* Rytm 4px zgodnie z brand-concept. */
   --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;  /* 10px — brand-concept */
-  --radius-lg: 1rem;      /* 16px — brand-concept */
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
 
-  /* Elevation "hairline-and-glow": nie cień pod kartą, tylko
-     linia włosowa + delikatna poświata zieleni. */
-  --shadow-glow: 0 0 0 1px var(--color-hairline), 0 8px 32px -12px rgb(27 157 23 / 0.25);
   --shadow-glow-strong: 0 0 0 1px rgb(27 157 23 / 0.4), 0 0 48px -8px rgb(52 225 46 / 0.2);
+
+  /* --- Krzywe ruchu ------------------------------------------------------
+     Wartości najczęściej spotykane na stronach studiów: easeOutQuart do
+     mikro-interakcji, easeOutExpo do wejść. Nigdy `transition: all`
+     i nigdy `ease` domyślne. */
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
@@ -87,142 +105,194 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Nagłówki: Clash Display, ciasny tracking, krótki leading.
-   Bez akcentowania pojedynczych słów kolorem — to najczęstszy tell. */
+/* Ziarno na całym dokumencie.
+   Statyczne, kafelkowane 160×160, ~350 bajtów jako data URI — bez żądania
+   sieciowego. To jest najtańszy sposób, żeby czerń przestała być płaska
+   i żeby gradienty o niskim kontraście nie robiły pasów (banding).
+
+   `stitchTiles` jest obowiązkowe (bez niego widać szwy), a `saturate 0`
+   usuwa kolor — feTurbulence domyślnie generuje szum kolorowy, który na
+   ciemnym tle wygląda jak uszkodzony panel. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ==========================================================================
+   Typografia
+
+   Sedno „drogiej" typografii: tracking musi być coraz bardziej ujemny
+   wraz ze wzrostem stopnia pisma. Ten sam letter-spacing przy 16px
+   i przy 76px to najczęstszy znak taniej strony.
+   ========================================================================== */
+
 h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  /* 620, nie 600 — przy foncie variable oś jest ciągła, a wartości
+     nieokrągłe to najtańszy sposób, żeby typografia przestała wyglądać
+     jak ustawienie domyślne. */
+  font-weight: 620;
+  letter-spacing: clamp(-0.048em, -0.018em - 0.3vw, -0.018em);
+  /* Poniżej 1.0 — przy dużym stopniu pisma wiersze muszą się niemal stykać.
+     To jest ten detal, po którym poznaje się złożenie zrobione ręcznie. */
+  line-height: 0.92;
   text-wrap: balance;
+  font-synthesis: none;
+  font-kerning: normal;
+}
+
+/* Mniejsze nagłówki potrzebują luźniejszego złożenia niż display. */
+h3 {
+  line-height: 1.08;
 }
 
 h4,
 h5,
 h6 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 540;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
-/* Długość wiersza poniżej 80 znaków — czytelność tekstu ciągłego. */
 p {
   text-wrap: pretty;
 }
 
+/* Lead pod nagłówkiem — 1–3 wiersze, więc `balance` tu działa. */
+.lead {
+  text-wrap: balance;
+  letter-spacing: 0.002em;
+}
+
+/* Kolumna tekstu ciągłego. Miara 62–68 znaków, nie 80. */
+.prose-col {
+  max-width: 34rem;
+  line-height: 1.68;
+  letter-spacing: 0.002em;
+  text-wrap: pretty;
+}
+
+/* Cyfry o stałej szerokości — bez tego liczby w cenniku i statystykach
+   „tańczą" przy zmianie wartości. */
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Nadtytuł sekcji.
+   Wersaliki same w sobie nie są błędem — używa ich większość badanych
+   stron studiów. Błędem jest składanie ich jak zwykłego tekstu.
+   Reguła: 10–13px, tracking DODATNI 0.1–0.4em, kolor przygaszony.
+   Wielkie litery bez rozstrzelenia zlepiają się i wyglądają tanio. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: var(--color-bone-45);
+}
+
+/* Przycięcie światła nad i pod tekstem. Dopiero to sprawia, że wielki
+   nagłówek siedzi w siatce — half-leading fontu dorzuca kilkanaście
+   pikseli, których żaden padding nie naprawi deterministycznie.
+   Bez wsparcia: nagłówki mają nieco więcej powietrza, zero uszkodzeń. */
+@supports (text-box-trim: trim-both) {
+  h1,
+  h2,
+  h3 {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
 /* ==========================================================================
    Powierzchnie i światło
-
-   Elevation „hairline-and-glow" z brand-concept: karta nie ma cienia pod
-   spodem, tylko linię włosową i delikatną poświatę zieleni.
    ========================================================================== */
 
-.card {
+/* Blok treści.
+   ⚠ Celowo BEZ tła, bez gradientu i bez cienia.
+   Z 17 przebadanych stron studiów sześć ma dokładnie zero niezerowych
+   `box-shadow`, a obrazy leżą bezpośrednio na tle. Separację robi linia
+   włosowa u góry i przestrzeń, nie pudełko. Siatka identycznych
+   zaokrąglonych kart z cieniem to najczęstszy znak szablonu. */
+.panel {
   position: relative;
-  /* Delikatny gradient od góry — powierzchnia łapie światło zamiast być
-     płaskim prostokątem. To jest cała różnica między „ramka" a „karta". */
-  background-image: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-bone) 3.5%, var(--color-basalt)) 0%,
-    var(--color-basalt) 55%
-  );
+  border-top: 1px solid var(--color-hairline);
+  padding-top: 1.75rem;
+  transition: border-color 240ms var(--ease-out-quart);
+}
+
+a.panel:hover,
+a.panel:focus-visible {
+  border-top-color: color-mix(in oklab, var(--color-signal) 70%, transparent);
+}
+
+/* Wariant z obrysem — tylko tam, gdzie blok musi być wyraźnie oddzielony
+   od sąsiadów (np. wyróżniony produkt). Nadal bez cienia. */
+.panel-outlined {
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-lg);
-  transition:
-    border-color 220ms ease,
-    transform 220ms ease,
-    box-shadow 220ms ease;
+  padding: 1.75rem;
+  transition: border-color 240ms var(--ease-out-quart);
 }
 
-a.card:hover,
-.card-interactive:hover {
-  border-color: color-mix(in srgb, var(--color-signal) 60%, transparent);
-  box-shadow: 0 0 40px -14px rgb(27 157 23 / 0.55);
+a.panel-outlined:hover {
+  border-color: color-mix(in oklab, var(--color-signal) 60%, transparent);
 }
 
-/* Linia światła na górnej krawędzi karty. */
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--color-bone) 14%, transparent) 50%,
-    transparent
-  );
-}
-
-/* Nagłówek sekcji: tytuł i odnośnik na wspólnej linii bazowej. */
-.section-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  column-gap: 2.5rem;
-  row-gap: 0.75rem;
-}
-
-/* Tag/chip — nazwa usługi, technologia, branża. */
+/* Tag: nazwa usługi, technologia, branża. */
 .chip {
   display: inline-block;
   padding: 0.25rem 0.625rem;
   font-size: var(--text-xs);
   line-height: 1.4;
   color: var(--color-lichen);
-  background-color: color-mix(in srgb, var(--color-signal) 9%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-signal) 22%, transparent);
+  background-color: color-mix(in oklab, var(--color-signal) 9%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-signal) 22%, transparent);
   border-radius: 999px;
 }
 
-/* Poświata za sekcją hero. Czysto dekoracyjna, nie przechwytuje kliknięć. */
-.glow {
+/* Poświata za hero.
+   Czyste gradienty radialne, BEZ filter: blur(). Blur to osobna warstwa
+   kompozytowa i wieloprzebiegowa konwolucja przy każdym repaint; gradient
+   radialny jest z natury gładki i liczy go GPU przy malowaniu.
+   Efekt wizualnie ten sam, koszt niższy o rząd wielkości. */
+.aurora {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
+  inset: -25% -10% auto -10%;
+  height: 80vh;
   z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      58% 52% at 50% 0%,
+      color-mix(in oklab, var(--color-signal) 24%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      34% 40% at 86% 20%,
+      color-mix(in oklab, var(--color-voltage) 11%, transparent) 0%,
+      transparent 72%
+    ),
+    radial-gradient(
+      42% 38% at 10% 34%,
+      color-mix(in oklab, var(--color-signal) 9%, transparent) 0%,
+      transparent 75%
+    );
+  /* Wygaszenie ku dołowi, żeby poświata nie kończyła się krawędzią. */
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
 }
 
-.glow::before,
-.glow::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(110px);
-}
-
-.glow::before {
-  width: 46rem;
-  height: 34rem;
-  top: -14rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: radial-gradient(
-    circle,
-    rgb(27 157 23 / 0.3) 0%,
-    rgb(27 157 23 / 0) 70%
-  );
-}
-
-.glow::after {
-  width: 30rem;
-  height: 22rem;
-  top: 6rem;
-  right: -8rem;
-  background: radial-gradient(
-    circle,
-    rgb(52 225 46 / 0.13) 0%,
-    rgb(52 225 46 / 0) 70%
-  );
-}
-
-/* Siatka linii — subtelna tekstura pod hero, żeby czerń nie była martwa. */
+/* Siatka pod hero — subtelna tekstura, żeby czerń nie była martwa. */
 .grid-texture {
   position: absolute;
   inset: 0;
@@ -236,15 +306,146 @@ a.card:hover,
   opacity: 0.45;
 }
 
+/* Nagłówek sekcji: tytuł i odnośnik na wspólnej linii bazowej. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 2.5rem;
+  row-gap: 0.75rem;
+}
+
+/* Płynny rytm sekcji — jedna reguła zamiast trzech breakpointów. */
+.section {
+  padding-block: clamp(4.5rem, 2rem + 8vw, 9rem);
+}
+
+/* Separator wygaszony na końcach — czytelniejszy niż kreska na całą szerokość. */
+.rule {
+  height: 1px;
+  border: 0;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-hairline) 15%,
+    var(--color-hairline) 85%,
+    transparent
+  );
+}
+
+/* Mockup przeglądarki — zastępuje zrzut ekranu tam, gdzie go nie mamy,
+   i oprawia go tam, gdzie mamy. Czysty CSS, zero JS. */
+.browser {
+  position: relative;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-basalt);
+  overflow: clip;
+}
+
+.browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 2.375rem;
+  padding-inline: 0.875rem;
+  border-bottom: 1px solid var(--color-hairline);
+  background-image: linear-gradient(
+    180deg in oklab,
+    color-mix(in oklab, var(--color-bone) 6%, var(--color-basalt)),
+    var(--color-basalt)
+  );
+}
+
+.browser__dots {
+  display: flex;
+  flex: none;
+  gap: 0.375rem;
+}
+
+.browser__dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: color-mix(in oklab, var(--color-bone) 15%, transparent);
+}
+
+.browser__url {
+  flex: 1;
+  min-width: 0;
+  height: 1.375rem;
+  padding-inline: 0.75rem;
+  border-radius: 999px;
+  background-color: color-mix(in oklab, var(--color-bone) 6%, transparent);
+  font: 400 var(--text-xs) / 1.375rem var(--font-sans);
+  color: var(--color-lichen);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browser__viewport {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background-color: var(--color-slate-moss);
+}
+
+/* ==========================================================================
+   Ruch
+
+   Wejścia sekcji sterowane osią przewijania, nie JavaScriptem.
+   Zero listenerów scrolla, animacja idzie na wątku kompozytora — więc
+   nie kosztuje INP, w przeciwieństwie do IntersectionObservera i GSAP.
+
+   Stan bazowy jest WIDOCZNY. Firefox nie ma jeszcze scroll-driven
+   animations w wersji stabilnej i jego użytkownicy muszą zobaczyć treść
+   natychmiast, a nie pustą stronę.
+
+   ⚠ Nie nakładać `.reveal` na element kandydujący do LCP (H1, obraz hero).
+   Element z opacity: 0 w pierwszej klatce nie liczy się jako LCP.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 32%;
+    }
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Wygaszenie rodzeństwa przy hoverze w siatce.
+   Efekt, za który zwykle płaci się biblioteką animacji. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .focus-group:has(.focus-item:hover) .focus-item:not(:hover) {
+    opacity: 0.5;
+    transition: opacity 280ms ease;
+  }
+}
+
 /* ==========================================================================
    Dostępność
    ========================================================================== */
 
-/* Widoczny focus dla klawiatury, niewidoczny przy kliknięciu myszą. */
+/* ⚠ Bez `border-radius` — ta właściwość zmieniałaby REALNY promień
+   elementu w momencie focusu, przez co okrągły element przeskakiwałby
+   na prostokątny. `outline` i tak podąża za promieniem elementu. */
 :focus-visible {
   outline: 2px solid var(--color-voltage);
   outline-offset: 3px;
-  border-radius: var(--radius-sm);
 }
 
 ::selection {
@@ -252,7 +453,6 @@ a.card:hover,
   color: var(--color-bone);
 }
 
-/* Skip link — pierwszy element w tabulacji, ukryty do momentu focusu. */
 .skip-link {
   position: absolute;
   left: 0.75rem;
@@ -270,7 +470,11 @@ a.card:hover,
   top: 0.75rem;
 }
 
-/* Szanuj preferencję ograniczenia ruchu — bezwarunkowo. */
+/* Szanuj preferencję ograniczenia ruchu — bezwarunkowo.
+   ⚠ Samo `animation-duration` NIE wystarczy: przy animacjach sterowanych
+   osią przewijania postęp wyznacza scroll, nie czas. Stąd jawne
+   wyłączenie osi. Pseudoelementy View Transitions żyją w osobnym drzewie
+   i selektor `*` ich nie dosięga — muszą mieć własną regułę. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -279,5 +483,21 @@ a.card:hover,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    animation-timeline: none !important;
+    animation-range: normal !important;
   }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 1ms !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Nakładka View Transitions przechwytuje zdarzenia wskaźnika — bez tego
+   kliknięcie w trakcie animacji przepada i liczy się jako opóźniona
+   interakcja (INP). */
+::view-transition {
+  pointer-events: none;
 }

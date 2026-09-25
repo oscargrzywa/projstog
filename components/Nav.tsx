@@ -84,7 +84,7 @@ export function Nav({ locale }: { locale: Locale }) {
 
             <nav
               aria-label={t.a11y.mainNav}
-              className="absolute right-0 top-11 w-56 rounded-lg border border-hairline bg-basalt p-2 shadow-[var(--shadow-glow)]"
+              className="absolute right-0 top-11 w-56 rounded-lg border border-hairline bg-basalt p-2"
             >
               {[...links, { label: t.nav.contact, segments: ["kontakt"] }].map(
                 (link) => (

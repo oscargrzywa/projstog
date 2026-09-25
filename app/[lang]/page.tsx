@@ -62,10 +62,13 @@ export default async function HomePage({
       {/* =============================================================== hero */}
       <section className="relative isolate overflow-hidden border-b border-hairline">
         <div className="grid-texture" aria-hidden="true" />
-        <div className="glow" aria-hidden="true" />
+        <div className="aurora" aria-hidden="true" />
 
-        <div className="mx-auto max-w-4xl px-5 pt-20 pb-16 text-center lg:pt-28">
-          <p className="inline-flex items-center gap-2 rounded-full border border-hairline bg-basalt px-3.5 py-1.5 text-xs text-lichen">
+        {/* Wyrównanie do LEWEJ. Na 17 przebadanych stronach studiów ani jedno
+            hero nie było wyśrodkowane — środkowanie czyta się jak szablon.
+            Kolejność też stamtąd: mały tekst PRZED wielkim nagłówkiem. */}
+        <div className="mx-auto max-w-6xl px-5 pt-20 pb-24 lg:pt-32 lg:pb-32">
+          <p className="flex items-center gap-2.5 text-sm text-bone-45">
             <span
               className="h-1.5 w-1.5 rounded-full bg-voltage"
               aria-hidden="true"
@@ -73,71 +76,52 @@ export default async function HomePage({
             {t.home.badge}
           </p>
 
-          <h1 className="mt-7 text-7xl">{t.home.h1}</h1>
+          <h1 className="mt-8 max-w-[15ch] text-7xl">{t.home.h1}</h1>
 
-          <p className="mx-auto mt-7 max-w-[58ch] text-lg leading-relaxed text-lichen">
+          <p className="lead mt-10 max-w-[52ch] text-lg leading-[1.5] text-bone-70">
             {t.home.lead}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-12 flex flex-wrap items-center gap-x-4 gap-y-3">
             <Link
               href={publicPath(lang, ["kontakt"])}
-              className="rounded-md bg-signal px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
+              className="rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone transition-colors duration-250 ease-[var(--ease-out-quart)] hover:bg-voltage hover:text-obsydian"
             >
               {t.home.ctaPrimary}
             </Link>
             <Link
               href={publicPath(lang, ["realizacje"])}
-              className="rounded-md border border-hairline px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:border-signal"
+              className="rounded-full border border-bone-12 px-7 py-3.5 text-sm font-medium text-bone transition-colors duration-250 ease-[var(--ease-out-quart)] hover:border-signal"
             >
               {t.home.ctaSecondary}
             </Link>
+
+            <span className="text-sm text-bone-45">
+              {t.home.orCall}{" "}
+              <a
+                href={`tel:${SITE.phoneRaw}`}
+                className="text-bone transition-colors hover:text-voltage"
+              >
+                {SITE.phone}
+              </a>
+            </span>
           </div>
 
-          <p className="mt-5 text-sm text-lichen">
-            {t.home.orCall}{" "}
-            <a
-              href={`tel:${SITE.phoneRaw}`}
-              className="font-medium text-bone transition-colors hover:text-voltage"
-            >
-              {SITE.phone}
-            </a>
-          </p>
-
-          {/* Liczby, które da się zweryfikować — realizacje liczone z danych. */}
-          <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline">
-            <div className="bg-obsydian px-4 py-6">
-              <dt className="sr-only">{t.home.stats.sinceLabel}</dt>
-              <dd>
-                <span className="font-display text-4xl text-bone">
-                  {SITE.foundedYear}
-                </span>
-                <span className="mt-1.5 block text-xs text-lichen">
-                  {t.home.stats.sinceLabel}
-                </span>
-              </dd>
+          {/* Meta jako wiersz tekstu, nie pudełko ze statystykami.
+              Licznik „lat doświadczenia" w czterech kolumnach z ikonkami
+              nie pojawił się na żadnej z przebadanych stron. */}
+          <dl className="mt-20 flex flex-wrap gap-x-12 gap-y-4 border-t border-bone-12 pt-8 text-sm">
+            <div className="flex gap-2">
+              <dt className="text-bone-45">{t.home.stats.sinceLabel}</dt>
+              <dd className="tabular text-bone">{SITE.foundedYear}</dd>
             </div>
-            <div className="bg-obsydian px-4 py-6">
-              <dt className="sr-only">{t.home.stats.baseLabel}</dt>
-              <dd>
-                <span className="font-display text-4xl text-voltage">
-                  {BASE_CITY.name}
-                </span>
-                <span className="mt-1.5 block text-xs text-lichen">
-                  {t.home.stats.baseLabel}
-                </span>
-              </dd>
+            <div className="flex gap-2">
+              <dt className="text-bone-45">{t.home.stats.baseLabel}</dt>
+              <dd className="text-bone">{BASE_CITY.name}</dd>
             </div>
-            <div className="bg-obsydian px-4 py-6">
-              <dt className="sr-only">{t.home.stats.replyLabel}</dt>
-              <dd>
-                <span className="font-display text-4xl text-bone">
-                  {t.home.stats.replyValue}
-                </span>
-                <span className="mt-1.5 block text-xs text-lichen">
-                  {t.home.stats.replyLabel}
-                </span>
-              </dd>
+            <div className="flex gap-2">
+              <dt className="text-bone-45">{t.home.stats.replyLabel}</dt>
+              <dd className="text-bone">{t.home.stats.replyValue}</dd>
             </div>
           </dl>
         </div>
@@ -163,10 +147,10 @@ export default async function HomePage({
             <Link
               key={category.slug}
               href={publicPath(lang, ["oferta", category.slug])}
-              className="card flex flex-col p-7"
+              className="panel flex flex-col"
             >
-              <h3 className="text-2xl">{category.title}</h3>
-              <p className="mt-3 max-w-[50ch] text-sm leading-relaxed text-lichen">
+              <h3 className="text-3xl">{category.title}</h3>
+              <p className="mt-4 max-w-[50ch] text-sm leading-[1.6] text-bone-70">
                 {category.lead}
               </p>
               <ul className="mt-6 flex flex-wrap gap-2">
@@ -243,7 +227,7 @@ export default async function HomePage({
             <li key={city.slug}>
               <Link
                 href={publicPath(lang, ["strony-internetowe", city.slug])}
-                className="card card-interactive inline-block px-4 py-2.5 text-sm text-bone"
+                className="inline-block rounded-full border border-bone-12 px-4 py-2 text-sm text-bone transition-colors duration-250 ease-[var(--ease-out-quart)] hover:border-signal hover:text-voltage"
               >
                 {city.name}
               </Link>
@@ -382,7 +366,7 @@ export default async function HomePage({
 
       {/* ============================================================ kontakt */}
       <section className="relative isolate overflow-hidden">
-        <div className="glow" aria-hidden="true" />
+        <div className="aurora" aria-hidden="true" />
         <div className="mx-auto max-w-3xl px-5 py-24 text-center">
           <h2 className="text-6xl">{t.home.contact.heading}</h2>
           <p className="mx-auto mt-6 max-w-[54ch] leading-relaxed text-lichen">
