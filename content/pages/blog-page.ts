@@ -28,9 +28,9 @@ const pl = {
   blog: {
     title: "Blog",
     lead:
-      "Piszę o tym, co realnie wpływa na to, czy strona firmy zarabia: o widoczności w Google, o kosztach, o decyzjach, które zapadają na długo przed pierwszą linijką kodu. Bez marketingowej nowomowy i bez porad przepisanych z angielskich blogów.",
+      "Tu dowiesz się, co realnie decyduje o tym, czy Twoja strona zarabia: jak trafić do klientów przez Google, ile to kosztuje i jakie decyzje podjąć, zanim powstanie pierwsza linijka kodu. Bez marketingowej nowomowy i bez porad przepisanych z angielskich blogów.",
     empty:
-      "Pierwsze wpisy są w przygotowaniu. Wrócę tu z konkretami, nie z wypełniaczem.",
+      "Pierwsze wpisy są w przygotowaniu. Znajdziesz tu konkrety, nie wypełniacz.",
     readingTime: "min czytania",
     author: "Autor",
     published: "Opublikowano",
@@ -41,15 +41,15 @@ const pl = {
     cta: {
       heading: "Masz pytanie do tego tekstu?",
       body:
-        "Jeśli coś z powyższego dotyczy Twojej firmy — napisz. Odpowiadam osobiście, nie przez formularz obsługiwany przez dział.",
-      button: "Napisz do mnie",
+        "Jeśli coś z powyższego dotyczy Twojej firmy — napisz. Odpowiedź dostaniesz od autora tekstu, nie od działu obsługi.",
+      button: "Zadaj pytanie",
     },
   },
 
   work: {
     title: "Realizacje",
     lead:
-      "Strony, które działają pod prawdziwymi adresami i mają prawdziwych właścicieli. Każdą można otworzyć i sprawdzić samemu — dlatego nie ma tu obiecanych wzrostów, tylko zakres pracy i to, po co powstała.",
+      "Strony, które działają pod prawdziwymi adresami i mają prawdziwych właścicieli. Każdą możesz otworzyć i sprawdzić sam. Nie znajdziesz tu obiecanych wzrostów — tylko zakres pracy i to, po co strona powstała.",
     empty: "Realizacje są w przygotowaniu.",
     industry: "Branża",
     outcome: "Po co powstała",
@@ -59,10 +59,10 @@ const pl = {
     todoNotice:
       "Opis tej realizacji czeka na uzupełnienie przez właściciela strony.",
     cta: {
-      heading: "Chcesz podobną stronę?",
+      heading: "Chcesz podobną stronę dla swojej firmy?",
       body:
-        "Zacznijmy od rozmowy o tym, co ma robić — układ i technologia wynikną z odpowiedzi.",
-      button: "Umów rozmowę",
+        "Powiedz, co Twoja strona ma robić — układ i technologię dobierzemy do tej odpowiedzi.",
+      button: "Umów bezpłatną rozmowę",
     },
   },
 };
@@ -75,8 +75,8 @@ const en: PagesCopy = {
   blog: {
     title: "Blog",
     lead:
-      "Notes on what actually decides whether a company website pays for itself: visibility in Google, real costs, and the choices made long before the first line of code. No marketing jargon, no advice copied from someone else's blog.",
-    empty: "The first posts are being written. I will be back with substance, not filler.",
+      "What actually decides whether your website pays for itself: how customers find you in Google, what it really costs, and the choices to make before the first line of code. No marketing jargon, no advice copied from someone else's blog.",
+    empty: "The first posts are being written. You will find substance here, not filler.",
     readingTime: "min read",
     author: "Author",
     published: "Published",
@@ -87,15 +87,15 @@ const en: PagesCopy = {
     cta: {
       heading: "A question about this piece?",
       body:
-        "If any of the above applies to your company, write to me. I answer personally — not through a form handled by a department.",
-      button: "Get in touch",
+        "If any of the above applies to your company, write in. The answer comes from the person who wrote this, not from a support department.",
+      button: "Ask a question",
     },
   },
 
   work: {
     title: "Work",
     lead:
-      "Websites that run under real addresses and belong to real owners. You can open every one of them and check for yourself — which is why there are no promised growth figures here, only the scope of the work and the reason the site exists.",
+      "Websites that run under real addresses and belong to real owners. You can open every one of them and check for yourself. There are no promised growth figures here — only the scope of the work and the reason each site exists.",
     empty: "Case studies are on the way.",
     industry: "Industry",
     outcome: "Why it exists",
@@ -104,10 +104,10 @@ const en: PagesCopy = {
     backToList: "All work",
     todoNotice: "This case study is still waiting for the owner to finish the copy.",
     cta: {
-      heading: "Want something similar?",
+      heading: "Want a site like this for your business?",
       body:
-        "Let's start with what the site has to do — the layout and the stack follow from that answer.",
-      button: "Book a call",
+        "Tell me what your site has to do — the layout and the stack are chosen to fit that answer.",
+      button: "Book a free call",
     },
   },
 };

@@ -1,0 +1,189 @@
+/* ==========================================================================
+   Własny kursor — style do components/Cursor.tsx
+   ========================================================================== */
+
+/* Natywny kursor chowamy tylko wtedy, gdy własny faktycznie działa
+   (klasę dokłada komponent). Pola tekstowe zachowują karetkę. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none;
+}
+
+html.has-custom-cursor
+  :is(
+    textarea,
+    [contenteditable]:not([contenteditable="false"]),
+    input:not(
+        [type="button"],
+        [type="submit"],
+        [type="reset"],
+        [type="checkbox"],
+        [type="radio"],
+        [type="range"],
+        [type="color"],
+        [type="file"],
+        [type="image"]
+      )
+  ) {
+  cursor: text;
+}
+
+/* Kontener bez stylów — nie tworzy kontekstu stosu, więc `difference`
+   na pierścieniu miesza się z faktyczną treścią strony. */
+.cursor {
+  --ring-size: 36px;
+  --dot-size: 6px;
+  --ring-scale: 1;
+  --press: 1;
+}
+
+/* Warstwy pozycjonowane z JS-a przez translate3d (bez transition —
+   pozycja musi iść za wskaźnikiem bez opóźnienia). z-index nad ziarnem (70). */
+.cursor__ring,
+.cursor__dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 250ms var(--ease-out-quart);
+}
+
+.cursor[data-visible="true"] .cursor__ring,
+.cursor[data-visible="true"] .cursor__dot {
+  opacity: 1;
+}
+
+/* Pierścień: bone + difference = soczewka odwracająca kolory pod spodem. */
+.cursor__ring {
+  mix-blend-mode: difference;
+}
+
+/* Rozmiar zmieniany wyłącznie przez scale — geometria stoi w miejscu. */
+.cursor__lens {
+  position: absolute;
+  top: calc(var(--ring-size) / -2);
+  left: calc(var(--ring-size) / -2);
+  width: var(--ring-size);
+  height: var(--ring-size);
+  border: 1px solid var(--color-bone);
+  border-radius: 50%;
+  background-color: transparent;
+  transform: scale(calc(var(--ring-scale) * var(--press)));
+  transition:
+    transform 450ms var(--ease-out-expo),
+    background-color 450ms var(--ease-out-expo),
+    opacity 250ms var(--ease-out-quart);
+}
+
+/* Etykieta poza elementem skalowanym, żeby tekst się nie rozmywał.
+   Kolor obsydianu na wypełnionej soczewce daje „wycięty" napis. */
+.cursor__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  font: 500 11px / 1 var(--font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-obsydian);
+  opacity: 0;
+  transition:
+    transform 450ms var(--ease-out-expo),
+    opacity 200ms var(--ease-out-quart);
+}
+
+.cursor__pip {
+  position: absolute;
+  top: calc(var(--dot-size) / -2);
+  left: calc(var(--dot-size) / -2);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+  transition:
+    transform 300ms var(--ease-out-expo),
+    opacity 200ms var(--ease-out-quart);
+}
+
+/* --- Stany ------------------------------------------------------------- */
+
+.cursor[data-pressed="true"] {
+  --press: 0.85;
+}
+
+/* Elementy interaktywne: soczewka rośnie i się wypełnia, kropka znika. */
+.cursor[data-state="hover"] {
+  --ring-scale: 1.8;
+}
+
+.cursor[data-state="hover"] .cursor__lens {
+  background-color: color-mix(in oklab, var(--color-bone) 35%, transparent);
+}
+
+/* Wiersze realizacji: duża pełna soczewka z etykietą (~88px). */
+.cursor[data-state="view"] {
+  --ring-scale: 2.45;
+}
+
+.cursor[data-state="view"] .cursor__lens {
+  background-color: var(--color-bone);
+}
+
+.cursor[data-state="view"] .cursor__label {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition-delay: 60ms;
+}
+
+.cursor:is([data-state="hover"], [data-state="view"]) .cursor__pip {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* Pola tekstowe: soczewka zwija się w wąską kreskę i gaśnie —
+   nie zasłania karetki. Kropka też znika. */
+.cursor[data-state="text"] .cursor__lens {
+  opacity: 0;
+  transform: scale(0.05, 0.6);
+}
+
+.cursor[data-state="text"] .cursor__pip {
+  opacity: 0;
+}
+
+/* Strefa soczewki w hero: kroplę rysuje HeroLens, pierścień by ją
+   dublował. Kropka zostaje jako punkt celowania. */
+.cursor[data-state="lens"] .cursor__lens {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+/* --- Magnetyzm ---------------------------------------------------------- */
+
+/* Dokładamy transform do listy przejść, nie kasując kolorów
+   (np. `transition-colors` z Tailwinda). Warstwa bez @layer wygrywa
+   z utilities, więc listy muszą być kompletne. */
+html.has-custom-cursor [data-magnetic] {
+  transition-property:
+    color, background-color, border-color, outline-color, text-decoration-color,
+    fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms,
+    600ms;
+  transition-timing-function:
+    var(--ease-out-quart), var(--ease-out-quart), var(--ease-out-quart),
+    var(--ease-out-quart), var(--ease-out-quart), var(--ease-out-quart),
+    var(--ease-out-quart), var(--ease-out-quart), var(--ease-out-quart),
+    var(--ease-out-expo);
+}
+
+/* Pod wskaźnikiem krócej — element nadąża; po wyjściu 600ms sprężynowania. */
+html.has-custom-cursor [data-magnetic][data-magnet-active] {
+  transition-duration: 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms, 150ms,
+    250ms;
+}

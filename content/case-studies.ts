@@ -11,9 +11,6 @@
  * Jedyny dopuszczalny wyjątek: liczba, którą klient sam podaje publicznie na
  * własnej stronie — i wtedy jako jego deklaracja, nie jako nasz wynik.
  *
- * `citySlug` wypełniamy WYŁĄCZNIE wtedy, gdy adres klienta jest jawny i
- * pokrywa się ze slugiem z `content/cities.ts`. Nigdy nie zgadujemy.
- *
  * `order` — niżej = wyżej na liście. Nowe realizacje dostają niższe numery.
  */
 
@@ -49,7 +46,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -99,7 +96,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -149,7 +146,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -183,7 +180,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "Strona wykonawcy konstrukcji drewnianych z Głogowa Małopolskiego, na której zdjęcia realizacji robią robotę przed pierwszą rozmową, a wycena zaczyna się od jednego formularza.",
       tech: ["Next.js", "React"],
       order: 4,
-      citySlug: "glogow-malopolski",
       body: [
         {
           type: "paragraph",
@@ -201,7 +197,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -235,7 +231,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "Strona firmy ogrodniczej z Bochni, która zbiera dziesięć bardzo różnych usług w jedną czytelną ofertę i pokazuje gotowe ogrody zamiast je opisywać.",
       tech: ["WordPress", "PHP"],
       order: 5,
-      citySlug: "bochnia",
       body: [
         {
           type: "paragraph",
@@ -253,7 +248,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -286,7 +281,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "Strona mieleckiego biura ubezpieczeniowego, która obsługuje klienta w dwóch trybach naraz: szybki zakup polisy online i spokojna rozmowa w biurze przy Wolności.",
       tech: ["WordPress", "PHP"],
       order: 6,
-      citySlug: "mielec",
       body: [
         {
           type: "paragraph",
@@ -304,7 +298,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "Co powstało",
+          text: "Co dostał klient",
         },
         {
           type: "list",
@@ -358,7 +352,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",
@@ -408,7 +402,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",
@@ -458,7 +452,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",
@@ -492,7 +486,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "A site for a timber construction firm near Głogów Małopolski where finished projects do the convincing before the first call, and a quote starts with a single form.",
       tech: ["Next.js", "React"],
       order: 4,
-      citySlug: "glogow-malopolski",
       body: [
         {
           type: "paragraph",
@@ -510,7 +503,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",
@@ -544,7 +537,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "A site for a Bochnia landscaping firm that pulls ten very different services into one readable offer and shows finished gardens instead of describing them.",
       tech: ["WordPress", "PHP"],
       order: 5,
-      citySlug: "bochnia",
       body: [
         {
           type: "paragraph",
@@ -562,7 +554,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",
@@ -595,7 +587,6 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         "A site for an insurance office in Mielec that serves two modes at once: buying a policy online in minutes, or sitting down with an agent on Wolności street.",
       tech: ["WordPress", "PHP"],
       order: 6,
-      citySlug: "mielec",
       body: [
         {
           type: "paragraph",
@@ -613,7 +604,7 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
         {
           type: "heading",
           level: 2,
-          text: "What I built",
+          text: "What the client got",
         },
         {
           type: "list",

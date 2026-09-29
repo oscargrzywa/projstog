@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Soczewka „pod wodą" — style do components/HeroLens.tsx
+   ========================================================================== */
+
+.hero-lens {
+  --lx: 0px;
+  --ly: 0px;
+  --lr: 0px;
+  --ls: 1;
+  --la: 0rad;
+  position: relative;
+}
+
+/* Oryginał ma w miejscu kropli dziurę — inaczej pod powiększoną kopią
+   prześwituje tekst w normalnej skali i dwa napisy się nakładają.
+   Promień 0 = gradient zdegenerowany, rysuje się ostatni kolor, czyli
+   nagłówek jest w pełni widoczny. */
+.hero-lens[data-lens] > h1 {
+  mask-image: radial-gradient(
+    circle var(--lr) at var(--lx) var(--ly),
+    transparent calc(100% - 1px),
+    #000 100%
+  );
+}
+
+/* Kopia nagłówka pod kroplą. Leży dokładnie na h1 (te same klasy
+   typograficzne, ta sama szerokość), powiększona wokół wskaźnika
+   i przycięta do koła. Clip jest w układzie elementu, więc skaluje się
+   razem z nim — stąd promień dzielony przez zoom. */
+.hero-lens__clone {
+  position: absolute;
+  inset: 0 0 auto 0;
+  margin: 0;
+  pointer-events: none;
+  user-select: none;
+  /* Czysta kość, bez zielonego zabarwienia — zieleń na jasnym tekście
+     pod ziarnem czytała się jak porost. */
+  color: var(--color-bone);
+  transform-origin: var(--lx) var(--ly);
+  transform: scale(var(--lens-zoom));
+  clip-path: circle(calc(var(--lr) / var(--lens-zoom)) at var(--lx) var(--ly));
+  will-change: clip-path, transform;
+}
+
+/* Krawędź kropli: bez wypełnienia, tylko światło na powierzchni —
+   refleks u góry, zielona poświata od dna, cień pod spodem. */
+.hero-lens__drop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--lr) * 2);
+  height: calc(var(--lr) * 2);
+  border-radius: 50%;
+  pointer-events: none;
+  transform:
+    translate(calc(var(--lx) - var(--lr)), calc(var(--ly) - var(--lr)))
+    rotate(var(--la))
+    scale(var(--ls), calc(2 - var(--ls)))
+    rotate(calc(var(--la) * -1));
+  background: radial-gradient(
+    circle at 34% 28%,
+    color-mix(in oklab, var(--color-bone) 14%, transparent) 0%,
+    transparent 38%
+  );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-bone) 16%, transparent),
+    inset 0 14px 28px -18px color-mix(in oklab, var(--color-bone) 45%, transparent),
+    inset 0 -22px 44px -22px color-mix(in oklab, var(--color-voltage) 35%, transparent),
+    0 30px 80px -30px rgb(0 0 0 / 0.7);
+}
+
+.hero-lens__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* W hero kropla zastępuje zwykły kursor (patrz Cursor.tsx: stan „lens"). */

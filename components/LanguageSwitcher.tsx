@@ -33,7 +33,8 @@ export function LanguageSwitcher({
       href={publicPath(other, segments)}
       hrefLang={other}
       aria-label={label}
-      className="rounded-sm px-1 text-xs font-medium tracking-wide text-lichen transition-colors hover:text-bone"
+      // Wygląd w components/nav.css — przełącznik żyje tylko w nagłówku.
+      className="lang-switch"
     >
       {other.toUpperCase()}
     </Link>

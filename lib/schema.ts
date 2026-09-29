@@ -7,7 +7,6 @@
  */
 
 import { SITE, HAS_STREET_ADDRESS } from "@/content/site";
-import { BASE_CITY, PUBLISHED_CITIES, type City } from "@/content/cities";
 import { publicPath, type Locale } from "./routes";
 
 function absolute(path: string): string {
@@ -72,8 +71,9 @@ export function localBusinessSchema(locale: Locale) {
     founder: { "@type": "Person", "@id": OWNER_ID, name: SITE.owner },
     foundingDate: String(SITE.foundedYear),
     sameAs: Object.values(SITE.social).filter(Boolean),
-    /* Obszar obsługi. Semantycznie poprawne, ale bez złudzeń — Google nie
-       wymienia `areaServed` w dokumentacji i to nie jest dźwignia rankingowa. */
+    /* Obszar obsługi — województwo siedziby, bez listy miast. Semantycznie
+       poprawne, ale bez złudzeń — Google nie wymienia `areaServed`
+       w dokumentacji i to nie jest dźwignia rankingowa. */
     areaServed: SITE.areaServed.map((region) => ({
       "@type": "AdministrativeArea",
       name: `województwo ${region}`,
@@ -94,7 +94,7 @@ export function personSchema(locale: Locale) {
     name: SITE.owner,
     url: absolute(publicPath(locale, ["o-mnie"])),
     worksFor: { "@id": BUSINESS_ID },
-    homeLocation: { "@type": "City", name: BASE_CITY.name },
+    homeLocation: { "@type": "City", name: SITE.address.city },
     knowsAbout:
       locale === "pl"
         ? [
@@ -134,35 +134,6 @@ export function breadcrumbSchema(
   };
 }
 
-/**
- * Usługa świadczona w konkretnym mieście — dla podstron lokalizacyjnych.
- * `areaServed` wskazuje miasto, `provider` linkuje do profilu firmy przez @id.
- */
-export function cityServiceSchema(
-  locale: Locale,
-  city: City,
-  name: string,
-  description: string
-) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name,
-    description,
-    serviceType: locale === "pl" ? "Tworzenie stron internetowych" : "Web design",
-    provider: { "@id": BUSINESS_ID },
-    areaServed: {
-      "@type": "City",
-      name: city.name,
-      containedInPlace: {
-        "@type": "AdministrativeArea",
-        name: `województwo ${city.voivodeship}`,
-      },
-    },
-    url: absolute(publicPath(locale, ["strony-internetowe", city.slug])),
-  };
-}
-
 /** Wpis blogowy. */
 export function articleSchema(
   locale: Locale,
@@ -187,30 +158,3 @@ export function articleSchema(
     inLanguage: locale,
   };
 }
-
-/**
- * Lista obsługiwanych miast — wspiera zrozumienie zasięgu.
- *
- * ⚠ Iterujemy po `PUBLISHED_CITIES`, nie po `CITIES`. Przy
- * `dynamicParams = false` miasta spoza bieżącego etapu publikacji nie mają
- * podstrony i zwracają 404 — wystawienie ich URL-i w danych strukturalnych
- * kierowałoby roboty na nieistniejące adresy.
- */
-export function serviceAreaListSchema(locale: Locale) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name:
-      locale === "pl"
-        ? `Miasta, w których działa ${SITE.name}`
-        : `Cities served by ${SITE.name}`,
-    itemListElement: PUBLISHED_CITIES.map((city, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: city.name,
-      url: absolute(publicPath(locale, ["strony-internetowe", city.slug])),
-    })),
-  };
-}
-
-export { BASE_CITY };

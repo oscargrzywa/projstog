@@ -68,7 +68,7 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 
 | Obszar | Decyzja |
 |---|---|
-| Zasięg | Mielec jako baza + 21 miast regionu, docelowo **znacznie więcej** |
+| Zasięg | Mielec jako siedziba, **bez podstron miast** (decyzja właściciela, wrzesień 2026) |
 | Oferta | Produkt wiodący „Profit Site" + 4 kategorie usług |
 | Języki | PL bez prefiksu + EN pod `/en/...`, `hreflang`, serwerowo |
 | Wizualia | Restart — zostaje tylko paleta i logo z brand-concept |
@@ -85,7 +85,6 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 /oferta/opieka-i-wsparcie
 /realizacje            /realizacje/[slug]
 /blog                  /blog/[slug]
-/strony-internetowe/[miasto]        22 podstrony lokalizacyjne
 /o-mnie   /kontakt   /polityka-prywatnosci
 ```
 
@@ -105,24 +104,13 @@ Stara strona miała pod to zerowe fundamenty. Nowa musi mieć:
 - spójność NAP (nazwa, adres, telefon) z wizytówką Google Moja Firma
 - **blog** budujący topical authority
 
-### Miasta — `content/cities.ts`
+### Podstrony miast — usunięte
 
-22 miasta na start, model danych przygotowany na rozbudowę: dodanie miasta
-= dopisanie wpisu do `CITIES`, route generuje się sam przez `generateStaticParams`.
-
-Rdzeń (`tier: "core"`): Mielec (siedziba), Rzeszów, Tarnów, Dębica, Tarnobrzeg,
-Stalowa Wola, Sandomierz, Łańcut.
-Rozszerzenie (`tier: "extended"`): Ropczyce, Sędziszów Młp., Nisko, Kolbuszowa,
-Nowa Dęba, Staszów, Połaniec, Bochnia, Brzesko, Dąbrowa Tarnowska,
-Głogów Młp., Boguchwała, Tyczyn, Sokołów Młp.
-
-> **⚠ Ryzyko „doorway pages".** Zestaw podstron różniących się wyłącznie nazwą
-> miasta to praktyka karana przez Google. Każdy wpis w `CITIES` ma własne,
-> ręcznie napisane `intro` i `localContext` — **nigdy nie generować tych pól
-> z szablonu przez podmianę nazwy miasta.**
->
-> Pola `distanceKm` i `population` są przybliżone i **wymagają weryfikacji
-> przed publikacją** — nie opierać na nich twardych deklaracji w treści.
+Podstrony lokalizacyjne (`/strony-internetowe/[miasto]`, hub
+`/strony-internetowe`, `content/cities.ts`) zostały **usunięte decyzją
+właściciela 2026-09-29**. Lokalne SEO = **Mielec**: JSON-LD `LocalBusiness`
+z adresem siedziby + wizytówka Google Moja Firma. Dane siedziby (miasto,
+województwo, NAP) żyją w `content/site.ts` (`SITE.address`).
 
 ## Realizacje (portfolio)
 
@@ -189,25 +177,16 @@ Z tego wynikają cztery przewagi do wyeksponowania:
    z dolnośląskim, Sokołów Małopolski z Podlaskim, Tyczyn z Tychami,
    a jedna strona ma URL `/polancu/` zamiast Połańca.
 
-### Kolejność zdobywania miast
-
-Od najsłabszej konkurencji, nie od największych miast — patrz `PHASE_1/2/3`
-w `content/cities.ts`. Rzeszów, Sandomierz i Łańcut na sam koniec: to jedyne
-miasta z realnymi lokalnymi graczami.
-
 ### Twarde zasady SEO — wynikają z dokumentacji Google
 
 | Zasada | Powód |
 |---|---|
-| **Nie publikować 22 podstron miast naraz** | Wzorzec „scaled content abuse". Stąd etapowanie |
-| **Żadnego bloku „obsługujemy także: [22 miasta]"** | Google wymienia to wprost w polityce keyword stuffing |
+| **Żadnego bloku „obsługujemy także: [lista miast]"** | Google wymienia to wprost w polityce keyword stuffing |
 | **Nigdy `PostalAddress` z adresem Mielca na stronie innego miasta** | Wprowadzanie w błąd, ryzyko ręcznej kary |
 | **`LocalBusiness` + `Organization`, nie `ProfessionalService`** | schema.org wycofało ten typ |
 | **Bez `aggregateRating` na własnej stronie** | Google nie pokazuje gwiazdek dla opinii kontrolowanych przez opisywany podmiot |
 | **Bez `nosnippet` i `max-snippet:0`** | Wykluczają z AI Overviews |
 | **Nie blokować `GPTBot` / `ClaudeBot` / `Google-Extended`** | To dziś realny kanał pozyskiwania klientów |
-| **Każda strona miasta linkuje do usług, nie tylko do kontaktu** | Inaczej wpada w „test funnela" na doorway |
-| **Hub `/strony-internetowe` ↔ miasta, dwukierunkowo** | Google wymaga „clearly defined, browseable hierarchy" |
 | **`lastModified` w sitemapie tylko prawdziwe** | Fałszywe daty podważają zaufanie do całej sitemapy |
 | **Pominąć `priority` i `changefreq`** | Google ich nie używa |
 
@@ -224,9 +203,9 @@ miasta z realnymi lokalnymi graczami.
 
 ### Realistyczne oczekiwania
 
-Są **dwa osobne rankingi**. Podstrony miast walczą o wyniki **organiczne** —
-i tam mogą wygrać. W **Local Packu / Mapach** bez adresu w danym mieście
-realnie się nie wejdzie; tam gramy o Mielec i najbliższą okolicę.
+Są **dwa osobne rankingi**: wyniki **organiczne** i **Local Pack / Mapy**.
+W Local Packu bez adresu w danym mieście realnie się nie wejdzie; tam gramy
+o Mielec i najbliższą okolicę (podstron innych miast nie prowadzimy).
 Mylenie tych dwóch rzeczy to źródło rozczarowań.
 
 ### Otwarta rekomendacja: wersja EN
@@ -244,6 +223,12 @@ publikacji. Do ustalenia z właścicielem.
   you know". Przy nowej wersji Next czytać docs z `node_modules/next/dist/docs/`
   zamiast polegać na pamięci.
 - **Język odpowiedzi do użytkownika: polski.**
+- **Oszczędzać tokeny, ale nigdy kosztem jakości.** Krótkie odpowiedzi bez
+  powtarzania stanu, czytanie tylko potrzebnych fragmentów plików, celowana
+  weryfikacja zamiast serii zrzutów, krótkie prompty dla subagentów.
+  Tnie się gadanie i zbędne kroki — nie staranność, testy ani poziom designu.
+- **Copywriting do klienta, nie o Oscarze.** Każdy tekst mówi, co klient
+  dostanie i zyska („Twoja firma", „dostajesz"). Zero samochwalstwa.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

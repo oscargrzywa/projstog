@@ -1,11 +1,11 @@
 /**
  * Stopka — Server Component.
  *
- * ⚠ Celowo NIE zawiera listy wszystkich miast. Powtórzony na każdej
- * podstronie blok „Obsługujemy także: Mielec, Dębica, Ropczyce…" to
- * dokładnie ten wzorzec, który Google wymienia w polityce keyword
- * stuffing („blocks of text listing cities and regions a web page is
- * trying to rank for"). Zamiast tego jedno łącze do huba obszaru działania.
+ * ⚠ Celowo NIE zawiera listy miast. Powtórzony na każdej podstronie blok
+ * „Obsługujemy także: Mielec, Dębica, Ropczyce…" to dokładnie ten wzorzec,
+ * który Google wymienia w polityce keyword stuffing („blocks of text listing
+ * cities and regions a web page is trying to rank for"). Jedyna lokalizacja
+ * w stopce to adres siedziby (NAP).
  */
 
 import Link from "next/link";
@@ -13,7 +13,6 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
-import { BASE_CITY } from "@/content/cities";
 import { listServiceCategories } from "@/lib/cms";
 import { publicPath, type Locale } from "@/lib/routes";
 
@@ -72,14 +71,6 @@ export async function Footer({ locale }: { locale: Locale }) {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href={publicPath(locale, ["strony-internetowe"])}
-                  className="text-sm text-lichen transition-colors hover:text-bone"
-                >
-                  {t.footer.moreCities}
-                </Link>
-              </li>
             </ul>
           </nav>
 
@@ -106,7 +97,7 @@ export async function Footer({ locale }: { locale: Locale }) {
               </li>
               {/* Adres spójny z wizytówką Google Moja Firma. */}
               <li className="pt-1">
-                {BASE_CITY.name}, {SITE.address.postalCode}
+                {SITE.address.city}, {SITE.address.postalCode}
               </li>
             </ul>
           </div>

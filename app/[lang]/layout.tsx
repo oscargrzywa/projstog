@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 
 import "../globals.css";
 
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
+import { Cursor } from "@/components/Cursor";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { localBusinessSchema } from "@/lib/schema";
 import { SITE } from "@/content/site";
 import { LOCALES, isLocale, type Locale } from "@/lib/routes";
@@ -72,11 +75,20 @@ export default async function RootLayout({
 
         <Nav locale={locale} />
 
+        {/* Nawigacja w App Routerze jest transition, więc ViewTransition
+            animuje zmianę podstrony sam. Granica tylko wokół treści —
+            nagłówek i stopka stoją w miejscu. Keyframes `page-swap`
+            w globals.css. */}
         <main id="tresc" className="flex-1">
-          {children}
+          <ViewTransition default="page-swap">{children}</ViewTransition>
         </main>
 
         <Footer locale={locale} />
+
+        {/* Wyspy klienckie od ruchu — same się wyłączają przy dotyku
+            i przy prefers-reduced-motion. */}
+        <SmoothScroll />
+        <Cursor />
       </body>
     </html>
   );

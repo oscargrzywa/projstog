@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ContactForm } from "@/components/ContactForm";
@@ -7,9 +6,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { CONTACT_PAGE, GOOGLE_MAPS_URL } from "@/content/pages/contact";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
-import { BASE_CITY } from "@/content/cities";
 import { breadcrumbSchema } from "@/lib/schema";
-import { isLocale, metadataAlternates, publicPath } from "@/lib/routes";
+import { isLocale, metadataAlternates } from "@/lib/routes";
 
 export async function generateMetadata({
   params,
@@ -125,6 +123,11 @@ export default async function ContactPage({
                 {copy.locationTravel}
               </p>
 
+              {/* Adres spójny z wizytówką Google Moja Firma (NAP). */}
+              <address className="mt-5 text-sm not-italic text-bone">
+                {SITE.address.postalCode} {SITE.address.city}
+              </address>
+
               {/* Zamiast iframe'a Google Maps — link. Osadzona mapa kosztuje
                   LCP i dokłada third-party na stronie, która ma być szybka. */}
               <a
@@ -135,13 +138,6 @@ export default async function ContactPage({
               >
                 {copy.mapsLinkLabel}
               </a>
-
-              <Link
-                href={publicPath(lang, ["strony-internetowe"])}
-                className="mt-6 block text-sm text-lichen transition-colors hover:text-bone"
-              >
-                {BASE_CITY.name} → {t.footer.moreCities}
-              </Link>
             </section>
           </aside>
         </div>

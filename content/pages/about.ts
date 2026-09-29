@@ -4,8 +4,11 @@
  * ⚠ ZASADA NADRZĘDNA: żadnych zmyślonych faktów.
  * Nie ma tu studiów, certyfikatów, nagród ani „X lat doświadczenia", bo takich
  * danych nie ma w materiałach źródłowych. Opisujemy wyłącznie to, co wynika
- * z `content/site.ts` (rok startu, lokalizacja, dane kontaktowe),
- * z `content/cities.ts` (zasięg) i ze sposobu pracy.
+ * z `content/site.ts` (rok startu, siedziba, obszar obsługi, dane kontaktowe)
+ * i ze sposobu pracy.
+ *
+ * `reachValue` musi zgadzać się z `SITE.areaServed` (JSON-LD) — treść
+ * widoczna i dane strukturalne nie mogą sobie przeczyć.
  *
  * Jedyna twarda liczba, jakiej wolno tu użyć, to rok rozpoczęcia działalności
  * — i ona też jest wyliczana z `SITE.foundedYear`, nie wpisana ręcznie.
@@ -57,19 +60,19 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     seo: {
       title: "O mnie — Oscar Grzywa, PROJSTOG Mielec",
       description:
-        "Nie agencja, tylko konkretny człowiek z Mielca. Strony internetowe dla firm z Podkarpacia robi i utrzymuje jedna osoba — od pierwszej rozmowy po wsparcie po uruchomieniu.",
+        "Twoją stronę internetową robi i utrzymuje jedna osoba z Mielca — od pierwszej rozmowy po wsparcie po uruchomieniu. Bez agencji, pośredników i przekazywania sprawy dalej.",
     },
     breadcrumbHome: "Strona główna",
     kicker: "Nie agencja. Człowiek z Mielca.",
     h1: "Oscar Grzywa",
     lead:
-      "Prowadzę PROJSTOG jednoosobowo. Rozmawiasz ze mną, ofertę dostajesz ode mnie, kod piszę ja i ja odbieram telefon, gdy trzeba coś poprawić po uruchomieniu. Na żadnym etapie nie pojawia się account manager ani podwykonawca, o którym nic nie wiesz.",
+      "Prowadzę PROJSTOG jednoosobowo, więc przez cały projekt masz jeden kontakt. Rozmawiasz ze mną, ofertę dostajesz ode mnie, kod piszę ja i ja odbieram telefon, gdy po uruchomieniu trzeba coś poprawić. Na żadnym etapie nie trafiasz do account managera ani do podwykonawcy, o którym nic nie wiesz.",
     photoAlt: "Oscar Grzywa, właściciel PROJSTOG",
     photoCaption: "Oscar Grzywa · PROJSTOG · Mielec",
 
-    localHeading: "Jestem stąd. Większość konkurencji nie jest.",
+    localHeading: "Masz wykonawcę stąd. Większość konkurencji jest daleko.",
     localLead:
-      "Sprawdziłem, kto realnie wyświetla się w Google na hasła o stronach internetowych na Podkarpaciu. Wyniki są jednoznaczne: prawie żadna z tych firm nie ma siedziby w regionie.",
+      "Wpisz w Google hasło o stronach internetowych na Podkarpaciu i sprawdź, skąd są firmy na górze wyników. Prawie żadna nie ma siedziby w regionie.",
     competitorOrigins: [
       { city: "Sochaczew", distance: "woj. mazowieckie" },
       { city: "Piła", distance: "woj. wielkopolskie" },
@@ -77,11 +80,11 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       { city: "Kraków", distance: "woj. małopolskie" },
     ],
     localPunchline:
-      "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Ja mieszkam i pracuję w Mielcu.",
+      "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Ja mieszkam i pracuję w Mielcu, więc możesz umówić się ze mną na spotkanie.",
     localDetail:
-      "W praktyce oznacza to, że mogę przyjechać na spotkanie, obejrzeć lokal albo zdjęcia z realizacji na miejscu i znam rynek, o którym piszę. Nie muszę zgadywać, jak wygląda gospodarka w Dębicy, Tarnobrzegu czy Kolbuszowej — jeżdżę tamtędy.",
+      "Dla Ciebie to znaczy, że przyjadę na spotkanie, obejrzę Twój lokal albo realizacje na miejscu, a teksty na Twoją stronę napiszę z wiedzą o lokalnym rynku. Nie zgaduję, jak wygląda sytuacja w Dębicy, Tarnobrzegu czy Kolbuszowej — jeżdżę tamtędy.",
 
-    approachHeading: "Jak pracuję",
+    approachHeading: "Jak wygląda współpraca",
     approachPoints: [
       {
         title: "Jeden kontakt, od początku do końca",
@@ -91,12 +94,12 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       {
         title: "Cena ustalona przed startem",
         body:
-          "Zakres spisujemy zanim zacznę. Wiesz, co wchodzi w kwotę, a co wyceniam osobno — bez faktur-niespodzianek w trakcie.",
+          "Zakres spisujemy, zanim zacznę. Wiesz, co wchodzi w kwotę, a co jest wyceniane osobno — bez faktur-niespodzianek w trakcie.",
       },
       {
-        title: "Strona ma przynosić zapytania",
+        title: "Twoja strona ma przynosić zapytania",
         body:
-          "Efekt mierzymy telefonami i wiadomościami od klientów, nie liczbą animacji. Szybkie ładowanie, czytelna oferta i widoczny numer telefonu są tu ważniejsze niż efekciarstwo.",
+          "Liczy się to, czy klienci dzwonią i piszą, a nie liczba animacji. Dlatego dostajesz szybkie ładowanie, czytelną ofertę i widoczny numer telefonu zamiast efekciarstwa.",
       },
       {
         title: "Kod i dostępy zostają u Ciebie",
@@ -105,9 +108,9 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       },
     ],
 
-    workHeading: "Czym się zajmuję",
+    workHeading: "W czym mogę Ci pomóc",
     workBody:
-      "Strony firmowe i one page, sklepy internetowe, blogi i platformy treści. Do tego automatyzacje i chatboty AI, proste systemy CRM, wizytówka Google Moja Firma i lokalne SEO, a po uruchomieniu hosting, aktualizacje i wsparcie techniczne. Wszystko w jednym miejscu, u tej samej osoby.",
+      "Strona firmowa albo one page, sklep internetowy, blog lub platforma treści. Do tego automatyzacje i chatboty AI, proste systemy CRM, wizytówka Google Moja Firma i lokalne SEO, a po uruchomieniu hosting, aktualizacje i wsparcie techniczne. Wszystko załatwiasz w jednym miejscu, u tej samej osoby.",
 
     factsHeading: "W skrócie",
     factsLabels: {
@@ -116,12 +119,12 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       reach: "Zasięg",
       contact: "Kontakt",
     },
-    reachValue: "Podkarpacie, Małopolska wschodnia, południowe Świętokrzyskie",
+    reachValue: "Mielec i całe Podkarpacie",
 
-    ctaHeading: "Porozmawiajmy o Twojej firmie",
+    ctaHeading: "Powiedz, czego potrzebuje Twoja firma",
     ctaBody:
-      "Pierwsza rozmowa jest bezpłatna i do niczego nie zobowiązuje. Powiem wprost, czy i jak mogę pomóc.",
-    ctaButton: "Napisz do mnie",
+      "Pierwsza rozmowa jest bezpłatna i do niczego nie zobowiązuje. Usłyszysz wprost, czy i jak mogę Ci pomóc.",
+    ctaButton: "Zapytaj o wycenę",
     ctaSecondary: "Zobacz ofertę",
   },
 
@@ -129,19 +132,19 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     seo: {
       title: "About — Oscar Grzywa, PROJSTOG Mielec",
       description:
-        "Not an agency — one person from Mielec. Websites for companies in south-eastern Poland, built and maintained by the same person from the first call to post-launch support.",
+        "Your website, built and maintained by one person from Mielec — from the first call to post-launch support. No agency, no middlemen, no passing your case along.",
     },
     breadcrumbHome: "Home",
     kicker: "Not an agency. One person from Mielec.",
     h1: "Oscar Grzywa",
     lead:
-      "I run PROJSTOG on my own. You talk to me, the quote comes from me, I write the code, and I am the one who picks up the phone when something needs fixing after launch. At no point does an account manager or an unnamed subcontractor appear.",
+      "I run PROJSTOG on my own, so you have one contact for the whole project. You talk to me, the quote comes from me, I write the code, and I pick up the phone when something needs fixing after launch. At no point are you handed to an account manager or an unnamed subcontractor.",
     photoAlt: "Oscar Grzywa, owner of PROJSTOG",
     photoCaption: "Oscar Grzywa · PROJSTOG · Mielec",
 
-    localHeading: "I am from here. Most of the competition is not.",
+    localHeading: "Your contractor is local. Most of the competition is far away.",
     localLead:
-      "I checked who actually ranks in Google for web design queries across south-eastern Poland. The result is unambiguous: almost none of those companies are based in the region.",
+      "Search Google for web design anywhere in south-eastern Poland and check where the companies at the top are based. Almost none of them are in the region.",
     competitorOrigins: [
       { city: "Sochaczew", distance: "Mazowieckie voivodeship" },
       { city: "Piła", distance: "Wielkopolskie voivodeship" },
@@ -149,11 +152,11 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       { city: "Kraków", distance: "Małopolskie voivodeship" },
     ],
     localPunchline:
-      "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. I live and work in Mielec.",
+      "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. I live and work in Mielec, so you can meet me in person.",
     localDetail:
-      "In practice that means I can come to a meeting, look at the premises or the job photos in person, and I know the market I write about. I do not have to guess what the economy looks like in Dębica, Tarnobrzeg or Kolbuszowa — I drive through them.",
+      "For you, that means I come to the meeting, look at your premises or your work on site, and write your copy knowing the local market. I do not guess what things look like in Dębica, Tarnobrzeg or Kolbuszowa — I drive through them.",
 
-    approachHeading: "How I work",
+    approachHeading: "How working together goes",
     approachPoints: [
       {
         title: "One contact, start to finish",
@@ -163,12 +166,12 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       {
         title: "Price agreed before we start",
         body:
-          "The scope is written down first. You know what the figure covers and what I quote separately — no surprise invoices halfway through.",
+          "The scope is written down first. You know what the figure covers and what is quoted separately — no surprise invoices halfway through.",
       },
       {
-        title: "The site exists to bring enquiries",
+        title: "Your site exists to bring enquiries",
         body:
-          "Success is measured in calls and messages from customers, not in the number of animations. Fast loading, a readable offer and a visible phone number matter more than visual tricks.",
+          "What counts is whether customers call and write, not the number of animations. So you get fast loading, a readable offer and a visible phone number instead of visual tricks.",
       },
       {
         title: "The code and the access stay yours",
@@ -177,9 +180,9 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       },
     ],
 
-    workHeading: "What I do",
+    workHeading: "What I can help you with",
     workBody:
-      "Company websites and one-pagers, online stores, blogs and content platforms. Plus AI automation and chatbots, simple CRM systems, Google Business Profile and local SEO, and after launch: hosting, updates and technical support. All in one place, from the same person.",
+      "A company website or one-pager, an online store, a blog or content platform. Plus AI automation and chatbots, simple CRM systems, Google Business Profile and local SEO, and after launch: hosting, updates and technical support. You get it all in one place, from the same person.",
 
     factsHeading: "In short",
     factsLabels: {
@@ -188,13 +191,12 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       reach: "Coverage",
       contact: "Contact",
     },
-    reachValue:
-      "Podkarpackie, eastern Małopolskie and southern Świętokrzyskie",
+    reachValue: "Mielec and the whole Podkarpackie region",
 
-    ctaHeading: "Let's talk about your business",
+    ctaHeading: "Tell me what your business needs",
     ctaBody:
-      "The first conversation is free and commits you to nothing. I will tell you plainly whether and how I can help.",
-    ctaButton: "Get in touch",
+      "The first conversation is free and commits you to nothing. You will hear plainly whether and how I can help.",
+    ctaButton: "Ask for a quote",
     ctaSecondary: "See the services",
   },
 };

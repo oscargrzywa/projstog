@@ -61,8 +61,6 @@ export type PostSummary = {
   tags: string[];
   /** Czas czytania w minutach — liczony przy imporcie, nie w komponencie. */
   readingMinutes: number;
-  /** Slug miasta, jeśli wpis jest powiązany z konkretnym rynkiem lokalnym. */
-  citySlug?: string;
 };
 
 export type Post = PostSummary & {
@@ -86,8 +84,6 @@ export type CaseStudySummary = {
   outcome: string;
   tech: string[];
   cover?: ImageRef;
-  /** Miasto klienta, jeśli lokalny — wiąże realizację z podstroną miasta. */
-  citySlug?: string;
   /** Kolejność na liście; niżej = wyżej na stronie. */
   order: number;
 };

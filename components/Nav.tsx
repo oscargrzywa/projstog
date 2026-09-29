@@ -1,16 +1,28 @@
 /**
  * Nawigacja główna — Server Component.
  *
- * Bez „use client": wszystkie linki są w HTML-u od razu, bez czekania
- * na hydratację. Menu mobilne to natywny <details>, więc działa
- * bez JavaScriptu i jest obsługiwane z klawiatury out of the box.
- * Jedyną wyspą kliencką jest przełącznik języka.
+ * Wszystkie linki są w HTML-u od razu, bez czekania na hydratację.
+ * Wyspy klienckie są małe i robią po jednej rzeczy:
+ * - NavScroll — `data-scrolled` na <header> (pasek → kapsuła),
+ * - NavLink — oznaczenie aktywnej podstrony,
+ * - MobileMenu — stan otwarcia nakładki mobilnej,
+ * - LanguageSwitcher — link do drugiej wersji językowej.
+ *
+ * Nagłówek jest `position: fixed` (kapsuła musi móc odsunąć się od krawędzi
+ * i zmienić wysokość bez przesuwania treści), więc za nim stoi odstęp
+ * o wysokości starego paska (4rem) — treść podstron nie wjeżdża pod spód,
+ * a hero na głównej (`100svh - 4rem`) zachowuje swoje proporcje.
  */
 
 import Link from "next/link";
 
+import "./nav.css";
+
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MobileMenu } from "./MobileMenu";
+import { NavLink } from "./NavLink";
+import { NavScroll } from "./NavScroll";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
 import { publicPath, type Locale } from "@/lib/routes";
@@ -19,94 +31,147 @@ export function Nav({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
 
   const links = [
-    { label: t.nav.offer, segments: ["oferta"] },
-    { label: t.nav.work, segments: ["realizacje"] },
-    { label: t.nav.blog, segments: ["blog"] },
-    { label: t.nav.about, segments: ["o-mnie"] },
+    { label: t.nav.offer, segment: "oferta" },
+    { label: t.nav.work, segment: "realizacje" },
+    { label: t.nav.blog, segment: "blog" },
+    { label: t.nav.about, segment: "o-mnie" },
   ];
 
+  const contactHref = publicPath(locale, ["kontakt"]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline bg-obsydian/85 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
-        <Link href={publicPath(locale)} className="rounded-md" aria-label="PROJSTOG">
-          <Logo className="h-7 w-auto" />
-        </Link>
+    <>
+      <header className="site-nav" data-scrolled="false" data-menu-open="false">
+        <NavScroll />
 
-        <nav
-          aria-label={t.a11y.mainNav}
-          className="ml-auto hidden items-center gap-7 md:flex"
-        >
-          {links.map((link) => (
+        <div className="site-nav__bar">
+          <div className="site-nav__brand">
             <Link
-              key={link.segments.join("/")}
-              href={publicPath(locale, link.segments)}
-              className="text-sm text-lichen transition-colors hover:text-bone"
+              href={publicPath(locale)}
+              className="site-nav__logo"
+              aria-label="PROJSTOG"
             >
-              {link.label}
+              <Logo className="site-nav__logo-svg" />
             </Link>
-          ))}
-        </nav>
 
-        <div className="ml-auto flex items-center gap-4 md:ml-0">
-          <LanguageSwitcher locale={locale} label={t.a11y.switchLanguage} />
+            {/* Status przy znaku, nie przy CTA — prawa kolumna musi być
+                wąska, żeby linki mogły stać na środku paska. */}
+            <a href={`tel:${SITE.phoneRaw}`} className="site-nav__phone">
+              <PhoneIcon />
+              {SITE.phone}
+            </a>
+          </div>
 
-          <a
-            href={`tel:${SITE.phoneRaw}`}
-            className="hidden text-sm text-lichen transition-colors hover:text-bone lg:block"
-          >
-            {SITE.phone}
-          </a>
+          <nav aria-label={t.a11y.mainNav} className="site-nav__links">
+            <ul>
+              {links.map((link) => (
+                <li key={link.segment}>
+                  <NavLink
+                    href={publicPath(locale, [link.segment])}
+                    label={link.label}
+                    segment={link.segment}
+                  />
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-          <Link
-            href={publicPath(locale, ["kontakt"])}
-            className="hidden rounded-md bg-signal px-4 py-2 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian sm:block"
-          >
-            {t.nav.cta}
-          </Link>
+          <div className="site-nav__actions">
+            <LanguageSwitcher locale={locale} label={t.a11y.switchLanguage} />
 
-          {/* Menu mobilne bez JavaScriptu. */}
-          <details className="group relative md:hidden">
-            <summary
-              className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-md border border-hairline"
-              aria-label={t.a11y.openMenu}
-            >
+            <Link href={contactHref} className="nav-cta" data-magnetic>
+              <span className="nav-cta__label">{t.nav.cta}</span>
               <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4 stroke-bone"
+                viewBox="0 0 16 16"
+                className="nav-cta__arrow"
                 fill="none"
-                strokeWidth="2"
+                stroke="currentColor"
+                strokeWidth="1.5"
                 strokeLinecap="round"
+                strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <path d="M4 7h16M4 12h16M4 17h16" />
+                <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
               </svg>
-            </summary>
+            </Link>
 
-            <nav
-              aria-label={t.a11y.mainNav}
-              className="absolute right-0 top-11 w-56 rounded-lg border border-hairline bg-basalt p-2"
-            >
-              {[...links, { label: t.nav.contact, segments: ["kontakt"] }].map(
-                (link) => (
-                  <Link
-                    key={link.segments.join("/")}
-                    href={publicPath(locale, link.segments)}
-                    className="block rounded-md px-3 py-2.5 text-sm text-bone transition-colors hover:bg-slate-moss"
-                  >
-                    {link.label}
+            <MobileMenu openLabel={t.a11y.openMenu} closeLabel={t.a11y.closeMenu}>
+              <div className="menu__inner">
+                <nav aria-label={t.a11y.mainNav}>
+                  <ul className="menu__list">
+                    {[...links, { label: t.nav.contact, segment: "kontakt" }].map(
+                      (link, i) => (
+                        <li
+                          key={link.segment}
+                          className="menu__item"
+                          style={{ "--i": i } as React.CSSProperties}
+                        >
+                          <NavLink
+                            href={publicPath(locale, [link.segment])}
+                            label={link.label}
+                            segment={link.segment}
+                            variant="overlay"
+                            index={i + 1}
+                          />
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </nav>
+
+                <div className="menu__footer">
+                  <a href={`tel:${SITE.phoneRaw}`} className="menu__contact">
+                    <PhoneIcon />
+                    {SITE.phone}
+                  </a>
+                  <a href={`mailto:${SITE.email}`} className="menu__contact">
+                    {SITE.email}
+                  </a>
+                  <Link href={contactHref} className="nav-cta nav-cta--block">
+                    <span className="nav-cta__label">{t.nav.cta}</span>
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="nav-cta__arrow"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                    </svg>
                   </Link>
-                )
-              )}
-              <a
-                href={`tel:${SITE.phoneRaw}`}
-                className="block rounded-md px-3 py-2.5 text-sm text-lichen transition-colors hover:bg-slate-moss"
-              >
-                {SITE.phone}
-              </a>
-            </nav>
-          </details>
+                </div>
+              </div>
+            </MobileMenu>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Odstęp za nagłówkiem fixed — tyle, ile zajmował stary pasek.
+          Znika, gdy strona ma sekcję z `data-nav-overlay` (hero, które
+          ma leżeć pod przezroczystym paskiem) — patrz nav.css. */}
+      <div className="site-nav-spacer" aria-hidden="true" />
+    </>
+  );
+}
+
+/* Słuchawka (obrys, 24×24) — kolor bierze z `currentColor` przez klasę. */
+function PhoneIcon() {
+  return (
+    <svg
+      className="phone-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
   );
 }

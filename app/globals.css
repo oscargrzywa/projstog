@@ -149,6 +149,27 @@ h3 {
   font-kerning: normal;
 }
 
+/* Nagłówek hero — jedyne miejsce „bold" na stronie.
+   Pełny zestaw właściwości h1 powtórzony jawnie, bo tę samą klasę nosi
+   kopia w soczewce (div, nie h1) — łamanie wierszy i przycięcie linii
+   muszą być identyczne, inaczej obraz pod kroplą się rozjedzie. */
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 0.4rem + 9.4vw, 10.5rem);
+  font-weight: 640;
+  letter-spacing: clamp(-0.06em, -0.02em - 0.35vw, -0.03em);
+  line-height: 0.86;
+  text-wrap: balance;
+  font-synthesis: none;
+  font-kerning: normal;
+}
+
+@supports (text-box-trim: trim-both) {
+  .hero-title {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
 /* Mniejsze nagłówki potrzebują luźniejszego złożenia niż display. */
 h3 {
   line-height: 1.08;
@@ -292,20 +313,6 @@ a.panel-outlined:hover {
   mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
 }
 
-/* Siatka pod hero — subtelna tekstura, żeby czerń nie była martwa. */
-.grid-texture {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--color-hairline) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
-  opacity: 0.45;
-}
-
 /* Nagłówek sekcji: tytuł i odnośnik na wspólnej linii bazowej. */
 .section-head {
   display: flex;
@@ -420,6 +427,287 @@ a.panel-outlined:hover {
   from {
     opacity: 0;
     transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Fala w listach i siatkach ------------------------------------------
+   Każde dziecko ma własną oś view(), więc elementy w RÓŻNYCH wierszach i tak
+   wchodzą osobno. Przesunięcie `--i` rozkłada w czasie tylko te, które
+   wjeżdżają razem — czyli sąsiadów w jednym rzędzie siatki.
+
+   Indeks liczony modulo 4 (najszersza siatka na stronie ma 4 kolumny).
+   Bez modulo dziesiąty element pionowej listy dostawałby opóźnienie tak
+   duże, że pojawiałby się dopiero w połowie ekranu. Wariant `--dense`
+   dla gęstych, zawijanych list (np. miasta): mniejszy krok, cykl 8. */
+.reveal-stagger > * {
+  --i: 0;
+  --stagger-step: 6%;
+}
+.reveal-stagger > :nth-child(4n + 2) { --i: 1; }
+.reveal-stagger > :nth-child(4n + 3) { --i: 2; }
+.reveal-stagger > :nth-child(4n + 4) { --i: 3; }
+
+.reveal-stagger--dense > * {
+  --stagger-step: 2.5%;
+}
+.reveal-stagger--dense > :nth-child(8n + 5) { --i: 4; }
+.reveal-stagger--dense > :nth-child(8n + 6) { --i: 5; }
+.reveal-stagger--dense > :nth-child(8n + 7) { --i: 6; }
+.reveal-stagger--dense > :nth-child(8n + 8) { --i: 7; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-stagger > * {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range:
+        entry calc(10% + var(--i) * var(--stagger-step))
+        cover calc(30% + var(--i) * var(--stagger-step));
+    }
+  }
+}
+
+/* --- Maska nagłówków sekcji ---------------------------------------------
+   Tekst wysuwa się od dołu z wnętrza własnej ramki — efekt „kurtyny",
+   bez dzielenia na słowa JS-em (nagłówek zostaje jednym węzłem tekstu,
+   dokładnie tak, jak widzi go Googlebot).
+
+   Struktura: <h2 class="mask-reveal"><span class="mask-reveal__inner">…
+   Oś czasu jest NAZWANA i przypięta do rodzica. Gdyby dziecko użyło
+   własnego view(), liczyłoby postęp od pozycji, którą samo sobie
+   przesuwa — animacja goniłaby własny ogon.
+
+   Padding + ujemny margines robią miejsce na descendery (line-height 0.92
+   i text-box-trim ucinają je przy overflow: clip) bez zmiany układu.
+   Cała reguła siedzi w @supports — bez wsparcia nagłówek jest zwykłym,
+   widocznym h2, bez obcinania. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .mask-reveal {
+      overflow: clip;
+      padding-block: 0.14em 0.3em;
+      margin-block: -0.14em -0.3em;
+      view-timeline-name: --mask-reveal;
+    }
+
+    .mask-reveal__inner {
+      display: block;
+      animation: mask-rise linear both;
+      animation-timeline: --mask-reveal;
+      animation-range: entry 20% cover 38%;
+    }
+  }
+}
+
+@keyframes mask-rise {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* --- Wejście hero ---------------------------------------------------------
+   Jedna orkiestrowana sekwencja przy załadowaniu, czas zegarowy (nie oś
+   przewijania — hero jest widoczne od pierwszej klatki, nie ma czego
+   przewijać). Kolejność: badge → H1 → lead → przyciski.
+   Krok 80ms: poniżej 60ms oko widzi jeden blok, powyżej 120ms sekwencja
+   zaczyna się dłużyć i opóźnia moment, w którym można kliknąć CTA.
+
+   ⚠ H1 to kandydat LCP. Dostaje osobny wariant `.enter-emerge` BEZ
+   opacity: 0 — wynurza się (przesuw + rozmycie), ale od pierwszej klatki
+   jest namalowany, więc LCP liczy się normalnie.
+
+   Całość w `no-preference`: przy reduced-motion reguła w ogóle nie
+   istnieje, więc elementy startujące od opacity 0 są od razu widoczne. */
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: enter-rise 1000ms var(--ease-out-expo) both;
+    animation-delay: calc(60ms + var(--i, 0) * 80ms);
+  }
+
+  .enter-emerge {
+    animation: enter-emerge 1100ms var(--ease-out-expo) both;
+    animation-delay: calc(60ms + var(--i, 0) * 80ms);
+  }
+}
+
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Bez opacity — patrz uwaga o LCP wyżej. Rozmycie tylko w pierwszej
+   fazie; filter: none na końcu zdejmuje warstwę filtra z kompozytora. */
+@keyframes enter-emerge {
+  from {
+    transform: translateY(0.25em);
+    filter: blur(6px);
+  }
+  to {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* --- Parallax warstw hero -----------------------------------------------
+   Oś: przewinięcie całego dokumentu, zakres pierwszego ekranu. Poza nim
+   animacja stoi na klatce końcowej — hero jest wtedy i tak poza widokiem.
+   Poświata zjeżdża w dół o ~30% drogi treści, czyli „płynie" wolniej;
+   kod w tle lekko się zmniejsza i gaśnie, jakby się oddalał.
+   Tylko transform i opacity — zero layoutu, zero repaintu. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .parallax-drift {
+      animation: parallax-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+
+    .parallax-recede {
+      animation: parallax-recede linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+
+@keyframes parallax-drift {
+  to {
+    transform: translateY(30vh);
+    opacity: 0.55;
+  }
+}
+
+/* Warstwa kodu w tle: `from` pominięty — start z pełnego krycia,
+   które CodeField ustala sam. Kod oddala się i gaśnie. */
+@keyframes parallax-recede {
+  to {
+    transform: translateY(12vh) scale(0.94);
+    opacity: 0.25;
+  }
+}
+
+/* --- Wiersze realizacji -------------------------------------------------
+   Hover: nazwa odsuwa się w prawo, pod wierszem rysuje się linia voltage
+   od lewej. Linia leży tuż nad istniejącym separatorem, w obrębie wiersza
+   (bottom: 0) — przy -1px zasłaniałby ją border następnego <li>, który
+   z animacją `.reveal` jest osobnym kontekstem nakładania.
+   `translate` zamiast `transform` — osobna właściwość nie koliduje
+   z animacją `.reveal`, która steruje `transform` na tym samym drzewie. */
+.work-row {
+  position: relative;
+}
+
+.work-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--color-voltage);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.work-row__name {
+  transition:
+    color 250ms var(--ease-out-quart),
+    translate 600ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .work-row:hover::after {
+    transform: scaleX(1);
+  }
+
+  .work-row:hover .work-row__name {
+    translate: 0.5rem 0;
+  }
+}
+
+.work-row:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* --- Przycisk z wlewanym wypełnieniem -----------------------------------
+   Voltage „wlewa się" od dołu (scaleY na pseudoelemencie) zamiast skoku
+   koloru tła. Tło bazowe (signal) zostaje na elemencie, więc bez hovera
+   i przy wyłączonym ruchu przycisk wygląda identycznie jak wcześniej.
+   `isolation` trzyma pseudoelement z z-index -1 pod tekstem, ale nad
+   tłem samego przycisku. */
+.btn-fill {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  transition: color 350ms var(--ease-out-quart);
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-voltage);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 550ms var(--ease-out-expo);
+}
+
+.btn-fill:hover,
+.btn-fill:focus-visible {
+  color: var(--color-obsydian);
+}
+
+.btn-fill:hover::before,
+.btn-fill:focus-visible::before {
+  transform: scaleY(1);
+}
+
+/* --- Przejścia między podstronami (View Transitions) --------------------
+   React <ViewTransition default="page-swap"> wokół treści <main> nadaje
+   jej klasę przejścia. Stara strona gaśnie szybko, nowa wchodzi wolniej
+   z lekkim podjazdem — asymetria jak w wytycznych Next: to, co odchodzi,
+   nie konkuruje o uwagę z tym, co przychodzi.
+   Grupa bez animacji rozmiaru — strony mają różną wysokość, a morfowanie
+   prostokąta całej treści wygląda jak błąd, nie jak ruch.
+   Nagłówek i stopka są poza granicą, więc się nie ruszają. */
+::view-transition-group(.page-swap) {
+  animation-duration: 0s;
+}
+
+::view-transition-old(.page-swap) {
+  animation: vt-fade-out 180ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(.page-swap) {
+  animation: vt-rise-in 520ms var(--ease-out-expo) 120ms both;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
   }
   to {
     opacity: 1;

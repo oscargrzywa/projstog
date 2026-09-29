@@ -127,7 +127,7 @@ export const CONTACT_FORM_COPY: Record<Locale, FormCopy> = {
         label: "Wiadomość",
         placeholder:
           "Czym zajmuje się firma, co ma robić strona, na kiedy jest potrzebna…",
-        hint: "Im więcej szczegółów, tym konkretniej odpowiem.",
+        hint: "Im więcej szczegółów, tym konkretniejszą odpowiedź dostaniesz.",
       },
     },
     serviceOptions: {
@@ -150,7 +150,7 @@ export const CONTACT_FORM_COPY: Record<Locale, FormCopy> = {
     submitting: "Wysyłam…",
     status: {
       success:
-        "Wiadomość dotarła. Odpowiadam w ciągu jednego dnia roboczego — jeśli sprawa jest pilna, zadzwoń.",
+        "Wiadomość dotarła. Odpowiedź dostaniesz w ciągu jednego dnia roboczego — jeśli sprawa jest pilna, zadzwoń.",
       networkError:
         "Nie udało się połączyć z serwerem. Sprawdź internet i spróbuj jeszcze raz albo zadzwoń.",
       serverError:
@@ -191,7 +191,7 @@ export const CONTACT_FORM_COPY: Record<Locale, FormCopy> = {
         label: "Message",
         placeholder:
           "What your company does, what the site should do, when you need it…",
-        hint: "The more detail you give, the more specific my answer will be.",
+        hint: "The more detail you give, the more specific the answer you get.",
       },
     },
     serviceOptions: {
@@ -214,7 +214,7 @@ export const CONTACT_FORM_COPY: Record<Locale, FormCopy> = {
     submitting: "Sending…",
     status: {
       success:
-        "Your message arrived. I reply within one working day — if it is urgent, please call.",
+        "Your message arrived. You will get a reply within one working day — if it is urgent, please call.",
       networkError:
         "Could not reach the server. Check your connection and try again, or call instead.",
       serverError:
@@ -259,31 +259,31 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     seo: {
       title: "Kontakt — Oscar Grzywa, PROJSTOG Mielec",
       description:
-        "Telefon, e-mail i formularz kontaktowy. Odbiera i odpisuje Oscar Grzywa — ta sama osoba, która później robi projekt. Mielec, woj. podkarpackie.",
+        "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Mielec, woj. podkarpackie.",
     },
     breadcrumbHome: "Strona główna",
     h1: "Kontakt",
     lead:
-      "Piszesz albo dzwonisz bezpośrednio do mnie. Nie ma infolinii, formularza zgłoszeniowego ani opiekuna klienta, który przekaże sprawę dalej.",
+      "Dzwonisz albo piszesz prosto do osoby, która zrobi Twoją stronę. Bez infolinii, systemu zgłoszeń i opiekuna klienta, który przekaże sprawę dalej.",
     phoneLabel: "Telefon",
     phoneNote: "Najszybsza droga — dzwoń śmiało w godzinach pracy.",
     emailLabel: "E-mail",
-    emailNote: "Wolisz napisać? Odpisuję z tego samego adresu.",
+    emailNote: "Wolisz napisać? Odpowiedź przyjdzie z tego samego adresu.",
     hoursLabel: "Godziny",
     hoursNote: "od poniedziałku do piątku",
-    responseHeading: "Czego możesz się spodziewać",
+    responseHeading: "Co dostajesz po wysłaniu wiadomości",
     responsePoints: [
-      "Odpowiadam w ciągu jednego dnia roboczego — telefonicznie albo mailem, jak wolisz.",
-      "Rozmawiasz ze mną, nie z pośrednikiem. Tą samą osobą, która potem pisze kod.",
+      "Odpowiedź w ciągu jednego dnia roboczego — telefonicznie albo mailem, jak wolisz.",
+      "Rozmowę z osobą, która potem zrobi Twój projekt, a nie z pośrednikiem.",
       "Pierwsza rozmowa jest bezpłatna i do niczego nie zobowiązuje.",
-      "Jeśli Twojego problemu nie umiem rozwiązać, mówię to od razu.",
+      "Jasną informację od razu, jeśli z Twoim problemem lepiej pójść gdzie indziej.",
     ],
     formHeading: "Napisz, czego potrzebujesz",
-    locationHeading: "Gdzie jestem",
+    locationHeading: "Gdzie się spotkamy",
     locationBody:
-      "Mielec, województwo podkarpackie. Realny adres w regionie, nie wirtualne biuro ani oddział firmy z drugiego końca Polski.",
+      "Mielec, województwo podkarpackie. Masz wykonawcę z realnym adresem w regionie, nie wirtualne biuro ani oddział firmy z drugiego końca Polski.",
     locationTravel:
-      "Do klientów w Mielcu i okolicy dojeżdżam na spotkania, do dalszych miast regionu także — wystarczy ustalić termin.",
+      "Jeśli jesteś z Mielca albo okolicy, przyjadę do Ciebie na spotkanie. Do dalszych miast regionu też — wystarczy ustalić termin.",
     mapsLinkLabel: "Zobacz w Mapach Google",
   },
 
@@ -291,31 +291,31 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     seo: {
       title: "Contact — Oscar Grzywa, PROJSTOG Mielec",
       description:
-        "Phone, email and a contact form. Oscar Grzywa answers personally — the same person who later builds the project. Mielec, south-eastern Poland.",
+        "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Mielec, south-eastern Poland.",
     },
     breadcrumbHome: "Home",
     h1: "Contact",
     lead:
-      "You write or call me directly. There is no call centre, no ticket queue and no account manager passing your case along.",
+      "You call or write straight to the person who will build your site. No call centre, no ticket queue and no account manager passing your case along.",
     phoneLabel: "Phone",
     phoneNote: "The fastest route — call during working hours.",
     emailLabel: "Email",
-    emailNote: "Prefer writing? I reply from the same address.",
+    emailNote: "Prefer writing? The reply comes from the same address.",
     hoursLabel: "Hours",
     hoursNote: "Monday to Friday",
-    responseHeading: "What to expect",
+    responseHeading: "What you get after you write",
     responsePoints: [
-      "I reply within one working day — by phone or email, whichever you prefer.",
-      "You talk to me, not to a middleman. The same person who then writes the code.",
+      "A reply within one working day — by phone or email, whichever you prefer.",
+      "A conversation with the person who will then build your project, not a middleman.",
       "The first conversation is free and commits you to nothing.",
-      "If I cannot solve your problem, I say so straight away.",
+      "A straight answer right away if your problem is better taken elsewhere.",
     ],
     formHeading: "Tell me what you need",
-    locationHeading: "Where I am",
+    locationHeading: "Where we can meet",
     locationBody:
-      "Mielec, Podkarpackie voivodeship. A real address in the region — not a virtual office and not a branch of a company from the other end of the country.",
+      "Mielec, Podkarpackie voivodeship. You get someone with a real address in the region — not a virtual office and not a branch of a company from the other end of the country.",
     locationTravel:
-      "I drive out to meetings in Mielec and the surrounding area, and to the wider region as well — we just agree a date.",
+      "If you are in Mielec or nearby, I will come to you for a meeting. The wider region too — we just agree a date.",
     mapsLinkLabel: "Open in Google Maps",
   },
 };

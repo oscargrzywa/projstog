@@ -62,7 +62,7 @@ export async function generateMetadata({
  * Kategoria usług jako `Service`.
  *
  * Budowana lokalnie zamiast w `lib/schema.ts` — dotyczy wyłącznie tego route'u.
- * Wzorzec za `cityServiceSchema`: `provider` wskazuje przez `@id` na profil
+ * `provider` wskazuje przez `@id` na profil
  * firmy wystawiony raz w root layoucie, zamiast powielać dane NAP.
  *
  * `hasOfferCatalog` wymienia dokładnie te usługi, które widać na stronie —

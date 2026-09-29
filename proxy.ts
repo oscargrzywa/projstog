@@ -3,9 +3,9 @@
  *
  * Zadanie: przepisać PUBLICZNY adres na WEWNĘTRZNĄ ścieżkę routera.
  *
- *   /oferta               -> /pl/oferta
- *   /en/services          -> /en/oferta
- *   /en/web-design/mielec -> /en/strony-internetowe/mielec
+ *   /oferta                              -> /pl/oferta
+ *   /en/services                         -> /en/oferta
+ *   /en/services/websites-and-stores     -> /en/oferta/strony-i-sklepy
  *
  * `NextResponse.rewrite` zachowuje oryginalny adres w pasku przeglądarki,
  * więc polskie URL-e nigdy nie pokazują prefiksu `/pl`.

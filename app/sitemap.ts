@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
 import { SITE } from "@/content/site";
-import { CITY_SLUGS } from "@/content/cities";
 import { listPosts, listCaseStudies, listServiceCategories } from "@/lib/cms";
 import { languageAlternates, publicPath, DEFAULT_LOCALE } from "@/lib/routes";
 
@@ -54,9 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     entry(["blog"]),
     ...posts.map((p) => entry(["blog", p.slug], p.updatedAt ?? p.publishedAt)),
-
-    /* Tylko miasta z opublikowanym etapem — reszta nie ma jeszcze podstrony. */
-    ...CITY_SLUGS.map((slug) => entry(["strony-internetowe", slug])),
 
     entry(["o-mnie"]),
     entry(["kontakt"]),

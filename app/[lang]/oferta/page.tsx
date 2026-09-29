@@ -30,9 +30,8 @@ export async function generateMetadata({
  * Produkt wiodący jako `Service`.
  *
  * Budowany lokalnie, a nie w `lib/schema.ts` — dotyczy wyłącznie tej podstrony,
- * więc nie ma powodu obciążać nim wspólnego modułu. Wzorzec i `@id` dostawcy
- * są te same co w `cityServiceSchema`: profil firmy istnieje raz, w root layoucie,
- * a każdy `Service` tylko się do niego odwołuje.
+ * więc nie ma powodu obciążać nim wspólnego modułu. Profil firmy istnieje raz,
+ * w root layoucie, a każdy `Service` tylko się do niego odwołuje przez `@id`.
  *
  * `hasOfferCatalog` wymienia cztery obszary usług — dokładnie te, które widać
  * niżej na stronie. Dane strukturalne nie mogą obiecywać więcej niż treść.

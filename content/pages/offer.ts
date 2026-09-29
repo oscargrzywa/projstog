@@ -78,10 +78,10 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
 
     h1: "Wiesz, co dostajesz, zanim zaczniemy.",
     lead:
-      "Cztery obszary pracy i jeden wykonawca. Zaczynamy od Profit Site — " +
-      "strony o z góry ustalonym zakresie, terminie i cenie. Jeśli projekt " +
-      "jest większy, schodzimy niżej: sklep, automatyzacje, widoczność w " +
-      "Google albo opieka nad tym, co już działa.",
+      "Stronę, sklep, automatyzacje, widoczność w Google i opiekę załatwisz " +
+      "u jednej osoby. Najprostszy start to Profit Site — strona o z góry " +
+      "ustalonym zakresie, terminie i cenie. Jeśli potrzebujesz więcej, " +
+      "dobierasz to, co pasuje do Twojej firmy.",
 
     profit: {
       eyebrow: "Produkt wiodący",
@@ -92,11 +92,11 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
         "Przy stronie internetowej najbardziej boli nie projekt graficzny, " +
           "tylko brak odpowiedzi na dwa pytania: kiedy będzie gotowa i ile " +
           "ostatecznie wyjdzie. Profit Site zaczyna właśnie od nich. Zakres, " +
-          "termin i cena są ustalone, zanim napiszę pierwszą linijkę kodu.",
-        "Dostajesz spisany komplet podstron i funkcji. Nie dokładam do niego " +
-          "nic po cichu i nie doliczam za to później. Jeśli w trakcie okaże " +
-          "się, że chcesz czegoś spoza listy, wyceniam to osobno i decydujesz, " +
-          "czy wchodzimy w to teraz, czy po uruchomieniu.",
+          "termin i cenę znasz, zanim powstanie pierwsza linijka kodu.",
+        "Dostajesz spisany komplet podstron i funkcji. Nic nie zostaje do " +
+          "niego dopisane po cichu ani doliczone później. Jeśli w trakcie " +
+          "zechcesz czegoś spoza listy, dostaniesz osobną wycenę i sam " +
+          "zdecydujesz, czy robimy to teraz, czy po uruchomieniu.",
       ],
       pillars: [
         {
@@ -110,8 +110,8 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
           label: "Termin",
           value: "14 dni do uruchomienia",
           note:
-            "Liczone od dnia, w którym mam komplet treści i zdjęć. Ten warunek " +
-            "mówię wprost na pierwszej rozmowie, żeby nie był niespodzianką.",
+            "Liczone od dnia, w którym dostanę od Ciebie komplet treści i zdjęć. " +
+            "Ten warunek usłyszysz już na pierwszej rozmowie, żeby nie był niespodzianką.",
         },
         {
           label: "Cena",
@@ -134,32 +134,32 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
       cta: "Zapytaj o Profit Site",
       ctaNote:
         "Pierwsza rozmowa jest bezpłatna i do niczego nie zobowiązuje. " +
-        "Zwykle odpisuję tego samego dnia.",
+        "Odpowiedź dostajesz zwykle tego samego dnia.",
       notFit:
-        "Profit Site nie pasuje do wszystkiego. Sklep, portal z panelem " +
-        "redakcyjnym albo aplikacja pod konkretny proces to inna robota i " +
-        "inna wycena — wtedy zaczynamy od obszarów poniżej.",
+        "Profit Site nie pasuje do wszystkiego. Jeśli potrzebujesz sklepu, " +
+        "portalu z panelem redakcyjnym albo aplikacji pod konkretny proces, " +
+        "to inna praca i inna wycena. Wtedy zacznij od obszarów poniżej.",
     },
 
     categories: {
-      heading: "Cztery obszary",
+      heading: "Wybierz, czego potrzebujesz",
       lead:
-        "Każdy ma własną podstronę z pełną listą usług i opisem tego, co " +
-        "dokładnie wchodzi w zakres.",
+        "Na każdej podstronie zobaczysz pełną listę usług i to, co dokładnie " +
+        "wchodzi w zakres.",
       linkLabel: "Zobacz zakres",
     },
 
     process: {
-      heading: "Jak to wygląda od środka",
+      heading: "Co się dzieje na każdym etapie",
       lead:
-        "Pięć etapów, zawsze te same, niezależnie od wielkości projektu. Na " +
-        "każdym wiesz, co się dzieje i czego potrzebuję od Ciebie.",
+        "Pięć etapów, zawsze tych samych, niezależnie od wielkości projektu. " +
+        "Na każdym wiesz, co się dzieje i czego potrzeba od Ciebie.",
       steps: [
         {
           name: "Brief",
           description:
-            "Rozmowa o firmie, o tym, kto do Ciebie dzwoni i po co ta strona. " +
-            "Wychodzę z niej ze spisanym zakresem, terminem i ceną.",
+            "Rozmowa o Twojej firmie, o tym, kto do Ciebie dzwoni i po co ta " +
+            "strona. Po niej dostajesz spisany zakres, termin i cenę.",
           need: "Od Ciebie: godzina czasu i szczera odpowiedź, na czym naprawdę Ci zależy.",
         },
         {
@@ -172,15 +172,15 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
         {
           name: "Realizacja",
           description:
-            "Koduję, wpinam treści i zdjęcia, sprawdzam na telefonie, tablecie " +
-            "i komputerze. Pracę widzisz na bieżąco pod roboczym adresem.",
+            "Strona powstaje z Twoimi treściami i zdjęciami i jest sprawdzana " +
+            "na telefonie, tablecie i komputerze. Pracę widzisz na bieżąco pod roboczym adresem.",
           need: "Od Ciebie: komplet tekstów i zdjęć — to najczęstszy powód opóźnień.",
         },
         {
           name: "Uruchomienie",
           description:
             "Domena, certyfikat, mapa strony, wizytówka Google, mierzenie " +
-            "ruchu. Przenoszę stronę na żywo i sprawdzam, czy Google ją widzi.",
+            "ruchu. Twoja strona trafia na żywo, a ja sprawdzam, czy Google ją widzi.",
           need: "Od Ciebie: dostęp do domeny albo zgoda, żebym kupił ją w Twoim imieniu.",
         },
         {
@@ -194,12 +194,12 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
     },
 
     cta: {
-      heading: "Porozmawiajmy o Twoim projekcie",
+      heading: "Powiedz, czego potrzebuje Twoja firma",
       lead:
-        "Napisz w dwóch zdaniach, co chcesz zrobić. Odpiszę, czy to robota na " +
-        "Profit Site, czy na osobną wycenę — także wtedy, gdy odpowiedź brzmi, " +
-        "że nie jestem do tego właściwą osobą.",
-      button: "Napisz do mnie",
+        "Napisz w dwóch zdaniach, co chcesz zrobić. Dowiesz się, czy to " +
+        "robota na Profit Site, czy na osobną wycenę — także wtedy, gdy " +
+        "lepiej pomoże Ci ktoś inny.",
+      button: "Zapytaj o wycenę",
     },
 
     breadcrumb: {
@@ -220,10 +220,10 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
 
     h1: "You know what you get before we start.",
     lead:
-      "Four areas of work and one person doing them. It starts with Profit " +
-      "Site — a website with the scope, deadline and price settled up front. " +
-      "If your project is bigger than that, we go further down: a store, " +
-      "automation, Google visibility, or care for what already runs.",
+      "Your website, store, automation, Google visibility and ongoing care, " +
+      "all handled by one person. The simplest start is Profit Site — a " +
+      "website with the scope, deadline and price settled up front. If you " +
+      "need more, you add what fits your business.",
 
     profit: {
       eyebrow: "Flagship product",
@@ -233,12 +233,12 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
       body: [
         "The painful part of a website project is rarely the design. It is not " +
           "knowing the answer to two questions: when will it be finished, and " +
-          "what will it finally cost. Profit Site starts with those. Scope, " +
-          "deadline and price are settled before I write a line of code.",
+          "what will it finally cost. Profit Site starts with those. You know " +
+          "the scope, deadline and price before a single line of code exists.",
         "You get a written list of pages and features. Nothing quietly gets " +
           "added to it, and nothing quietly gets billed for later. If halfway " +
-          "through you want something outside that list, I quote it separately " +
-          "and you decide whether it happens now or after launch.",
+          "through you want something outside that list, you get a separate " +
+          "quote and decide whether it happens now or after launch.",
       ],
       pillars: [
         {
@@ -252,8 +252,8 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
           label: "Timeline",
           value: "14 days to launch",
           note:
-            "Counted from the day I have all the copy and photos. I say that " +
-            "condition out loud in the first call, so it is never a surprise.",
+            "Counted from the day you send all the copy and photos. You hear " +
+            "that condition in the first call, so it is never a surprise.",
         },
         {
           label: "Price",
@@ -276,32 +276,32 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
       cta: "Ask about Profit Site",
       ctaNote:
         "The first conversation is free and commits you to nothing. " +
-        "I usually reply the same day.",
+        "You usually get a reply the same day.",
       notFit:
-        "Profit Site does not fit every job. A store, an editorial platform " +
-        "or an application built around one specific process is different work " +
-        "and a different quote — for those, start from the areas below.",
+        "Profit Site does not fit every job. If you need a store, an editorial " +
+        "platform or an application built around one specific process, that is " +
+        "different work and a different quote. Start from the areas below.",
     },
 
     categories: {
-      heading: "Four areas",
+      heading: "Pick what you need",
       lead:
-        "Each one has its own page with the full list of services and what " +
-        "exactly is included.",
+        "Each page shows you the full list of services and exactly what is " +
+        "included.",
       linkLabel: "See what it covers",
     },
 
     process: {
-      heading: "How it works from the inside",
+      heading: "What happens at each stage",
       lead:
         "Five stages, always the same ones, whatever the size of the project. " +
-        "At every stage you know what is happening and what I need from you.",
+        "At every stage you know what is happening and what is needed from you.",
       steps: [
         {
           name: "Brief",
           description:
-            "A conversation about the business, who calls you and what the " +
-            "site is for. I leave it with a written scope, deadline and price.",
+            "A conversation about your business, who calls you and what the " +
+            "site is for. Afterwards you get a written scope, deadline and price.",
           need: "From you: an hour, and an honest answer about what really matters.",
         },
         {
@@ -314,15 +314,15 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
         {
           name: "Build",
           description:
-            "I write the code, load the content and photos, and check it on " +
+            "Your site is built with your content and photos, and checked on " +
             "phone, tablet and desktop. You watch it grow on a staging address.",
           need: "From you: all the copy and photos — the most common cause of delay.",
         },
         {
           name: "Launch",
           description:
-            "Domain, certificate, sitemap, Google listing, analytics. I move " +
-            "the site live and confirm that Google can actually see it.",
+            "Domain, certificate, sitemap, Google listing, analytics. Your site " +
+            "goes live and I confirm that Google can actually see it.",
           need: "From you: access to the domain, or permission to buy it on your behalf.",
         },
         {
@@ -336,12 +336,12 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
     },
 
     cta: {
-      heading: "Tell me about your project",
+      heading: "Tell me what your business needs",
       lead:
-        "Two sentences about what you want to build is enough. I will tell you " +
-        "whether it is a Profit Site job or a separate quote — including when " +
-        "the honest answer is that I am not the right person for it.",
-      button: "Get in touch",
+        "Two sentences about what you want to build is enough. You will find " +
+        "out whether it is a Profit Site job or a separate quote — including " +
+        "when someone else would serve you better.",
+      button: "Ask for a quote",
     },
 
     breadcrumb: {
@@ -357,7 +357,7 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
 export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
   pl: {
     backToOffer: "Cała oferta",
-    servicesHeading: "Co dokładnie robię",
+    servicesHeading: "Co dokładnie dostajesz",
     servicesLead:
       "Poniżej każda usługa z tego obszaru: po co jest i co konkretnie " +
       "wchodzi w zakres. Jeśli czegoś na liście nie ma, po prostu zapytaj.",
@@ -365,7 +365,7 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
       heading: "Pozostałe obszary",
       lead:
         "Projekty rzadko mieszczą się w jednej szufladzie. Zobacz, co jeszcze " +
-        "mogę wziąć na siebie.",
+        "możesz zdjąć ze swojej głowy.",
     },
     profitNudge: {
       text:
@@ -378,9 +378,9 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
       heading: "Nie wiesz, czy to ten obszar?",
       lead:
         "Opisz krótko, co chcesz osiągnąć. Jeśli sprawa należy do innej " +
-        "kategorii albo w ogóle nie do mnie, powiem to od razu — bez " +
+        "kategorii albo w ogóle nie do mnie, usłyszysz to od razu — bez " +
         "przeciągania rozmowy.",
-      button: "Napisz do mnie",
+      button: "Zapytaj o wycenę",
     },
     breadcrumb: {
       label: "Okruszki nawigacyjne",
@@ -394,7 +394,7 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
     servicesLead:
       "Every service in this area below: what it is for and what exactly is " +
       "included. If something you need is not on the list, just ask.",
-    servicesHeading: "What I actually do here",
+    servicesHeading: "What exactly you get",
     other: {
       heading: "The other areas",
       lead:
@@ -412,9 +412,9 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
       heading: "Not sure this is the right area?",
       lead:
         "Describe briefly what you want to achieve. If it belongs in another " +
-        "category, or not with me at all, I will say so straight away rather " +
-        "than dragging the conversation out.",
-      button: "Get in touch",
+        "category, or not with me at all, you will hear so straight away " +
+        "rather than having the conversation dragged out.",
+      button: "Ask for a quote",
     },
     breadcrumb: {
       label: "Breadcrumb",

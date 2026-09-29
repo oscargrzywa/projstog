@@ -7,7 +7,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { ABOUT_PAGE, OWNER_PHOTO } from "@/content/pages/about";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
-import { BASE_CITY } from "@/content/cities";
 import { breadcrumbSchema, personSchema } from "@/lib/schema";
 import { isLocale, metadataAlternates, publicPath } from "@/lib/routes";
 
@@ -138,7 +137,7 @@ export default async function AboutPage({
               <div className="flex justify-between gap-4 py-3">
                 <dt className="text-lichen">{copy.factsLabels.base}</dt>
                 <dd className="text-right text-bone">
-                  {BASE_CITY.name}, {SITE.address.postalCode}
+                  {SITE.address.city}, {SITE.address.postalCode}
                 </dd>
               </div>
               <div className="flex justify-between gap-4 py-3">

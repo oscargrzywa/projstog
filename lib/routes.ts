@@ -47,7 +47,6 @@ const SEGMENTS = {
   "opieka-i-wsparcie": { pl: "opieka-i-wsparcie", en: "care-and-support" },
   realizacje: { pl: "realizacje", en: "work" },
   blog: { pl: "blog", en: "blog" },
-  "strony-internetowe": { pl: "strony-internetowe", en: "web-design" },
   "o-mnie": { pl: "o-mnie", en: "about" },
   kontakt: { pl: "kontakt", en: "contact" },
   "polityka-prywatnosci": {
@@ -85,12 +84,12 @@ export function internalSegment(segment: string, locale: Locale): string {
  * Publiczna ścieżka dla podanych segmentów wewnętrznych.
  *
  * PL nie ma prefiksu (`/oferta`), EN ma (`/en/services`).
- * Segmenty dynamiczne (slug wpisu, slug miasta) przekazuj jako zwykłe stringi —
- * nie ma ich w mapie, więc przejdą bez zmian.
+ * Segmenty dynamiczne (slug wpisu, slug realizacji) przekazuj jako zwykłe
+ * stringi — nie ma ich w mapie, więc przejdą bez zmian.
  *
  *   publicPath("pl", ["oferta"])                     -> "/oferta"
  *   publicPath("en", ["oferta"])                     -> "/en/services"
- *   publicPath("en", ["strony-internetowe", "mielec"]) -> "/en/web-design/mielec"
+ *   publicPath("en", ["realizacje", "apartsea"])     -> "/en/work/apartsea"
  *   publicPath("pl", [])                             -> "/"
  */
 export function publicPath(locale: Locale, segments: string[] = []): string {
@@ -106,7 +105,7 @@ export function publicPath(locale: Locale, segments: string[] = []): string {
  *
  *   internalPath("/oferta")            -> "/pl/oferta"
  *   internalPath("/en/services")       -> "/en/oferta"
- *   internalPath("/en/web-design/mielec") -> "/en/strony-internetowe/mielec"
+ *   internalPath("/en/work/apartsea")  -> "/en/realizacje/apartsea"
  *   internalPath("/")                  -> "/pl"
  */
 export function internalPath(pathname: string): string {
@@ -139,8 +138,8 @@ export function languageAlternates(
  * Odpowiednik bieżącego publicznego adresu w drugim języku.
  * Używane przez przełącznik języka, który zna tylko `usePathname()`.
  *
- *   switchLocale("/oferta", "en")            -> "/en/services"
- *   switchLocale("/en/web-design/mielec", "pl") -> "/strony-internetowe/mielec"
+ *   switchLocale("/oferta", "en")                -> "/en/services"
+ *   switchLocale("/en/work/apartsea", "pl")      -> "/realizacje/apartsea"
  */
 export function switchLocale(publicPathname: string, target: Locale): string {
   const parts = publicPathname.split("/").filter(Boolean);

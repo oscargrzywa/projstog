@@ -6,7 +6,21 @@
  * firm. Rozjazd choćby w formacie telefonu osłabia sygnały lokalne.
  */
 
-import { BASE_CITY, SERVED_VOIVODESHIPS } from "./cities";
+/**
+ * Siedziba firmy. Firma nie ma podstron miast (decyzja właściciela,
+ * 2026-09-29) — lokalne SEO opiera się na Mielcu: LocalBusiness
+ * z adresem siedziby + wizytówka Google Moja Firma.
+ */
+const BASE = {
+  /** mianownik — "Mielec" */
+  city: "Mielec",
+  /** miejscownik z przyimkiem — "w Mielcu" */
+  inCity: "w Mielcu",
+  /** dopełniacz — "Mielca" (do fraz "człowiek z Mielca") */
+  ofCity: "Mielca",
+  county: "mielecki",
+  voivodeship: "podkarpackie",
+} as const;
 
 export const SITE = {
   name: "PROJSTOG",
@@ -24,9 +38,14 @@ export const SITE = {
   phoneRaw: "+48730771568",
 
   address: {
-    city: BASE_CITY.name,
+    city: BASE.city,
+    /** "w Mielcu" — do treści */
+    inCity: BASE.inCity,
+    /** "Mielca" — do treści */
+    ofCity: BASE.ofCity,
+    county: BASE.county,
     postalCode: "39-300",
-    region: "podkarpackie",
+    region: BASE.voivodeship,
     country: "PL",
     /**
      * ⚠ DO UZUPEŁNIENIA przed publikacją.
@@ -54,8 +73,11 @@ export const SITE = {
    */
   priceRange: "1500 PLN - 15000 PLN",
 
-  /** Obszar obsługi — do `areaServed` w JSON-LD. */
-  areaServed: SERVED_VOIVODESHIPS,
+  /**
+   * Obszar obsługi — do `areaServed` w JSON-LD. Województwo siedziby,
+   * bez listy miast (podstron miast nie ma).
+   */
+  areaServed: [BASE.voivodeship],
 
   social: {
     facebook: "https://www.facebook.com/oscar.grzywa",
