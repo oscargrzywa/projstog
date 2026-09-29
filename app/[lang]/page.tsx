@@ -218,19 +218,29 @@ export default async function HomePage({
       </section>
 
       {/* ============================================================= proces */}
-      {/* Film „od briefu do klienta". Tytuły i opisy rozdziałów lecą do
-          HTML-u z SSR (lista <ol> w ProcessFilm), makieta jest dekoracją. */}
+      {/* Makieta „strona buduje się sama". Nagłówek, lead i CTA są tu,
+          w HTML-u z SSR; sama makieta to dekoracja (aria-hidden). */}
       <section className="overflow-x-clip border-y border-hairline">
         <div className="mx-auto max-w-6xl px-5 py-28">
           <h2 className="mask-reveal max-w-[18ch] text-5xl">
             <span className="mask-reveal__inner">{t.home.process.heading}</span>
           </h2>
-          <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          <p className="reveal mt-5 max-w-[60ch] leading-relaxed text-lichen">
             {t.home.process.lead}
           </p>
 
-          <div className="mt-14">
+          <div className="mt-12">
             <ProcessFilm copy={t.home.process} />
+          </div>
+
+          <div className="reveal mt-8 flex justify-center">
+            <Link
+              href={publicPath(lang, ["kontakt"])}
+              data-magnetic
+              className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+            >
+              {t.home.process.cta}
+            </Link>
           </div>
         </div>
       </section>

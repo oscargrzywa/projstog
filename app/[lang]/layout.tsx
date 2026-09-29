@@ -80,7 +80,9 @@ export default async function RootLayout({
             nagłówek i stopka stoją w miejscu. Keyframes `page-swap`
             w globals.css. */}
         <main id="tresc" className="flex-1">
-          <ViewTransition default="page-swap">{children}</ViewTransition>
+          <ViewTransition default="page-swap">
+            {children}
+          </ViewTransition>
         </main>
 
         <Footer locale={locale} />
