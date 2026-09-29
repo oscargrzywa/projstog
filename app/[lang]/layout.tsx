@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 
@@ -14,27 +13,7 @@ import { localBusinessSchema } from "@/lib/schema";
 import { SITE } from "@/content/site";
 import { LOCALES, isLocale, type Locale } from "@/lib/routes";
 import { getDictionary } from "@/content/dictionary";
-
-/* Clash Display — tylko nagłówki. Wariant variable, jeden plik na wszystkie grubości. */
-const clashDisplay = localFont({
-  src: "../fonts/ClashDisplay-Variable.woff2",
-  weight: "200 700",
-  display: "swap",
-  variable: "--font-clash",
-  fallback: ["system-ui", "sans-serif"],
-});
-
-/* Satoshi — tekst ciągły i interfejs. */
-const satoshi = localFont({
-  src: [
-    { path: "../fonts/Satoshi-Variable.woff2", style: "normal" },
-    { path: "../fonts/Satoshi-VariableItalic.woff2", style: "italic" },
-  ],
-  weight: "300 900",
-  display: "swap",
-  variable: "--font-satoshi",
-  fallback: ["system-ui", "sans-serif"],
-});
+import { clashDisplay, satoshi } from "../fonts";
 
 /* Obie wersje językowe prerenderowane na etapie builda. */
 export function generateStaticParams() {

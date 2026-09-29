@@ -141,6 +141,9 @@ h3 {
      jak ustawienie domyślne. */
   font-weight: 620;
   letter-spacing: clamp(-0.048em, -0.018em - 0.3vw, -0.018em);
+  /* Ujemny tracking zjada też spacje — w Clash Display słowa zaczynały
+     się zlewać. Oddajemy odstęp tylko między słowami. */
+  word-spacing: 0.08em;
   /* Poniżej 1.0 — przy dużym stopniu pisma wiersze muszą się niemal stykać.
      To jest ten detal, po którym poznaje się złożenie zrobione ręcznie. */
   line-height: 0.92;
@@ -158,6 +161,7 @@ h3 {
   font-size: clamp(3.4rem, 0.4rem + 9.4vw, 10.5rem);
   font-weight: 640;
   letter-spacing: clamp(-0.06em, -0.02em - 0.35vw, -0.03em);
+  word-spacing: 0.14em;
   line-height: 0.86;
   text-wrap: balance;
   font-synthesis: none;
@@ -768,6 +772,24 @@ a.panel-outlined:hover {
 :focus-visible {
   outline: 2px solid var(--color-voltage);
   outline-offset: 3px;
+}
+
+/* Powiększony obszar dotyku (min. 44×44 px) dla małych linków tekstowych.
+   Niewidoczny pseudoelement wystaje poza link, więc układ i wygląd się
+   nie zmieniają — rośnie tylko cel dla palca. Nie łączyć z elementami,
+   które same używają ::after. */
+.hit {
+  position: relative;
+}
+
+.hit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 2.75rem);
+  height: max(100%, 2.75rem);
+  translate: -50% -50%;
 }
 
 ::selection {

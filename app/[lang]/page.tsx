@@ -137,7 +137,7 @@ export default async function HomePage({
               {t.home.orCall}{" "}
               <a
                 href={`tel:${SITE.phoneRaw}`}
-                className="text-bone transition-colors hover:text-voltage"
+                className="hit text-bone transition-colors hover:text-voltage"
               >
                 {SITE.phone}
               </a>
@@ -157,7 +157,7 @@ export default async function HomePage({
           </h2>
           <Link
             href={publicPath(lang, ["oferta"])}
-            className="reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            className="hit reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
           >
             {t.home.services.all}
           </Link>
@@ -253,7 +253,7 @@ export default async function HomePage({
           </h2>
           <Link
             href={publicPath(lang, ["realizacje"])}
-            className="reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            className="hit reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
           >
             {t.home.work.all}
           </Link>
@@ -272,7 +272,7 @@ export default async function HomePage({
                 href={publicPath(lang, ["realizacje", study.slug])}
                 data-cursor="view"
                 data-cursor-label={cursorViewLabel}
-                className="work-row group grid gap-x-8 gap-y-3 py-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto]"
+                className="work-row group grid gap-x-8 gap-y-3 py-8 md:grid-cols-[minmax(0,1fr)_auto] lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto]"
               >
                 <div>
                   <h3 className="work-row__name text-2xl group-hover:text-voltage">
@@ -283,7 +283,8 @@ export default async function HomePage({
                   </span>
                 </div>
 
-                <p className="max-w-[56ch] text-sm leading-relaxed text-lichen">
+                {/* Tablet: opis pod nazwą na pełną szerokość, trzy kolumny od lg. */}
+                <p className="max-w-[56ch] text-sm leading-relaxed text-lichen md:order-last md:col-span-2 lg:order-none lg:col-span-1">
                   {study.outcome}
                 </p>
 
@@ -315,7 +316,7 @@ export default async function HomePage({
               </h2>
               <Link
                 href={publicPath(lang, ["blog"])}
-                className="reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
+                className="hit reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
               >
                 {t.home.blog.all}
               </Link>

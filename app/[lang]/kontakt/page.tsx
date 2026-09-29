@@ -59,7 +59,7 @@ export default async function ContactPage({
             <dd className="mt-2">
               <a
                 href={`tel:${SITE.phoneRaw}`}
-                className="font-display text-2xl text-bone transition-colors hover:text-voltage"
+                className="hit font-display text-2xl text-bone transition-colors hover:text-voltage"
               >
                 {SITE.phone}
               </a>
@@ -72,7 +72,7 @@ export default async function ContactPage({
             <dd className="mt-2">
               <a
                 href={`mailto:${SITE.email}`}
-                className="font-display text-xl break-all text-bone transition-colors hover:text-voltage"
+                className="hit font-display text-xl break-all text-bone transition-colors hover:text-voltage"
               >
                 {SITE.email}
               </a>
@@ -134,7 +134,7 @@ export default async function ContactPage({
                 href={GOOGLE_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+                className="hit mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
               >
                 {copy.mapsLinkLabel}
               </a>

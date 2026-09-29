@@ -96,7 +96,7 @@ export default async function CaseStudyPage({
         <header className="mx-auto max-w-6xl px-5 pt-12 pb-10 lg:pt-16">
           <Link
             href={publicPath(locale, ["realizacje"])}
-            className="text-sm text-lichen underline-offset-4 transition-colors hover:text-voltage hover:underline"
+            className="hit text-sm text-lichen underline-offset-4 transition-colors hover:text-voltage hover:underline"
           >
             {copy.work.backToList}
           </Link>

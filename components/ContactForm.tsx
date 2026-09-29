@@ -405,7 +405,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
                 aria-describedby={
                   errors.consent ? errorIdFor("consent") : undefined
                 }
-                className="mt-1 h-4 w-4 shrink-0 accent-signal"
+                className="mt-0.5 h-5 w-5 shrink-0 accent-signal"
               />
               <label
                 htmlFor={`${uid}-consent`}

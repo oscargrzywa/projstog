@@ -84,7 +84,7 @@ export default async function PrivacyPage({
         <p className="mt-4 leading-relaxed text-lichen">{copy.contactBody}</p>
         <a
           href={`mailto:${SITE.email}`}
-          className="mt-4 inline-block font-display text-xl text-bone transition-colors hover:text-voltage"
+          className="hit mt-4 inline-block font-display text-xl text-bone transition-colors hover:text-voltage"
         >
           {SITE.email}
         </a>

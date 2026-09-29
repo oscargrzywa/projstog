@@ -42,12 +42,12 @@ export async function Footer({ locale }: { locale: Locale }) {
             <h2 className="text-sm font-medium text-bone">
               {t.footer.columnOffer}
             </h2>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-3 lg:mt-4 lg:space-y-2.5">
               {categories.map((category) => (
                 <li key={category.slug}>
                   <Link
                     href={publicPath(locale, ["oferta", category.slug])}
-                    className="text-sm text-lichen transition-colors hover:text-bone"
+                    className="inline-flex min-h-11 items-center text-sm text-lichen transition-colors hover:text-bone lg:min-h-0"
                   >
                     {category.title}
                   </Link>
@@ -60,12 +60,12 @@ export async function Footer({ locale }: { locale: Locale }) {
             <h2 className="text-sm font-medium text-bone">
               {t.footer.columnCompany}
             </h2>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-3 lg:mt-4 lg:space-y-2.5">
               {company.map((link) => (
                 <li key={link.segments.join("/")}>
                   <Link
                     href={publicPath(locale, link.segments)}
-                    className="text-sm text-lichen transition-colors hover:text-bone"
+                    className="inline-flex min-h-11 items-center text-sm text-lichen transition-colors hover:text-bone lg:min-h-0"
                   >
                     {link.label}
                   </Link>
@@ -78,11 +78,11 @@ export async function Footer({ locale }: { locale: Locale }) {
             <h2 className="text-sm font-medium text-bone">
               {t.footer.columnContact}
             </h2>
-            <ul className="mt-4 space-y-2.5 text-sm text-lichen">
+            <ul className="mt-3 text-sm text-lichen lg:mt-4 lg:space-y-2.5">
               <li>
                 <a
                   href={`tel:${SITE.phoneRaw}`}
-                  className="transition-colors hover:text-bone"
+                  className="inline-flex min-h-11 items-center transition-colors hover:text-bone lg:min-h-0"
                 >
                   {SITE.phone}
                 </a>
@@ -90,13 +90,13 @@ export async function Footer({ locale }: { locale: Locale }) {
               <li>
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="transition-colors hover:text-bone"
+                  className="inline-flex min-h-11 items-center transition-colors hover:text-bone lg:min-h-0"
                 >
                   {SITE.email}
                 </a>
               </li>
               {/* Adres spójny z wizytówką Google Moja Firma. */}
-              <li className="pt-1">
+              <li className="pt-2 lg:pt-1">
                 {SITE.address.city}, {SITE.address.postalCode}
               </li>
             </ul>
@@ -109,7 +109,7 @@ export async function Footer({ locale }: { locale: Locale }) {
           </p>
           <Link
             href={publicPath(locale, ["polityka-prywatnosci"])}
-            className="transition-colors hover:text-bone"
+            className="inline-flex min-h-11 items-center transition-colors hover:text-bone lg:min-h-0"
           >
             {t.footer.privacy}
           </Link>

@@ -123,7 +123,7 @@ export default async function BlogPostPage({
         <header className="mx-auto max-w-6xl px-5 pt-12 pb-10 lg:pt-16">
           <Link
             href={publicPath(locale, ["blog"])}
-            className="text-sm text-lichen underline-offset-4 transition-colors hover:text-voltage hover:underline"
+            className="hit text-sm text-lichen underline-offset-4 transition-colors hover:text-voltage hover:underline"
           >
             {copy.blog.backToList}
           </Link>

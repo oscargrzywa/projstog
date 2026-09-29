@@ -75,7 +75,7 @@ export default async function AboutPage({
 
         {/* Przewaga lokalna — najmocniejszy argument, więc stoi wysoko,
             nie schowany w stopce. */}
-        <section className="mt-20 rounded-lg border border-hairline bg-basalt p-8 sm:p-10">
+        <section className="mt-20 rounded-lg border border-hairline bg-basalt p-5 sm:p-10">
           <h2 className="max-w-[20ch] text-4xl">{copy.localHeading}</h2>
           <p className="mt-5 max-w-[60ch] leading-relaxed text-lichen">
             {copy.localLead}
@@ -125,7 +125,7 @@ export default async function AboutPage({
             </p>
             <Link
               href={publicPath(lang, ["realizacje"])}
-              className="mt-6 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+              className="hit mt-6 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
             >
               {t.nav.work}
             </Link>
@@ -153,7 +153,7 @@ export default async function AboutPage({
                 <dd className="text-right">
                   <a
                     href={`tel:${SITE.phoneRaw}`}
-                    className="text-bone transition-colors hover:text-voltage"
+                    className="hit text-bone transition-colors hover:text-voltage"
                   >
                     {SITE.phone}
                   </a>

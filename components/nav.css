@@ -171,6 +171,9 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
 .nav-link {
   position: relative;
   display: inline-flex;
+  align-items: center;
+  /* 44 px — linki są w użyciu także na tabletach dotykowych (od 768 px). */
+  min-height: 2.75rem;
   padding: 0.5rem 0.875rem;
   border-radius: 999px;
   font-size: 0.875rem;
@@ -226,7 +229,7 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
 .nav-link[aria-current="page"]::after {
   content: "";
   position: absolute;
-  bottom: 0.0625rem;
+  bottom: 0.3125rem;
   left: 50%;
   width: 0.25rem;
   height: 0.25rem;
@@ -320,6 +323,18 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
   transition:
     color 300ms var(--ease-out-quart),
     border-color 300ms var(--ease-out-quart);
+}
+
+/* Cel dotyku 44×44 bez powiększania kółka. */
+.lang-switch::after,
+.site-nav__logo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 2.75rem);
+  height: max(100%, 2.75rem);
+  translate: -50% -50%;
 }
 
 .lang-switch:hover {
@@ -580,10 +595,30 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
   align-items: center;
   gap: 0.75rem;
   justify-self: start;
+  min-height: 2.75rem;
   font-size: 1rem;
   letter-spacing: 0.012em;
   font-variant-numeric: tabular-nums lining-nums;
   color: var(--color-bone-70);
+}
+
+/* Niskie telefony (SE, landscape): całe menu z CTA mieści się bez przewijania. */
+@media (max-height: 44rem) {
+  .menu {
+    padding-top: 5.25rem;
+  }
+
+  .menu__inner {
+    gap: 1.5rem;
+  }
+
+  .menu-link {
+    padding-block: 0.75rem;
+  }
+
+  .menu__footer {
+    gap: 0.25rem;
+  }
 }
 
 .nav-cta--block {

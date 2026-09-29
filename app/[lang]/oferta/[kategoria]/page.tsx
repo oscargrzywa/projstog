@@ -137,7 +137,7 @@ export default async function ServiceCategoryPage({
         >
           <Link
             href={publicPath(lang, [])}
-            className="underline-offset-4 transition-colors hover:text-bone hover:underline"
+            className="hit underline-offset-4 transition-colors hover:text-bone hover:underline"
           >
             {page.breadcrumb.home}
           </Link>
@@ -146,7 +146,7 @@ export default async function ServiceCategoryPage({
           </span>
           <Link
             href={publicPath(lang, ["oferta"])}
-            className="underline-offset-4 transition-colors hover:text-bone hover:underline"
+            className="hit underline-offset-4 transition-colors hover:text-bone hover:underline"
           >
             {page.breadcrumb.offer}
           </Link>
@@ -219,7 +219,7 @@ export default async function ServiceCategoryPage({
           </p>
           <Link
             href={publicPath(lang, ["oferta"])}
-            className="mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            className="hit mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
           >
             {page.profitNudge.link}
           </Link>
@@ -253,7 +253,7 @@ export default async function ServiceCategoryPage({
             <li>
               <Link
                 href={publicPath(lang, ["oferta"])}
-                className="group block border-t border-hairline pt-4 transition-colors hover:border-signal"
+                className="group block min-h-11 border-t border-hairline pt-4 transition-colors hover:border-signal"
               >
                 <h3 className="text-xl transition-colors group-hover:text-voltage">
                   {page.backToOffer}
