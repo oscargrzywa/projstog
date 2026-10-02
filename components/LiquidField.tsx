@@ -5,8 +5,8 @@
    w zieleniach + miękkie zafalowanie w miejscu kursora, które wygasa.
    Zasady:
    - renderujemy w ~0.5× DPR i skalujemy CSS-em — to tło, ma być miękkie,
-   - jasność maks. jak .aurora (zieleń ~20% krycia w szczycie), wygaszona
-     maską ku dołowi — kontrast H1 nie może spaść,
+   - jasność maks. jak .aurora (zieleń ~20% krycia w szczycie), równo na
+     całym hero — sufit krycia pilnuje kontrastu H1,
    - kolory z tokenów CSS (uniformy), żadnych hexów w shaderze,
    - pętla stoi, gdy hero poza ekranem albo karta ukryta,
    - reduced motion → jedna statyczna klatka,
@@ -92,15 +92,13 @@ void main() {
   // Kaustyki: jasne, cienkie grzbiety tam, gdzie pole przechodzi przez 0.5.
   float caustic = pow(1.0 - abs(f * 2.0 - 1.0), 7.0);
 
-  // Poświata od góry, jak .aurora — dół i tak gasi maska CSS.
-  vec2 s = gl_FragCoord.xy / u_res;
-  float top = smoothstep(0.0, 1.0, s.y);
-  float glow = smoothstep(0.25, 0.85, f) * (0.55 + 0.45 * top);
+  // Dym równo na całej wysokości hero — bez poświaty tylko od góry.
+  float glow = smoothstep(0.25, 0.85, f);
 
   // Lekkie rozjaśnienie pod kursorem, gaśnie razem z siłą.
   float near = exp(-dot(uv - m, uv - m) * 14.0) * u_force;
 
-  float light = glow * 0.14 + caustic * 0.07 * (0.4 + 0.6 * top) + near * 0.05;
+  float light = glow * 0.14 + caustic * 0.07 + near * 0.05;
   float alpha = clamp(light, 0.0, 0.22);
   vec3 col = mix(u_signal, u_voltage, clamp(caustic * 0.8 + near, 0.0, 1.0));
 
@@ -405,11 +403,12 @@ export function LiquidField({ className }: { className?: string }) {
         height: "100%",
         zIndex: -1,
         pointerEvents: "none",
-        // Wygaszenie ku dołowi jak w .aurora.
+        // Dym na całym hero; tylko przy samej krawędzi miękkie przejście
+        // w kolejną sekcję, żeby nie było twardej linii.
         maskImage:
-          "linear-gradient(180deg, #000 0%, #000 45%, transparent 100%)",
+          "linear-gradient(180deg, #000 0%, #000 88%, transparent 100%)",
         WebkitMaskImage:
-          "linear-gradient(180deg, #000 0%, #000 45%, transparent 100%)",
+          "linear-gradient(180deg, #000 0%, #000 88%, transparent 100%)",
         opacity: ready ? 1 : 0,
         transition: "opacity 1.2s var(--ease-out-expo)",
       }}
