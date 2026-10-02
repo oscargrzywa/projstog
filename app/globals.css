@@ -95,6 +95,16 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Duże monitory: cała skala (rem) rośnie płynnie od 1680px, z sufitem
+   ~21px przy 2560px. Bez tego kontener 72rem zostawał wąskim pasem
+   na środku ekranu. Media queries w rem liczą się od wartości
+   domyślnej przeglądarki, więc nie ma sprzężenia z breakpointami. */
+@media (min-width: 105rem) {
+  html {
+    font-size: clamp(100%, 100vw / 105, 131.25%);
+  }
+}
+
 body {
   background-color: var(--color-obsydian);
   color: var(--color-bone);

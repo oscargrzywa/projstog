@@ -344,6 +344,7 @@ export function CodeField() {
     let fontSize = 12.5;
     let lh = 20;
     let charW = 7.5;
+    let container = CONTAINER;
     let base = ALPHA_DESKTOP;
     let blocks: Block[] = [];
     const mask = document.createElement("canvas");
@@ -369,7 +370,7 @@ export function CodeField() {
       const white = (a: number) => `rgba(255, 255, 255, ${a})`;
       const fx = (x: number) => clamp(x / W, 0, 1);
 
-      const cont = Math.min(W, CONTAINER);
+      const cont = Math.min(W, container);
       const left = (W - cont) / 2 + 20;
 
       // Poziomo: słabo za lewą kolumną tekstu, pełnia po prawej.
@@ -400,10 +401,12 @@ export function CodeField() {
       // Eliptyczna „dziura" za nagłówkiem.
       m.globalCompositeOperation = "destination-out";
       const cx = mobile ? W * 0.45 : left + cont * 0.32;
-      const cy = H * 0.5;
-      const rx = mobile ? W * 0.7 : cont * 0.48;
-      const ry = H * (mobile ? 0.28 : 0.3);
-      const hole = mobile ? 0.45 : 0.5;
+      // Na telefonie tekst zaczyna się wysoko i zajmuje całą szerokość —
+      // dziura wyżej i głębsza, żeby kod nie nachodził na plakietkę i h1.
+      const cy = H * (mobile ? 0.4 : 0.5);
+      const rx = mobile ? W * 0.8 : cont * 0.48;
+      const ry = H * (mobile ? 0.32 : 0.3);
+      const hole = mobile ? 0.85 : 0.5;
       m.translate(cx, cy);
       m.scale(rx / ry, 1);
       const rg = m.createRadialGradient(0, 0, 0, 0, 0, ry);
@@ -453,7 +456,7 @@ export function CodeField() {
 
     const layout = () => {
       // Jeden edytor, prawa strona kontenera — tam, gdzie hero ma powietrze.
-      const cont = Math.min(W, CONTAINER);
+      const cont = Math.min(W, container);
       const left = (W - cont) / 2 + 20;
       blocks = [];
       {
@@ -685,7 +688,12 @@ export function CodeField() {
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       mobile = W < 768;
-      fontSize = mobile ? 12 : 12.5;
+      // Na dużych ekranach root font-size rośnie (globals.css) — kod w tle
+      // i szerokość kontenera skalują się razem z resztą strony.
+      const rem =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) / 16 || 1;
+      container = CONTAINER * rem;
+      fontSize = (mobile ? 12 : 12.5) * rem;
       lh = Math.round(fontSize * 1.6);
       base = mobile ? ALPHA_MOBILE : ALPHA_DESKTOP;
       // Zmiana rozmiaru kanwy zeruje stan kontekstu — font od nowa.

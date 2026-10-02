@@ -172,6 +172,8 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
   position: relative;
   display: inline-flex;
   align-items: center;
+  /* Na 768 px „O mnie" łamało się na dwa wiersze. */
+  white-space: nowrap;
   /* 44 px — linki są w użyciu także na tabletach dotykowych (od 768 px). */
   min-height: 2.75rem;
   padding: 0.5rem 0.875rem;
