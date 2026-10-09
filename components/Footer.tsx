@@ -5,7 +5,7 @@
  * „Obsługujemy także: Mielec, Dębica, Ropczyce…" to dokładnie ten wzorzec,
  * który Google wymienia w polityce keyword stuffing („blocks of text listing
  * cities and regions a web page is trying to rank for"). Jedyna lokalizacja
- * w stopce to adres siedziby (NAP).
+ * w stopce to adres z CEIDG (NAP).
  */
 
 import Link from "next/link";
@@ -95,10 +95,15 @@ export async function Footer({ locale }: { locale: Locale }) {
                   {SITE.email}
                 </a>
               </li>
-              {/* Adres spójny z wizytówką Google Moja Firma. */}
+              {/* Adres i NIP spójne z CEIDG i wizytówką Google Moja Firma. */}
               <li className="pt-2 lg:pt-1">
-                {SITE.address.city}, {SITE.address.postalCode}
+                <address className="not-italic">
+                  {SITE.address.street}
+                  <br />
+                  {SITE.address.postalCode} {SITE.address.city}
+                </address>
               </li>
+              <li>NIP {SITE.nip}</li>
             </ul>
           </div>
         </div>

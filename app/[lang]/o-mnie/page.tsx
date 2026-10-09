@@ -125,13 +125,11 @@ export default async function AboutPage({
             <dl className="mt-5 divide-y divide-hairline border-y border-hairline text-sm">
               <div className="flex justify-between gap-4 py-3">
                 <dt className="text-lichen">{copy.factsLabels.base}</dt>
-                <dd className="text-right text-bone">
-                  {SITE.address.city}, {SITE.address.postalCode}
-                </dd>
+                <dd className="text-right text-bone">{SITE.citiesLabel}</dd>
               </div>
               <div className="flex justify-between gap-4 py-3">
-                <dt className="text-lichen">{copy.factsLabels.since}</dt>
-                <dd className="text-right text-bone">{SITE.foundedYear}</dd>
+                <dt className="text-lichen">{copy.factsLabels.nip}</dt>
+                <dd className="text-right font-mono text-bone">{SITE.nip}</dd>
               </div>
               <div className="flex justify-between gap-4 py-3">
                 <dt className="text-lichen">{copy.factsLabels.reach}</dt>

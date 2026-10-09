@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
-import { CONTACT_PAGE, GOOGLE_MAPS_URL } from "@/content/pages/contact";
+import { CEIDG_URL, CONTACT_PAGE, GOOGLE_MAPS_URL } from "@/content/pages/contact";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -123,11 +123,6 @@ export default async function ContactPage({
                 {copy.locationTravel}
               </p>
 
-              {/* Adres spójny z wizytówką Google Moja Firma (NAP). */}
-              <address className="mt-5 text-sm not-italic text-bone">
-                {SITE.address.postalCode} {SITE.address.city}
-              </address>
-
               {/* Zamiast iframe'a Google Maps — link. Osadzona mapa kosztuje
                   LCP i dokłada third-party na stronie, która ma być szybka. */}
               <a
@@ -138,6 +133,46 @@ export default async function ContactPage({
               >
                 {copy.mapsLinkLabel}
               </a>
+            </section>
+
+            {/* Dane rejestrowe — identyczne z CEIDG i JSON-LD (NAP). */}
+            <section>
+              <h2 className="text-2xl">{copy.companyHeading}</h2>
+              <dl className="mt-5 divide-y divide-hairline border-y border-hairline text-sm">
+                <div className="flex justify-between gap-4 py-3">
+                  <dt className="text-lichen">{copy.companyLabels.name}</dt>
+                  <dd className="text-right text-bone">{SITE.legalName}</dd>
+                </div>
+                <div className="flex justify-between gap-4 py-3">
+                  <dt className="text-lichen">{copy.companyLabels.nip}</dt>
+                  <dd className="text-right font-mono text-bone">{SITE.nip}</dd>
+                </div>
+                <div className="flex justify-between gap-4 py-3">
+                  <dt className="text-lichen">{copy.companyLabels.regon}</dt>
+                  <dd className="text-right font-mono text-bone">{SITE.regon}</dd>
+                </div>
+                <div className="flex justify-between gap-4 py-3">
+                  <dt className="text-lichen">{copy.companyLabels.address}</dt>
+                  <dd className="text-right text-bone">
+                    <address className="not-italic">
+                      {SITE.address.street}
+                      <br />
+                      {SITE.address.postalCode} {SITE.address.city}
+                    </address>
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-sm leading-relaxed text-lichen">
+                {copy.companyNote}{" "}
+                <a
+                  href={CEIDG_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hit font-medium text-voltage underline-offset-4 hover:underline"
+                >
+                  {copy.companyLink} ↗
+                </a>
+              </p>
             </section>
           </aside>
         </div>

@@ -6,7 +6,7 @@
  * ręczną karą — nie dopisywać tu niczego „na wyrost".
  */
 
-import { SITE, HAS_STREET_ADDRESS } from "@/content/site";
+import { SITE } from "@/content/site";
 import { publicPath, type Locale } from "./routes";
 
 function absolute(path: string): string {
@@ -17,14 +17,11 @@ function absolute(path: string): string {
 const BUSINESS_ID = `${SITE.url}/#firma`;
 const OWNER_ID = `${SITE.url}/#wlasciciel`;
 
-/**
- * Adres. Gdy nie ma ulicy, podajemy samo miasto i region — to poprawny opis
- * działalności bez lokalu obsługującego klientów. Nie wymyślamy ulicy.
- */
+/** Adres — stałe miejsce wykonywania działalności wg CEIDG. */
 function postalAddress() {
   return {
     "@type": "PostalAddress",
-    ...(HAS_STREET_ADDRESS ? { streetAddress: SITE.address.street } : {}),
+    streetAddress: SITE.address.street,
     addressLocality: SITE.address.city,
     postalCode: SITE.address.postalCode,
     addressRegion: SITE.address.region,
@@ -69,15 +66,18 @@ export function localBusinessSchema(locale: Locale) {
       },
     ],
     founder: { "@type": "Person", "@id": OWNER_ID, name: SITE.owner },
-    foundingDate: String(SITE.foundedYear),
+    taxID: SITE.nip,
+    identifier: { "@type": "PropertyValue", propertyID: "REGON", value: SITE.regon },
     sameAs: Object.values(SITE.social).filter(Boolean),
-    /* Obszar obsługi — województwo siedziby, bez listy miast. Semantycznie
-       poprawne, ale bez złudzeń — Google nie wymienia `areaServed`
-       w dokumentacji i to nie jest dźwignia rankingowa. */
-    areaServed: SITE.areaServed.map((region) => ({
-      "@type": "AdministrativeArea",
-      name: `województwo ${region}`,
-    })),
+    /* Obszar obsługi — miasta działania i województwo. Google nie wymienia
+       `areaServed` w dokumentacji, to nie jest dźwignia rankingowa. */
+    areaServed: [
+      ...SITE.cities.map((city) => ({ "@type": "City", name: city })),
+      ...SITE.areaServed.map((region) => ({
+        "@type": "AdministrativeArea",
+        name: `województwo ${region}`,
+      })),
+    ],
     priceRange: SITE.priceRange,
   };
 }
@@ -94,7 +94,6 @@ export function personSchema(locale: Locale) {
     name: SITE.owner,
     url: absolute(publicPath(locale, ["o-mnie"])),
     worksFor: { "@id": BUSINESS_ID },
-    homeLocation: { "@type": "City", name: SITE.address.city },
     knowsAbout:
       locale === "pl"
         ? [

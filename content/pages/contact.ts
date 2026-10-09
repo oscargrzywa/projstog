@@ -252,14 +252,19 @@ type ContactPageCopy = {
   locationBody: string;
   locationTravel: string;
   mapsLinkLabel: string;
+  /** Dane rejestrowe z CEIDG. */
+  companyHeading: string;
+  companyLabels: { name: string; nip: string; regon: string; address: string };
+  companyNote: string;
+  companyLink: string;
 };
 
 export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
   pl: {
     seo: {
-      title: "Kontakt — Oscar Grzywa, PROJSTOG Mielec",
+      title: "Kontakt — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
       description:
-        "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Mielec, woj. podkarpackie.",
+        "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Mielec i Rzeszów, woj. podkarpackie.",
     },
     breadcrumbHome: "Strona główna",
     h1: "Kontakt",
@@ -281,17 +286,21 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     formHeading: "Napisz, czego potrzebujesz",
     locationHeading: "Gdzie się spotkamy",
     locationBody:
-      "Mielec, województwo podkarpackie. Masz wykonawcę z realnym adresem w regionie, nie wirtualne biuro ani oddział firmy z drugiego końca Polski.",
+      "Mielec i Rzeszów, województwo podkarpackie. Masz wykonawcę z realnym adresem w regionie, nie wirtualne biuro ani oddział firmy z drugiego końca Polski.",
     locationTravel:
-      "Jeśli jesteś z Mielca albo okolicy, przyjadę do Ciebie na spotkanie. Do dalszych miast regionu też — wystarczy ustalić termin.",
+      "Jeśli jesteś z Mielca, Rzeszowa albo okolic, przyjadę do Ciebie na spotkanie. Do dalszych miast regionu też — wystarczy ustalić termin.",
     mapsLinkLabel: "Zobacz w Mapach Google",
+    companyHeading: "Dane firmy",
+    companyLabels: { name: "Firma", nip: "NIP", regon: "REGON", address: "Adres" },
+    companyNote: "Fakturę dostajesz na te dane.",
+    companyLink: "Sprawdź wpis w CEIDG",
   },
 
   en: {
     seo: {
-      title: "Contact — Oscar Grzywa, PROJSTOG Mielec",
+      title: "Contact — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
       description:
-        "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Mielec, south-eastern Poland.",
+        "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Mielec and Rzeszów, south-eastern Poland.",
     },
     breadcrumbHome: "Home",
     h1: "Contact",
@@ -313,10 +322,14 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     formHeading: "Tell me what you need",
     locationHeading: "Where we can meet",
     locationBody:
-      "Mielec, Podkarpackie voivodeship. You get someone with a real address in the region — not a virtual office and not a branch of a company from the other end of the country.",
+      "Mielec and Rzeszów, Podkarpackie voivodeship. You get someone with a real address in the region — not a virtual office and not a branch of a company from the other end of the country.",
     locationTravel:
-      "If you are in Mielec or nearby, I will come to you for a meeting. The wider region too — we just agree a date.",
+      "If you are in Mielec, Rzeszów or nearby, I will come to you for a meeting. The wider region too — we just agree a date.",
     mapsLinkLabel: "Open in Google Maps",
+    companyHeading: "Company details",
+    companyLabels: { name: "Company", nip: "Tax ID (NIP)", regon: "REGON", address: "Address" },
+    companyNote: "Your invoice is issued from these details.",
+    companyLink: "Verify in CEIDG, the Polish business register",
   },
 };
 
@@ -329,4 +342,7 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
  * i psuje LCP na stronie, która ma się ładować poniżej sekundy.
  */
 export const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=PROJSTOG%20Mielec";
+  "https://www.google.com/maps/search/?api=1&query=%C5%9Aniadeckich%2020D%2C%2035-006%20Rzesz%C3%B3w";
+
+/** Publiczny wpis w CEIDG — wyszukiwarka po NIP. */
+export const CEIDG_URL = "https://aplikacja.ceidg.gov.pl/ceidg/ceidg.public.ui/search.aspx";

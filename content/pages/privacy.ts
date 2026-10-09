@@ -69,7 +69,7 @@ export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
         heading: "1. Administrator danych",
         blocks: [
           {
-            text: "Administratorem Twoich danych osobowych jest Oscar Grzywa, prowadzący działalność pod nazwą PROJSTOG, z siedzibą w Mielcu (39-300), województwo podkarpackie.",
+            text: "Administratorem Twoich danych osobowych jest Oscar Grzywa, prowadzący działalność gospodarczą pod firmą PROJSTOG Oscar Grzywa, ul. Jana i Jędrzeja Śniadeckich 20D/7, 35-006 Rzeszów, NIP 8172228348, REGON 545844575.",
           },
           {
             text: "Kontakt w sprawach dotyczących danych osobowych:",
@@ -77,9 +77,6 @@ export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
               "e-mail: biuro@projstog.pl",
               "telefon: +48 730 771 568",
             ],
-          },
-          {
-            text: "⚠ DO UZUPEŁNIENIA przed publikacją: pełny adres działalności oraz NIP — jeśli mają być podane w dokumencie.",
           },
         ],
       },
@@ -243,14 +240,11 @@ export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
         heading: "1. Data controller",
         blocks: [
           {
-            text: "The controller of your personal data is Oscar Grzywa, trading as PROJSTOG, based in Mielec (39-300), Podkarpackie voivodeship, Poland.",
+            text: "The controller of your personal data is Oscar Grzywa, trading as PROJSTOG Oscar Grzywa, ul. Jana i Jędrzeja Śniadeckich 20D/7, 35-006 Rzeszów, Poland, tax ID (NIP) 8172228348, REGON 545844575.",
           },
           {
             text: "Contact for data protection matters:",
             items: ["email: biuro@projstog.pl", "phone: +48 730 771 568"],
-          },
-          {
-            text: "⚠ TO BE COMPLETED before publication: full business address and tax identification number, if they are to appear in this document.",
           },
         ],
       },

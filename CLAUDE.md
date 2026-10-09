@@ -40,12 +40,17 @@ blokuje `.env*`, `node_modules/`, buildy i artefakty `.playwright-mcp/`.
 
 | | |
 |---|---|
-| Lokalizacja | **Mielec, woj. podkarpackie, 39-300** |
+| Działanie | **Mielec / Rzeszów**, woj. podkarpackie |
+| Adres (CEIDG) | ul. Jana i Jędrzeja Śniadeckich 20D/7, 35-006 Rzeszów |
+| Firma (CEIDG) | PROJSTOG Oscar Grzywa · NIP 8172228348 · REGON 545844575 |
 | E-mail | biuro@projstog.pl |
 | Telefon | +48 730 771 568 |
 | Social | FB `oscar.grzywa`, IG `@oscargrzywa`, LinkedIn |
 
-Pozycjonowanie: **„NIE AGENCJA. CZŁOWIEK Z MIELCA."** — jeden kontakt, bez
+**Nie podawać daty rozpoczęcia działalności** (decyzja właściciela) — ani
+w treści, ani w JSON-LD (`foundingDate`).
+
+Pozycjonowanie: **„NIE AGENCJA. CZŁOWIEK Z PODKARPACIA."** — jeden kontakt, bez
 account managerów, jasna cena. Tagline z brand-concept: **„Strony, które zarabiają."**
 
 Usługi: strony WWW (one page, firmowe, sklepy WooCommerce, blogi), automatyzacje
@@ -68,7 +73,7 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 
 | Obszar | Decyzja |
 |---|---|
-| Zasięg | Mielec jako siedziba, **bez podstron miast** (decyzja właściciela, wrzesień 2026) |
+| Zasięg | Mielec / Rzeszów, **bez podstron miast** (decyzja właściciela, wrzesień 2026) |
 | Oferta | Produkt wiodący „Profit Site" + 4 kategorie usług |
 | Języki | PL bez prefiksu + EN pod `/en/...`, `hreflang`, serwerowo |
 | Wizualia | Restart — zostaje tylko paleta i logo z brand-concept |
@@ -108,9 +113,10 @@ Stara strona miała pod to zerowe fundamenty. Nowa musi mieć:
 
 Podstrony lokalizacyjne (`/strony-internetowe/[miasto]`, hub
 `/strony-internetowe`, `content/cities.ts`) zostały **usunięte decyzją
-właściciela 2026-09-29**. Lokalne SEO = **Mielec**: JSON-LD `LocalBusiness`
-z adresem siedziby + wizytówka Google Moja Firma. Dane siedziby (miasto,
-województwo, NAP) żyją w `content/site.ts` (`SITE.address`).
+właściciela 2026-09-29**. Lokalne SEO = **Mielec / Rzeszów** (decyzja
+2026-10-09): w treści oba miasta, w JSON-LD `LocalBusiness` adres z CEIDG
+(Rzeszów) + wizytówka Google Moja Firma. Dane firmy (NAP, NIP, REGON) żyją
+w `content/site.ts` (`SITE`).
 
 ## Realizacje (portfolio)
 
@@ -205,7 +211,7 @@ Z tego wynikają cztery przewagi do wyeksponowania:
 
 Są **dwa osobne rankingi**: wyniki **organiczne** i **Local Pack / Mapy**.
 W Local Packu bez adresu w danym mieście realnie się nie wejdzie; tam gramy
-o Mielec i najbliższą okolicę (podstron innych miast nie prowadzimy).
+o Rzeszów (adres z CEIDG) i Mielec (podstron innych miast nie prowadzimy).
 Mylenie tych dwóch rzeczy to źródło rozczarowań.
 
 ### Otwarta rekomendacja: wersja EN

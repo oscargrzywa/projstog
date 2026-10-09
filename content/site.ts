@@ -7,25 +7,24 @@
  */
 
 /**
- * Siedziba firmy. Firma nie ma podstron miast (decyzja właściciela,
- * 2026-09-29) — lokalne SEO opiera się na Mielcu: LocalBusiness
- * z adresem siedziby + wizytówka Google Moja Firma.
+ * Firma działa w Mielcu i Rzeszowie (decyzja właściciela, 2026-10-09).
+ * Adres rejestrowy — z CEIDG — jest w Rzeszowie i to on trafia do JSON-LD.
+ * Podstron miast nie ma (decyzja z 2026-09-29).
  */
-const BASE = {
-  /** mianownik — "Mielec" */
-  city: "Mielec",
-  /** miejscownik z przyimkiem — "w Mielcu" */
-  inCity: "w Mielcu",
-  /** dopełniacz — "Mielca" (do fraz "człowiek z Mielca") */
-  ofCity: "Mielca",
-  county: "mielecki",
-  voivodeship: "podkarpackie",
-} as const;
+const VOIVODESHIP = "podkarpackie";
 
 export const SITE = {
   name: "PROJSTOG",
+  /** Firma przedsiębiorcy — dokładnie jak w CEIDG. */
   legalName: "PROJSTOG Oscar Grzywa",
   owner: "Oscar Grzywa",
+  nip: "8172228348",
+  regon: "545844575",
+
+  /** Miasta działania — do haseł i meta tagów. */
+  cities: ["Mielec", "Rzeszów"],
+  /** Etykieta „Mielec / Rzeszów" do treści. */
+  citiesLabel: "Mielec / Rzeszów",
 
   /** Domena produkcyjna — baza dla canonical, OG i sitemapy. */
   url: "https://projstog.pl",
@@ -37,32 +36,17 @@ export const SITE = {
   /** Format E.164 — do `tel:` i do JSON-LD. */
   phoneRaw: "+48730771568",
 
+  /** Stałe miejsce wykonywania działalności — wg CEIDG. */
   address: {
-    city: BASE.city,
-    /** "w Mielcu" — do treści */
-    inCity: BASE.inCity,
-    /** "Mielca" — do treści */
-    ofCity: BASE.ofCity,
-    county: BASE.county,
-    postalCode: "39-300",
-    region: BASE.voivodeship,
+    street: "ul. Jana i Jędrzeja Śniadeckich 20D/7",
+    city: "Rzeszów",
+    postalCode: "35-006",
+    region: VOIVODESHIP,
     country: "PL",
-    /**
-     * ⚠ DO UZUPEŁNIENIA przed publikacją.
-     * Jeśli firma nie przyjmuje klientów pod adresem, zostaw puste — wtedy
-     * JSON-LD opisze ją jako działalność z obszarem obsługi (service area),
-     * bez adresu ulicznego. Podawanie nieprawdziwego adresu jest niezgodne
-     * z regulaminem Google Moja Firma.
-     */
-    street: "",
   },
 
-  /**
-   * Współrzędne siedziby (Mielec).
-   * ⚠ DO WERYFIKACJI — Google zaleca min. 5 miejsc po przecinku.
-   * Odczytać dokładne z wizytówki Google Moja Firma i wstawić tutaj.
-   */
-  geo: { latitude: 50.28751, longitude: 21.42389 },
+  /** Współrzędne adresu z CEIDG (OpenStreetMap). */
+  geo: { latitude: 50.04112, longitude: 22.01601 },
 
   /** Godziny pracy — muszą zgadzać się z wizytówką Google Moja Firma. */
   hours: { opens: "09:00", closes: "17:00" },
@@ -73,21 +57,12 @@ export const SITE = {
    */
   priceRange: "1500 PLN - 15000 PLN",
 
-  /**
-   * Obszar obsługi — do `areaServed` w JSON-LD. Województwo siedziby,
-   * bez listy miast (podstron miast nie ma).
-   */
-  areaServed: [BASE.voivodeship],
+  /** Obszar obsługi — do `areaServed` w JSON-LD. */
+  areaServed: [VOIVODESHIP],
 
   social: {
     facebook: "https://www.facebook.com/oscar.grzywa",
     instagram: "https://www.instagram.com/oscargrzywa",
     linkedin: "https://www.linkedin.com/in/oscar-grzywa",
   },
-
-  /** Rok startu działalności — do stopki i treści „O mnie". */
-  foundedYear: 2022,
 } as const;
-
-/** Czy mamy pełny adres uliczny (wpływa na kształt JSON-LD). */
-export const HAS_STREET_ADDRESS = SITE.address.street.length > 0;

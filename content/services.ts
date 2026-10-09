@@ -77,10 +77,10 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Strony internetowe i sklepy — Mielec | PROJSTOG",
+        title: "Strony internetowe i sklepy — Mielec, Rzeszów | PROJSTOG",
         description:
           "Strona one page, strona firmowa, sklep WooCommerce albo blog dla " +
-          "Twojej firmy z Mielca i Podkarpacia. Stałą cenę znasz przed " +
+          "Twojej firmy z Mielca, Rzeszowa i Podkarpacia. Stałą cenę znasz przed " +
           "startem, a stronę robi osoba, z którą rozmawiasz.",
       },
     },
@@ -149,11 +149,11 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Automatyzacje AI, chatboty i CRM — Mielec | PROJSTOG",
+        title: "Automatyzacje AI, chatboty i CRM — Mielec, Rzeszów | PROJSTOG",
         description:
           "Mniej ręcznej roboty w Twojej firmie: automatyzacje w Make i n8n, " +
           "chatboty odpowiadające klientom po godzinach, proste systemy CRM " +
-          "i aplikacje na zamówienie. Jeden wykonawca z Mielca od początku do końca.",
+          "i aplikacje na zamówienie. Jeden wykonawca z Podkarpacia od początku do końca.",
       },
     },
 
@@ -208,7 +208,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Google Moja Firma i lokalne SEO — Mielec | PROJSTOG",
+        title: "Google Moja Firma i lokalne SEO — Mielec, Rzeszów | PROJSTOG",
         description:
           "Twoja firma widoczna tam, gdzie szukają klienci: wizytówka Google, " +
           "lokalne SEO, social media i teksty, które sprzedają. Dla firm " +
@@ -252,7 +252,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Hosting, opieka nad stroną i wsparcie | PROJSTOG Mielec",
+        title: "Hosting, opieka nad stroną i wsparcie | PROJSTOG Mielec / Rzeszów",
         description:
           "Twoja strona pod opieką: hosting, SSL, kopie zapasowe, aktualizacje " +
           "i szybka pomoc, gdy coś przestanie działać. Zajmuje się nią ta sama " +
@@ -325,11 +325,11 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Websites and Online Stores — PROJSTOG, Mielec",
+        title: "Websites and Online Stores — PROJSTOG, Mielec / Rzeszów",
         description:
           "A one-page site, company website, WooCommerce store or blog for " +
           "your business. You know the fixed price before we start, and the " +
-          "person you talk to in Mielec, Poland, is the one who builds it.",
+          "person you talk to in Mielec or Rzeszów, Poland, is the one who builds it.",
       },
     },
 
@@ -403,7 +403,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         description:
           "Less manual work in your business: automations in Make and n8n, " +
           "chatbots that answer after hours, simple CRM systems and custom " +
-          "apps. One contact in Mielec, Poland, from start to finish.",
+          "apps. One contact in Mielec and Rzeszów, Poland, from start to finish.",
       },
     },
 
@@ -505,7 +505,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         title: "Hosting, Website Care and Support — PROJSTOG",
         description:
           "Your site, looked after: hosting, SSL, backups, updates and fast " +
-          "help when something stops working — from the same person in Mielec " +
+          "help when something stops working — from the same person " +
           "who built it.",
       },
     },

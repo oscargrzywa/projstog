@@ -25,8 +25,8 @@ export async function generateMetadata({
   const pl = lang === "pl";
   return {
     title: pl
-      ? "Strony internetowe Mielec i Podkarpacie — PROJSTOG"
-      : "Web design in Mielec and south-eastern Poland — PROJSTOG",
+      ? "Strony internetowe Mielec, Rzeszów i Podkarpacie — PROJSTOG"
+      : "Web design in Mielec, Rzeszów and south-eastern Poland — PROJSTOG",
     description: pl
       ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Mielca, Rzeszowa, Dębicy i całego Podkarpacia. Robi je jedna osoba — od rozmowy po wsparcie po wdrożeniu."
       : "Websites, online stores and AI automation for companies in Mielec, Rzeszów, Dębica and the wider region. Built by one person, start to finish.",

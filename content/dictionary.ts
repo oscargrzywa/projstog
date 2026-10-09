@@ -30,7 +30,7 @@ const pl = {
   },
 
   home: {
-    badge: "Mielec, Podkarpacie",
+    badge: "Mielec / Rzeszów · Podkarpacie",
     h1: "Strona, która zarabia dla Twojej firmy.",
     lead:
       "Dostajesz stronę, sklep albo automatyzację, która pomaga Ci zdobywać klientów i zdejmuje z Ciebie ręczną robotę. Od pierwszej rozmowy po opiekę po starcie masz jeden numer telefonu i jedną osobę, która odpowiada za całość.",
@@ -46,7 +46,7 @@ const pl = {
     },
 
     notAgency: {
-      heading: "Rozmawiasz z człowiekiem z Mielca, nie z agencją.",
+      heading: "Rozmawiasz z człowiekiem z Podkarpacia, nie z agencją.",
       lead:
         "Wpisz w Google „strony internetowe” i nazwę podkarpackiego miasta. Prawie żadna z firm na górze wyników nie ma tu siedziby.",
       punchline: "Ze mną spotkasz się na miejscu, przy jednym stole.",
@@ -259,7 +259,7 @@ const en: Dictionary = {
   },
 
   home: {
-    badge: "Mielec, south-eastern Poland",
+    badge: "Mielec / Rzeszów · south-eastern Poland",
     h1: "A website that earns for your business.",
     lead:
       "You get a website, an online store or an automation that helps you win customers and takes manual work off your plate. From the first call to support after launch, you have one phone number and one person responsible for all of it.",
@@ -275,7 +275,7 @@ const en: Dictionary = {
     },
 
     notAgency: {
-      heading: "You deal with a person from Mielec, not an agency.",
+      heading: "You deal with a person from the region, not an agency.",
       lead:
         "Search Google for web design plus the name of any town in the region. Almost none of the companies at the top are based here.",
       punchline: "With me, you can sit down and talk face to face.",
