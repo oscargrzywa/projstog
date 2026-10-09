@@ -73,7 +73,7 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 
 | Obszar | Decyzja |
 |---|---|
-| Zasięg | Mielec / Rzeszów, **bez podstron miast** (decyzja właściciela, wrzesień 2026) |
+| Zasięg | Siedziba Mielec / Rzeszów, **obsługa: cała Polska** (`areaServed` = Country), **bez podstron miast** |
 | Oferta | Produkt wiodący „Profit Site" + 4 kategorie usług |
 | Języki | PL bez prefiksu + EN pod `/en/...`, `hreflang`, serwerowo |
 | Wizualia | Restart — zostaje tylko paleta i logo z brand-concept |
