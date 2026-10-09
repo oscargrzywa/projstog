@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
+import { PageHero } from "@/components/PageHero";
+import { WorkFeature } from "@/components/WorkFeature";
+import { WorkStack } from "@/components/WorkStack";
 import { SITE } from "@/content/site";
 import { getPageCopy } from "@/content/pages/blog-page";
 import { listCaseStudies } from "@/lib/cms";
@@ -46,6 +50,7 @@ export default async function WorkIndexPage({
 
   const copy = getPageCopy(lang);
   const studies = await listCaseStudies(lang);
+  const contactHref = publicPath(lang, ["kontakt"]);
 
   return (
     <>
@@ -56,68 +61,62 @@ export default async function WorkIndexPage({
         ])}
       />
 
-      <section className="mx-auto max-w-6xl px-5 pt-16 pb-12 lg:pt-24">
-        <h1 className="text-6xl">{copy.work.title}</h1>
-        <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-lichen">
-          {copy.work.lead}
-        </p>
-      </section>
+      {/* ============================================================= nagłówek */}
+      <PageHero
+        crumbsLabel={copy.work.breadcrumbLabel}
+        crumbs={[
+          { label: copy.work.breadcrumbHome, href: publicPath(lang, []) },
+          { label: copy.work.title },
+        ]}
+        title={copy.work.title}
+        lead={<p>{copy.work.lead}</p>}
+        actions={
+          <Link
+            href={contactHref}
+            data-magnetic
+            className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+          >
+            {copy.work.cta.button}
+          </Link>
+        }
+        aside={studies.length > 0 ? <WorkStack studies={studies} /> : undefined}
+      />
 
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          {studies.length === 0 ? (
-            <p className="max-w-[54ch] leading-relaxed text-lichen">
-              {copy.work.empty}
+      {/* ================================================================ lista */}
+      <section className="mx-auto max-w-6xl px-5 pt-20 pb-28 lg:pt-24">
+        {studies.length === 0 ? (
+          <p className="max-w-[54ch] leading-relaxed text-lichen">
+            {copy.work.empty}
+          </p>
+        ) : (
+          <>
+            <p className="reveal flex max-w-[60ch] items-start gap-3 text-sm leading-relaxed text-lichen">
+              <span className="live-dot mt-2" aria-hidden="true" />
+              {copy.work.shotHint}
             </p>
-          ) : (
-            <ul className="divide-y divide-hairline border-y border-hairline">
+
+            {/* Duże wiersze zamiast siatki kafelków — zrzut całej strony
+                po jednej stronie, konkret po drugiej, naprzemiennie. */}
+            <ul className="mt-10 border-t border-hairline">
               {studies.map((study) => (
-                <li key={study.slug}>
-                  <Link
-                    href={publicPath(lang, ["realizacje", study.slug])}
-                    className="group block py-8"
-                  >
-                    {/* Dwie kolumny od md: po lewej tożsamość klienta,
-                        po prawej to, po co strona powstała. */}
-                    <div className="grid gap-x-10 gap-y-4 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
-                      <div>
-                        <h2 className="text-3xl transition-colors group-hover:text-voltage">
-                          {study.name}
-                        </h2>
-                        <p className="mt-2 text-sm text-lichen">
-                          {study.industry}
-                        </p>
-                        <p className="mt-1 font-mono text-xs text-lichen opacity-70">
-                          {study.domain}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="max-w-[62ch] leading-relaxed text-bone/85">
-                          {study.outcome}
-                        </p>
-
-                        {study.tech.length > 0 && (
-                          <ul className="mt-5 flex flex-wrap gap-2">
-                            {study.tech.map((item) => (
-                              <li
-                                key={item}
-                                className="rounded-sm border border-hairline px-2 py-0.5 text-xs text-lichen"
-                              >
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                </li>
+                <WorkFeature
+                  key={study.slug}
+                  study={study}
+                  href={publicPath(lang, ["realizacje", study.slug])}
+                  cursorLabel={copy.work.cursorView}
+                  moreLabel={copy.work.viewStudy}
+                />
               ))}
             </ul>
-          )}
-        </div>
+          </>
+        )}
       </section>
+
+      <CtaBand
+        heading={copy.work.cta.heading}
+        lead={copy.work.cta.body}
+        primary={{ label: copy.work.cta.button, href: contactHref }}
+      />
     </>
   );
 }

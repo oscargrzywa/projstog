@@ -56,8 +56,9 @@ export function SiteShot({
           width={width}
           height={height}
           sizes={sizes}
-          priority={priority}
-          quality={70}
+          /* `priority` jest przestarzałe w Next 16; dla obrazu LCP docs
+             zalecają eager + fetchPriority zamiast `preload`. */
+          {...(priority ? ({ loading: "eager", fetchPriority: "high" } as const) : {})}
         />
       </div>
     </div>

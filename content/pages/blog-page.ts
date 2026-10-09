@@ -58,6 +58,15 @@ const pl = {
     backToList: "Wszystkie realizacje",
     todoNotice:
       "Opis tej realizacji czeka na uzupełnienie przez właściciela strony.",
+    breadcrumbHome: "Strona główna",
+    breadcrumbLabel: "Okruszki nawigacyjne",
+    liveAt: "Adres",
+    viewStudy: "Zobacz realizację",
+    /* Etykieta kursora nad wierszem realizacji (czyta ją components/Cursor). */
+    cursorView: "Zobacz",
+    shotHint:
+      "Każdy zrzut to cała strona główna klienta. Najedź na niego albo przewiń na telefonie — obejrzysz ją od góry do dołu, tak jak wygląda dziś.",
+    nextStudy: "Następna realizacja",
     cta: {
       heading: "Chcesz podobną stronę dla swojej firmy?",
       body:
@@ -103,6 +112,14 @@ const en: PagesCopy = {
     visitSite: "Visit the site",
     backToList: "All work",
     todoNotice: "This case study is still waiting for the owner to finish the copy.",
+    breadcrumbHome: "Home",
+    breadcrumbLabel: "Breadcrumb",
+    liveAt: "Live at",
+    viewStudy: "View the case study",
+    cursorView: "View",
+    shotHint:
+      "Every screenshot is the client's full home page. Hover over it, or scroll on a phone, to see it top to bottom, exactly as it looks today.",
+    nextStudy: "Next project",
     cta: {
       heading: "Want a site like this for your business?",
       body:

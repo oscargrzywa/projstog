@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  CaseFacts,
+  CaseProse,
+  CaseStage,
+  NextStudy,
+} from "@/components/CaseStudy";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
-import { RichText } from "@/components/RichText";
+import { PageHero } from "@/components/PageHero";
 import { SITE } from "@/content/site";
 import { TODO_MARKER, getPageCopy } from "@/content/pages/blog-page";
 import { getCaseStudy, listCaseStudies } from "@/lib/cms";
@@ -57,6 +64,20 @@ export async function generateMetadata({
   };
 }
 
+function ExternalIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+      <path
+        d="M5 11 11 5M6 5h5v5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default async function CaseStudyPage({
   params,
 }: {
@@ -66,10 +87,20 @@ export default async function CaseStudyPage({
   if (!isLocale(lang)) notFound();
 
   const locale: Locale = lang;
-  const study = await getCaseStudy(locale, slug);
+  const [study, all] = await Promise.all([
+    getCaseStudy(locale, slug),
+    listCaseStudies(locale),
+  ]);
   if (!study) notFound();
 
   const copy = getPageCopy(locale);
+  const listHref = publicPath(locale, ["realizacje"]);
+  const contactHref = publicPath(locale, ["kontakt"]);
+
+  /* Następna wg `order` (lista przychodzi już posortowana), z zawinięciem
+     — po ostatniej wraca pierwsza, więc oglądanie nie kończy się ślepo. */
+  const index = all.findIndex((item) => item.slug === study.slug);
+  const next = all.length > 1 ? all[(index + 1) % all.length] : null;
 
   /* Znacznik zostaje na widoku celowo — luka w treści ma być widoczna
      dla właściciela strony, a nie cicho zamieciona pod dywan. */
@@ -92,90 +123,114 @@ export default async function CaseStudyPage({
       />
 
       <article>
-        {/* --------------------------------------------------------- nagłówek */}
-        <header className="mx-auto max-w-6xl px-5 pt-12 pb-10 lg:pt-16">
-          <Link
-            href={publicPath(locale, ["realizacje"])}
-            className="hit text-sm text-lichen underline-offset-4 transition-colors hover:text-voltage hover:underline"
-          >
-            {copy.work.backToList}
-          </Link>
+        {/* ========================================================= nagłówek */}
+        <PageHero
+          crumbsLabel={copy.work.breadcrumbLabel}
+          crumbs={[
+            { label: copy.work.breadcrumbHome, href: publicPath(locale, []) },
+            { label: copy.work.title, href: listHref },
+            { label: study.name },
+          ]}
+          title={study.name}
+          titleClassName="max-w-[16ch]"
+          lead={
+            <>
+              <p>{study.outcome}</p>
+              {needsCopy && (
+                <p className="mt-5 rounded-md border border-dashed border-hairline px-4 py-2.5 text-xs text-lichen">
+                  {copy.work.todoNotice}
+                </p>
+              )}
+            </>
+          }
+          actions={
+            <>
+              <a
+                href={study.url}
+                target="_blank"
+                rel="noopener"
+                data-magnetic
+                className="btn-fill inline-flex items-center gap-2.5 rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+              >
+                {copy.work.visitSite}
+                <span className="font-display text-xs opacity-80">{study.domain}</span>
+                <ExternalIcon />
+              </a>
+              <Link
+                href={contactHref}
+                data-magnetic
+                className="rounded-full border border-bone-12 px-7 py-3.5 text-sm font-medium text-bone transition-colors duration-250 hover:border-signal"
+              >
+                {copy.work.cta.button}
+              </Link>
+            </>
+          }
+        />
 
-          <h1 className="mt-6 max-w-[18ch] text-5xl">{study.name}</h1>
+        {/* ============================================================ scena */}
+        {study.cover && <CaseStage image={study.cover} domain={study.domain} />}
 
-          <p className="mt-6 max-w-[58ch] text-lg leading-relaxed text-lichen">
-            {study.outcome}
-          </p>
+        {/* ============================================================ treść */}
+        <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-14 px-5 py-20 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:py-28">
+          <CaseFacts
+            items={[
+              { label: copy.work.industry, value: study.industry },
+              ...(study.tech.length > 0
+                ? [
+                    {
+                      label: copy.work.tech,
+                      value: (
+                        <ul className="flex flex-wrap gap-1.5">
+                          {study.tech.map((item) => (
+                            <li key={item} className="chip font-sans">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      ),
+                    },
+                  ]
+                : []),
+              {
+                label: copy.work.liveAt,
+                value: (
+                  <a
+                    href={study.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="hit inline-flex items-center gap-2.5 transition-colors hover:text-voltage"
+                  >
+                    <span className="live-dot" aria-hidden="true" />
+                    {study.domain}
+                    <ExternalIcon />
+                  </a>
+                ),
+              },
+            ]}
+          />
 
-          {needsCopy && (
-            <p className="mt-5 max-w-[58ch] rounded-md border border-dashed border-hairline px-4 py-2.5 text-xs text-lichen">
-              {copy.work.todoNotice}
-            </p>
-          )}
-
-          <a
-            href={study.url}
-            target="_blank"
-            rel="noopener"
-            className="mt-8 inline-flex items-center gap-2 rounded-md border border-hairline px-5 py-3 text-sm font-medium text-bone transition-colors hover:border-signal hover:text-voltage"
-          >
-            {copy.work.visitSite}
-            <span className="font-mono text-xs text-lichen">{study.domain}</span>
-          </a>
-
-          <dl className="mt-10 grid gap-x-10 gap-y-5 border-t border-hairline pt-5 text-sm sm:grid-cols-2">
-            <div>
-              <dt className="text-xs uppercase tracking-wide text-lichen">
-                {copy.work.industry}
-              </dt>
-              <dd className="mt-1 text-bone">{study.industry}</dd>
-            </div>
-
-            {study.tech.length > 0 && (
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-lichen">
-                  {copy.work.tech}
-                </dt>
-                <dd className="mt-2">
-                  <ul className="flex flex-wrap gap-2">
-                    {study.tech.map((item) => (
-                      <li
-                        key={item}
-                        className="rounded-sm border border-hairline px-2 py-0.5 text-xs text-lichen"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </dd>
-              </div>
-            )}
-          </dl>
-        </header>
-
-        {/* ------------------------------------------------------------ treść */}
-        <div className="border-t border-hairline">
-          <div className="mx-auto max-w-6xl px-5 py-12">
-            <RichText blocks={study.body} />
-          </div>
+          <CaseProse blocks={study.body} />
         </div>
       </article>
 
-      {/* ---------------------------------------------------------- kontakt */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="max-w-[20ch] text-4xl">{copy.work.cta.heading}</h2>
-          <p className="mt-5 max-w-[52ch] leading-relaxed text-lichen">
-            {copy.work.cta.body}
-          </p>
-          <Link
-            href={publicPath(locale, ["kontakt"])}
-            className="mt-8 inline-block rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
-          >
-            {copy.work.cta.button}
-          </Link>
-        </div>
-      </section>
+      {/* ================================================ następna realizacja */}
+      {next && (
+        <NextStudy
+          study={next}
+          href={publicPath(locale, ["realizacje", next.slug])}
+          heading={copy.work.nextStudy}
+          allLabel={copy.work.backToList}
+          allHref={listHref}
+          moreLabel={copy.work.viewStudy}
+          cursorLabel={copy.work.cursorView}
+        />
+      )}
+
+      <CtaBand
+        heading={copy.work.cta.heading}
+        lead={copy.work.cta.body}
+        primary={{ label: copy.work.cta.button, href: contactHref }}
+      />
     </>
   );
 }

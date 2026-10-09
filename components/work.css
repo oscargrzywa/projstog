@@ -1,0 +1,533 @@
+/* ==========================================================================
+   Realizacje — lista i podstrona realizacji.
+
+   Ten sam język co strona główna: nagłówki spod maski, wejścia na osi
+   przewijania, linia voltage pod wierszem przy hoverze. Tu mieszka tylko
+   to, czego używają /realizacje i /realizacje/[slug] — wspólne klocki
+   (PageHero, SiteShot, CtaBand) są w page-kit.css.
+
+   Ruch wyłącznie na `transform`/`translate`/`scale`/`opacity` i osiach
+   view(); całość w `prefers-reduced-motion: no-preference`. Bez wsparcia
+   osi przewijania (Firefox) wszystko stoi w stanie końcowym — widoczne.
+   ========================================================================== */
+
+/* --- Stóg zrzutów (nagłówek listy) ------------------------------------
+   Karty leżą schodkami rosnącymi w prawo — jak słupki znaku PROJSTOG.
+   Pozycja to osobne `translate` + `rotate` (zmienne --x/--y/--r), a wejście
+   to animacja `transform` — dwie różne właściwości, więc animacja wejścia
+   nie blokuje przejścia w wachlarz przy hoverze. */
+
+.work-stack {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 21rem;
+  aspect-ratio: 1 / 1.02;
+}
+
+@media (min-width: 64rem) {
+  .work-stack {
+    max-width: none;
+  }
+}
+
+/* Światło pod stosem — stóg stoi w poświacie, a nie na płaskiej czerni. */
+.work-stack::before {
+  content: "";
+  position: absolute;
+  inset: 12% -20% -12% -12%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    50% 46% at 48% 62%,
+    color-mix(in oklab, var(--color-signal) 26%, transparent) 0%,
+    transparent 72%
+  );
+}
+
+.work-stack__card {
+  --x: 0%;
+  --y: 0%;
+  --r: 0deg;
+  --lift: 0%;
+  position: absolute;
+  left: 2%;
+  bottom: 2%;
+  z-index: calc(10 - var(--n));
+  width: 60%;
+  overflow: clip;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 26%, var(--color-hairline));
+  border-radius: var(--radius-md);
+  background-color: var(--color-basalt);
+  box-shadow: 0 1.75rem 3rem -1.25rem color-mix(in oklab, var(--color-obsydian) 90%, transparent);
+  transform-origin: 50% 130%;
+  translate: var(--x) calc(var(--y) + var(--lift));
+  rotate: var(--r);
+  transition:
+    translate 850ms var(--ease-out-expo),
+    rotate 850ms var(--ease-out-expo),
+    border-color 300ms var(--ease-out-quart);
+  transition-delay: calc(var(--n) * 35ms);
+}
+
+/* Schodki w spoczynku. */
+.work-stack__card:nth-child(1) { --x: 0%;  --y: 0%;   --r: -3deg; }
+.work-stack__card:nth-child(2) { --x: 15%; --y: -10%; --r: -1deg; }
+.work-stack__card:nth-child(3) { --x: 30%; --y: -20%; --r: 1deg; }
+.work-stack__card:nth-child(4) { --x: 45%; --y: -30%; --r: 3deg; }
+
+/* Krawędź jak pasek postępu builda — ta sama linia co na słupkach hero. */
+.work-stack__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  z-index: 2;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 18px 1px color-mix(in oklab, var(--color-voltage) 45%, transparent);
+}
+
+/* Przygaszenie kart, nad którymi nie ma kursora. */
+.work-stack__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: var(--color-obsydian);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out-quart);
+}
+
+.work-stack__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 1.25rem;
+  padding-inline: 0.5rem;
+  border-bottom: 1px solid var(--color-hairline);
+  background-image: linear-gradient(
+    180deg in oklab,
+    color-mix(in oklab, var(--color-bone) 6%, var(--color-basalt)),
+    var(--color-basalt)
+  );
+}
+
+.work-stack__bar span {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background-color: color-mix(in oklab, var(--color-bone) 15%, transparent);
+}
+
+.work-stack__shot {
+  container-type: size;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: clip;
+  background-color: var(--color-slate-moss);
+}
+
+.work-stack__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  translate: 0 0;
+  transition: translate 900ms var(--ease-out-quart);
+}
+
+/* Telefon: prościej — trzy karty, bez wachlarza. */
+@media (max-width: 63.99rem) {
+  .work-stack__card:nth-child(4) {
+    display: none;
+  }
+
+  .work-stack {
+    aspect-ratio: 1 / 0.92;
+  }
+}
+
+/* Wachlarz: stos rozchodzi się wokół punktu pod kartami. Karta pod
+   kursorem podnosi się i przewija własny zrzut, reszta gaśnie. */
+@media (hover: hover) and (min-width: 64rem) {
+  .work-stack:hover .work-stack__card:nth-child(1) { --x: -12%; --y: 3%;   --r: -11deg; }
+  .work-stack:hover .work-stack__card:nth-child(2) { --x: 8%;   --y: -8%;  --r: -3.5deg; }
+  .work-stack:hover .work-stack__card:nth-child(3) { --x: 28%;  --y: -15%; --r: 4deg; }
+  .work-stack:hover .work-stack__card:nth-child(4) { --x: 46%;  --y: -20%; --r: 11deg; }
+
+  .work-stack__card:hover {
+    --lift: -7%;
+    border-color: color-mix(in oklab, var(--color-voltage) 55%, transparent);
+    transition-delay: 0ms;
+  }
+
+  .work-stack:has(.work-stack__card:hover) .work-stack__card:not(:hover)::after {
+    opacity: 0.5;
+  }
+}
+
+@media (hover: hover) and (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
+  .work-stack__card:hover img {
+    translate: 0 calc(-100% + 100cqh);
+    transition: translate 7s cubic-bezier(0.45, 0.05, 0.4, 1);
+  }
+}
+
+/* Wejście: karty „rozdawane" po kolei, od przedniej. `backwards`, nie
+   `both` — po zakończeniu animacja nie trzyma żadnej wartości. */
+@media (prefers-reduced-motion: no-preference) {
+  .work-stack__card {
+    animation: stack-deal 1100ms var(--ease-out-expo) backwards;
+    animation-delay: calc(380ms + var(--n) * 110ms);
+  }
+}
+
+@keyframes stack-deal {
+  from {
+    transform: translateY(28%) scale(0.92);
+    opacity: 0;
+  }
+}
+
+/* --- Lista realizacji --------------------------------------------------- */
+
+.work-feature {
+  /* Oś dla ramki — przypięta do wiersza, bo ramka sama się przesuwa. */
+  view-timeline-name: --work-feature;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.work-feature__link {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  padding-block: clamp(3rem, 1.5rem + 4vw, 6rem);
+}
+
+@media (min-width: 64rem) {
+  .work-feature__link {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(3rem, 0.5rem + 4.5vw, 6rem);
+  }
+
+  /* Naprzemiennie: co drugi wiersz ma zrzut po prawej. */
+  .work-feature:nth-child(even) .work-feature__link {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .work-feature:nth-child(even) .work-feature__shot {
+    order: 2;
+  }
+
+  .work-feature__link--text,
+  .work-feature:nth-child(even) .work-feature__link--text {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Ramka zapala się razem z wierszem — hairline-and-glow. */
+.work-feature__shot .browser,
+.next-card__shot .browser {
+  transition:
+    border-color 300ms var(--ease-out-quart),
+    box-shadow 500ms var(--ease-out-quart);
+}
+
+.work-feature__link:is(:hover, :focus-visible) .browser,
+.next-card:is(:hover, :focus-visible) .browser {
+  border-color: color-mix(in oklab, var(--color-signal) 60%, transparent);
+  box-shadow: var(--shadow-glow-strong);
+}
+
+/* „Zobacz realizację" ze strzałką, która wyrywa się do przodu. */
+.work-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-voltage);
+}
+
+.work-more__arrow {
+  transition: translate 500ms var(--ease-out-expo);
+}
+
+.work-feature__link:is(:hover, :focus-visible) .work-more__arrow {
+  translate: 0.375rem 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Ramka otwiera się z wnętrza i dorasta, a przez cały przejazd
+       płynie wolniej niż tekst obok — lekki parallax. */
+    .work-feature__shot {
+      animation:
+        feature-open linear both,
+        feature-drift linear both;
+      animation-timeline: --work-feature, --work-feature;
+      animation-range:
+        entry 0% cover 40%,
+        cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes feature-open {
+  from {
+    clip-path: inset(9% 7% 9% 7% round var(--radius-lg));
+    scale: 0.94;
+    opacity: 0.35;
+  }
+  to {
+    clip-path: inset(0 round var(--radius-lg));
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes feature-drift {
+  from {
+    translate: 0 2.5rem;
+  }
+  to {
+    translate: 0 -2.5rem;
+  }
+}
+
+/* --- Scena case study -------------------------------------------------
+   Ramka nachodzi na dolną krawędź nagłówka — linia hero przechodzi
+   „za" zrzutem, jak horyzont. Przy przewijaniu dorasta do pełnej skali. */
+
+.case-stage {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * clamp(1.25rem, 0.25rem + 2.5vw, 3rem));
+  view-timeline-name: --case-stage;
+}
+
+.case-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8% 0 -6%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    55% 50% at 50% 55%,
+    color-mix(in oklab, var(--color-signal) 22%, transparent) 0%,
+    transparent 72%
+  );
+}
+
+.case-stage__frame .browser {
+  border-color: color-mix(in oklab, var(--color-signal) 32%, var(--color-hairline));
+  box-shadow: 0 2.5rem 6rem -2.5rem color-mix(in oklab, var(--color-obsydian) 95%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .case-stage__frame {
+      animation: stage-grow linear both;
+      animation-timeline: --case-stage;
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@keyframes stage-grow {
+  from {
+    scale: 0.9;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* --- Fakty: branża, stack, adres --------------------------------------- */
+
+.case-facts {
+  display: grid;
+  align-self: start;
+  align-content: start;
+  gap: 1.75rem 2rem;
+}
+
+@media (min-width: 40rem) {
+  .case-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .case-facts {
+    position: sticky;
+    top: 7rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.case-facts > div {
+  border-top: 1px solid var(--color-hairline);
+  padding-top: 1rem;
+}
+
+.case-facts dt {
+  font-size: var(--text-sm);
+  color: var(--color-bone-45);
+}
+
+.case-facts dd {
+  margin-top: 0.625rem;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 540;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-bone);
+}
+
+/* --- Treść case study --------------------------------------------------
+   Pierwszy akapit to wstęp — większy i jaśniejszy. Nad każdym H2 linia
+   voltage, ta sama co na szczytach słupków znaku. */
+
+.case-prose > div > p:first-child {
+  /* Większy stopień = szersze `ch` — miara skrócona, żeby prawa krawędź
+     zgadzała się z resztą kolumny. */
+  max-width: 56ch;
+  font-size: var(--text-xl);
+  line-height: 1.6;
+  color: var(--color-bone);
+}
+
+.case-prose h2:not(:first-child) {
+  margin-top: 4.5rem;
+}
+
+.case-prose h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 14px 1px color-mix(in oklab, var(--color-voltage) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .case-prose > div > * {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 28%;
+    }
+  }
+}
+
+/* --- Następna realizacja ------------------------------------------------ */
+
+.case-next {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border-top: 1px solid var(--color-hairline);
+  background-color: var(--color-basalt);
+}
+
+.next-card {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 3.5rem;
+  padding-bottom: clamp(4rem, 2rem + 5vw, 7rem);
+  view-timeline-name: --next-card;
+}
+
+@media (min-width: 64rem) {
+  .next-card {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(3rem, 0.5rem + 4.5vw, 6rem);
+  }
+}
+
+.next-card__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-bone);
+}
+
+/* Okrągły przycisk — voltage wlewa się od dołu, jak w `.btn-fill`. */
+.next-card__circle {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  overflow: clip;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 50%;
+  color: var(--color-voltage);
+  transition:
+    color 350ms var(--ease-out-quart),
+    border-color 350ms var(--ease-out-quart);
+}
+
+.next-card__circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-voltage);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 550ms var(--ease-out-expo);
+}
+
+.next-card__circle svg {
+  transition: translate 500ms var(--ease-out-expo);
+}
+
+.next-card:is(:hover, :focus-visible) .next-card__circle {
+  border-color: var(--color-voltage);
+  color: var(--color-obsydian);
+}
+
+.next-card:is(:hover, :focus-visible) .next-card__circle::before {
+  transform: none;
+}
+
+.next-card:is(:hover, :focus-visible) .next-card__circle svg {
+  translate: 0.25rem 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Podgląd wjeżdża z prawej i prostuje się, jak kolejna karta ze stosu. */
+    .next-card__shot {
+      animation: next-slide linear both;
+      animation-timeline: --next-card;
+      animation-range: entry 0% cover 45%;
+    }
+  }
+}
+
+@keyframes next-slide {
+  from {
+    translate: 14% 0;
+    rotate: 4deg;
+    opacity: 0.3;
+  }
+  to {
+    translate: 0 0;
+    rotate: 0deg;
+    opacity: 1;
+  }
+}
