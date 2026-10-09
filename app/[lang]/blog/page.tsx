@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/JsonLd";
+import { PageHero } from "@/components/PageHero";
 import { SITE } from "@/content/site";
 import { formatDate, getPageCopy } from "@/content/pages/blog-page";
 import { listPosts } from "@/lib/cms";
@@ -57,17 +58,21 @@ export default async function BlogIndexPage({
         ])}
       />
 
-      <section className="mx-auto max-w-6xl px-5 pt-16 pb-12 lg:pt-24">
-        <h1 className="text-6xl">{copy.blog.title}</h1>
-        <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-lichen">
-          {copy.blog.lead}
-        </p>
-      </section>
+      <PageHero
+        crumbsLabel={copy.blog.breadcrumbLabel}
+        crumbs={[
+          { label: copy.blog.breadcrumbHome, href: publicPath(lang, []) },
+          { label: copy.blog.title },
+        ]}
+        title={copy.blog.title}
+        lead={<p>{copy.blog.lead}</p>}
+      />
 
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-12">
+      <section>
+        <div className="mx-auto max-w-6xl px-5 py-16">
           {posts.length === 0 ? (
-            <p className="max-w-[54ch] leading-relaxed text-lichen">
+            <p className="reveal flex max-w-[54ch] items-center gap-3 leading-relaxed text-lichen">
+              <span className="live-dot" aria-hidden="true" />
               {copy.blog.empty}
             </p>
           ) : (

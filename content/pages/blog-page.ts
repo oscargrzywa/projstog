@@ -32,6 +32,8 @@ const pl = {
     empty:
       "Pierwsze wpisy są w przygotowaniu. Znajdziesz tu konkrety, nie wypełniacz.",
     readingTime: "min czytania",
+    breadcrumbHome: "Strona główna",
+    breadcrumbLabel: "Okruszki nawigacyjne",
     author: "Autor",
     published: "Opublikowano",
     updated: "Aktualizacja",
@@ -87,6 +89,8 @@ const en: PagesCopy = {
       "What actually decides whether your website pays for itself: how customers find you in Google, what it really costs, and the choices to make before the first line of code. No marketing jargon, no advice copied from someone else's blog.",
     empty: "The first posts are being written. You will find substance here, not filler.",
     readingTime: "min read",
+    breadcrumbHome: "Home",
+    breadcrumbLabel: "Breadcrumb",
     author: "Author",
     published: "Published",
     updated: "Updated",
