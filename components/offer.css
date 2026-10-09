@@ -1,0 +1,706 @@
+/* ==========================================================================
+   /oferta — „dokument zakresu" (ProfitSpec) i makieta etapów (ProcessSteps).
+   ========================================================================== */
+
+/* --- Dokument zakresu ---------------------------------------------------
+   Trzy filary Profit Site jako kartka, która „podpisuje się" przy wejściu:
+   pola zaznaczają się po kolei, na końcu rysuje się parafa. To jest dosłownie
+   obietnica z treści — zakres spisany w dokumencie akceptowanym przez obie
+   strony. Pod kartką dwie kolejne — stos, jak w znaku. */
+
+.spec {
+  position: relative;
+  max-width: 26rem;
+  margin-inline: auto;
+  rotate: -2deg;
+}
+
+/* Kartki pod spodem. */
+.spec::before,
+.spec::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-basalt);
+}
+
+.spec::before {
+  translate: 0.9rem 0.9rem;
+  rotate: 3deg;
+  opacity: 0.5;
+}
+
+.spec::after {
+  translate: 0.45rem 0.45rem;
+  rotate: 1.5deg;
+  opacity: 0.8;
+}
+
+.spec__sheet {
+  position: relative;
+  z-index: 1;
+  padding: 1.75rem 1.75rem 1.5rem;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 28%, var(--color-hairline));
+  border-radius: var(--radius-lg);
+  background-image: linear-gradient(
+    160deg in oklab,
+    color-mix(in oklab, var(--color-bone) 5%, var(--color-basalt)),
+    var(--color-basalt) 60%
+  );
+  box-shadow: var(--shadow-glow-strong);
+}
+
+.spec__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.spec__name {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-bone);
+}
+
+.spec__caption {
+  font-size: var(--text-xs);
+  color: var(--color-lichen);
+}
+
+.spec__row {
+  display: grid;
+  grid-template-columns: 1.375rem 4.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.875rem;
+  padding-block: 0.9rem;
+  border-bottom: 1px dashed var(--color-hairline);
+}
+
+.spec__box {
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  /* Stan końcowy — odhaczone. Animacja startuje od pustego pola. */
+  border: 1px solid var(--color-voltage);
+  border-radius: 0.375rem;
+  background-color: var(--color-voltage);
+}
+
+.spec__box svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  stroke: var(--color-obsydian);
+  stroke-width: 2.6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 0;
+}
+
+.spec__label {
+  font-size: var(--text-xs);
+  color: var(--color-lichen);
+}
+
+.spec__value {
+  font-size: var(--text-sm);
+  color: var(--color-bone);
+}
+
+.spec__sign {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  font-size: var(--text-xs);
+  color: var(--color-lichen);
+}
+
+.spec__sign svg {
+  width: 7.5rem;
+  height: 2.5rem;
+  fill: none;
+  stroke: var(--color-voltage);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 0;
+}
+
+/* Sekwencja: kartka wjeżdża (to robi `.enter` rodzica), potem pola po
+   kolei, na końcu parafa. Stan bez ruchu = dokument już podpisany. */
+@media (prefers-reduced-motion: no-preference) {
+  .spec__box {
+    animation: spec-box 420ms var(--ease-out-quart) both;
+    animation-delay: calc(900ms + var(--n) * 380ms);
+  }
+
+  .spec__box svg {
+    animation: spec-check 420ms var(--ease-out-quart) both;
+    animation-delay: calc(1000ms + var(--n) * 380ms);
+  }
+
+  .spec__sign svg {
+    animation: spec-sign 1100ms cubic-bezier(0.65, 0, 0.35, 1) 2.2s both;
+  }
+
+  .spec {
+    animation: spec-float 7s ease-in-out 3.4s infinite alternate;
+  }
+}
+
+@keyframes spec-box {
+  from {
+    background-color: transparent;
+    border-color: var(--color-bone-12);
+  }
+}
+
+@keyframes spec-check {
+  from {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes spec-sign {
+  from {
+    stroke-dashoffset: 260;
+  }
+}
+
+@keyframes spec-float {
+  to {
+    translate: 0 -0.5rem;
+    rotate: -1deg;
+  }
+}
+
+/* --- Lista „co wchodzi w pakiet" ---------------------------------------- */
+
+.includes-check {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  margin-top: 0.2rem;
+  fill: none;
+  stroke: var(--color-voltage);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 20;
+}
+
+/* Ptaszek rysuje się, gdy wiersz wjeżdża w widok. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .includes-check {
+      animation: spec-check linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 35%;
+    }
+  }
+}
+
+/* --- Etapy: lista + makieta --------------------------------------------- */
+
+.steps {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 64rem) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .steps__visual {
+    position: sticky;
+    top: 7rem;
+    order: 2;
+  }
+}
+
+.step {
+  position: relative;
+  padding: 1.25rem 0 1.25rem 1.5rem;
+  border-left: 1px solid var(--color-hairline);
+  transition: opacity 400ms var(--ease-out-quart);
+}
+
+/* Nieaktywne etapy przygaszone, ale czytelne — cała treść zostaje na
+   stronie, makieta tylko podkreśla jeden z nich. */
+.steps[data-ready] .step:not([data-active]) {
+  opacity: 0.55;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--color-voltage);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform 500ms var(--ease-out-expo);
+}
+
+.step[data-active]::before {
+  transform: none;
+}
+
+.step__button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.step__button:focus-visible {
+  outline: 2px solid var(--color-voltage);
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+.step__num {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-lichen);
+}
+
+.step[data-active] .step__num {
+  color: var(--color-voltage);
+}
+
+/* Pasek czasu autoodtwarzania — po dojściu do końca przełącza etap. */
+.step__timer {
+  position: absolute;
+  left: 1.5rem;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--color-hairline);
+  overflow: hidden;
+}
+
+.step__timer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in oklab, var(--color-voltage) 70%, transparent);
+  transform-origin: 0 50%;
+  animation: step-timer var(--step-dur, 4.6s) linear both;
+  animation-play-state: inherit;
+}
+
+@keyframes step-timer {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* --- Makieta etapów -------------------------------------------------------
+   Jedno okno przeglądarki, pięć stanów (`data-step`). Warstwy leżą na
+   sobie i przechodzą opacity/transform — zero przeliczeń układu. */
+
+.pv {
+  --pv-ease: var(--ease-out-expo);
+  position: relative;
+}
+
+.pv .browser__viewport {
+  overflow: clip;
+}
+
+.pv__url {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pv__lock {
+  width: 0.7rem;
+  height: 0.7rem;
+  fill: none;
+  stroke: var(--color-voltage);
+  stroke-width: 2;
+  display: none;
+}
+
+.pv[data-step="3"] .pv__lock,
+.pv[data-step="4"] .pv__lock {
+  display: block;
+}
+
+.pv__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex: none;
+  font-size: 0.6875rem;
+  color: var(--color-voltage);
+  opacity: 0;
+  transition: opacity 400ms var(--pv-ease);
+}
+
+.pv[data-step="3"] .pv__status,
+.pv[data-step="4"] .pv__status {
+  opacity: 1;
+}
+
+.pv__layer {
+  position: absolute;
+  inset: 0;
+  padding: 7%;
+  transition:
+    opacity 600ms var(--pv-ease),
+    transform 700ms var(--pv-ease);
+}
+
+/* Etap 0 — brief: kartka z punktami do odhaczenia. */
+.pv__brief {
+  display: grid;
+  align-content: center;
+  gap: 0.75rem;
+  max-width: 70%;
+  margin-inline: auto;
+}
+
+.pv__line {
+  height: 0.5rem;
+  border-radius: 999px;
+  background-color: var(--color-bone-12);
+}
+
+.pv__todo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.pv__todo i {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: none;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 0.25rem;
+  transition:
+    background-color 300ms var(--pv-ease),
+    border-color 300ms var(--pv-ease);
+}
+
+.pv[data-step="0"] .pv__todo i {
+  background-color: var(--color-voltage);
+  border-color: var(--color-voltage);
+  transition-delay: calc(350ms + var(--n) * 260ms);
+}
+
+.pv:not([data-step="0"]) .pv__brief {
+  opacity: 0;
+  transform: translateY(-1.5rem) scale(0.96);
+}
+
+/* Etapy 1–4 — strona: siatka (1) → wypełniona (2+). */
+.pv__site {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 6%;
+}
+
+.pv[data-step="0"] .pv__site {
+  opacity: 0;
+  transform: translateY(1.5rem) scale(0.98);
+}
+
+.pv__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pv__logo {
+  width: 18%;
+  height: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.pv__links {
+  display: flex;
+  gap: 0.5rem;
+  width: 34%;
+}
+
+.pv__links span {
+  flex: 1;
+  height: 0.375rem;
+  border-radius: 999px;
+}
+
+.pv__hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 6%;
+  align-items: center;
+}
+
+.pv__copy {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pv__title {
+  height: 0.9rem;
+  border-radius: 0.25rem;
+}
+
+.pv__title + .pv__title {
+  width: 70%;
+}
+
+.pv__cta {
+  width: 40%;
+  height: 0.9rem;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+}
+
+.pv__img {
+  aspect-ratio: 4 / 3;
+  border-radius: 0.5rem;
+}
+
+.pv__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5%;
+}
+
+.pv__cols span {
+  height: 2.25rem;
+  border-radius: 0.375rem;
+}
+
+/* Etap 1 — siatka: same obrysy przerywane. */
+.pv__site :is(.pv__logo, .pv__links span, .pv__title, .pv__cta, .pv__img, .pv__cols span) {
+  border: 1px dashed color-mix(in oklab, var(--color-signal) 55%, transparent);
+  background-color: transparent;
+  transition:
+    background-color 600ms var(--pv-ease),
+    border-color 600ms var(--pv-ease);
+}
+
+/* Etap 2+ — wypełnione kolorem i „zdjęciami". */
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__site :is(.pv__logo, .pv__links span, .pv__title, .pv__cta, .pv__img, .pv__cols span) {
+  border-color: transparent;
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__logo {
+  background-color: var(--color-voltage);
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__links span {
+  background-color: var(--color-bone-45);
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__title {
+  background-color: var(--color-bone);
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__cta {
+  background-color: var(--color-signal);
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__img {
+  background-image:
+    radial-gradient(60% 50% at 70% 30%, color-mix(in oklab, var(--color-voltage) 45%, transparent), transparent 70%),
+    linear-gradient(160deg, #1f4a1d, #0c1a0c);
+}
+
+.pv:is([data-step="2"], [data-step="3"], [data-step="4"]) .pv__cols span {
+  background-color: color-mix(in oklab, var(--color-bone) 9%, transparent);
+}
+
+/* Telefon — wjeżdża na etapie realizacji (sprawdzanie na urządzeniach). */
+.pv__phone {
+  position: absolute;
+  right: 5%;
+  bottom: -2%;
+  width: 22%;
+  aspect-ratio: 9 / 18;
+  padding: 0.375rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 0.875rem;
+  background-color: var(--color-obsydian);
+  opacity: 0;
+  transform: translateY(30%);
+  transition:
+    opacity 600ms var(--pv-ease),
+    transform 800ms var(--pv-ease);
+}
+
+.pv__phone span {
+  display: block;
+  height: 100%;
+  border-radius: 0.5rem;
+  background-image:
+    linear-gradient(180deg, transparent 0 8%, var(--color-voltage) 8% 11%, transparent 11% 18%),
+    linear-gradient(180deg, transparent 0 20%, var(--color-bone) 20% 25%, transparent 25% 28%, var(--color-bone) 28% 33%, transparent 33%),
+    linear-gradient(160deg, #1f4a1d, #0c1a0c 60%);
+  background-size: 50% 100%, 80% 100%, 100% 100%;
+  background-position: 12% 0, 12% 0, 0 0;
+  background-repeat: no-repeat;
+}
+
+.pv[data-step="2"] .pv__phone {
+  opacity: 1;
+  transform: none;
+}
+
+/* Etap 3 — strona w Google: karta wyniku wysuwa się od dołu. */
+.pv__serp {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 7%;
+  display: grid;
+  gap: 0.375rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 0.625rem;
+  background-color: color-mix(in oklab, var(--color-obsydian) 88%, transparent);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 600ms var(--pv-ease),
+    transform 700ms var(--pv-ease);
+}
+
+.pv__serp-url {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.625rem;
+  color: var(--color-lichen);
+}
+
+.pv__serp-url::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+}
+
+.pv__serp b {
+  display: block;
+  height: 0.6rem;
+  width: 62%;
+  border-radius: 999px;
+  background-color: color-mix(in oklab, var(--color-voltage) 75%, var(--color-bone));
+}
+
+.pv__serp .pv__line {
+  height: 0.375rem;
+}
+
+.pv[data-step="3"] .pv__serp {
+  opacity: 1;
+  transform: none;
+}
+
+/* Etap 4 — opieka: pasek dostępności i odhaczone zadania. */
+.pv__care {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 7%;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 0.625rem;
+  background-color: color-mix(in oklab, var(--color-obsydian) 88%, transparent);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 600ms var(--pv-ease),
+    transform 700ms var(--pv-ease);
+}
+
+.pv[data-step="4"] .pv__care {
+  opacity: 1;
+  transform: none;
+}
+
+.pv__uptime {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 2px;
+  height: 1rem;
+}
+
+.pv__uptime span {
+  border-radius: 1px;
+  background-color: color-mix(in oklab, var(--color-signal) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pv[data-step="4"] .pv__uptime span:last-child {
+    animation: uptime-blink 1.2s ease-in-out infinite;
+  }
+}
+
+@keyframes uptime-blink {
+  50% {
+    background-color: var(--color-voltage);
+    box-shadow: 0 0 8px var(--color-voltage);
+  }
+}
+
+.pv__checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 1rem;
+  font-size: 0.6875rem;
+  color: var(--color-bone-70);
+}
+
+.pv__checks span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.pv__checks span::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+}
+
+@media (max-width: 47.99rem) {
+  .pv__checks {
+    font-size: 0.625rem;
+  }
+}

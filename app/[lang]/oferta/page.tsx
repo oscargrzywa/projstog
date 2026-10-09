@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
+import { PageHero } from "@/components/PageHero";
+import { ProcessSteps } from "@/components/ProcessSteps";
+import { ProfitSpec } from "@/components/ProfitSpec";
 import { SITE } from "@/content/site";
 import { OFFER_PAGE } from "@/content/pages/offer";
 import { getDictionary } from "@/content/dictionary";
@@ -87,6 +91,8 @@ export default async function OfferPage({
   const t = getDictionary(lang);
   const page = OFFER_PAGE[lang];
   const categories = await listServiceCategories(lang);
+  /* Etykieta kursora nad wierszem obszaru (czyta ją components/Cursor). */
+  const cursorViewLabel = lang === "pl" ? "Zobacz" : "View";
 
   return (
     <>
@@ -99,42 +105,72 @@ export default async function OfferPage({
       />
 
       {/* ------------------------------------------------------------ hero */}
-      <section className="mx-auto max-w-6xl px-5 pt-16 pb-14 lg:pt-24">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-lichen">
-          {t.nav.offer}
-        </p>
-        <h1 className="mt-5 max-w-[16ch] text-6xl">{page.h1}</h1>
-        <p className="mt-6 max-w-[56ch] text-lg leading-relaxed text-lichen">
-          {page.lead}
-        </p>
-      </section>
+      <PageHero
+        crumbsLabel={page.breadcrumb.label}
+        crumbs={[
+          { label: page.breadcrumb.home, href: publicPath(lang, []) },
+          { label: page.breadcrumb.offer },
+        ]}
+        title={page.h1}
+        lead={<p>{page.lead}</p>}
+        actions={
+          <>
+            <Link
+              href={publicPath(lang, ["kontakt"])}
+              data-magnetic
+              className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+            >
+              {page.profit.cta}
+            </Link>
+            <Link
+              href={publicPath(lang, ["realizacje"])}
+              data-magnetic
+              className="rounded-full border border-bone-12 px-7 py-3.5 text-sm font-medium text-bone transition-colors duration-250 hover:border-signal"
+            >
+              {t.home.ctaSecondary}
+            </Link>
+          </>
+        }
+        aside={
+          <ProfitSpec
+            name={page.profit.name}
+            caption={page.profit.spec.caption}
+            sign={page.profit.spec.sign}
+            pillars={page.profit.pillars}
+          />
+        }
+      />
 
       {/* --------------------------------------------- produkt wiodący */}
-      <section className="border-y border-hairline bg-basalt">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-voltage">
-                {page.profit.eyebrow}
-              </p>
-              <h2 className="mt-4 text-5xl">{page.profit.name}</h2>
-              <p className="mt-4 max-w-[46ch] text-lg leading-relaxed text-bone">
-                {page.profit.tagline}
-              </p>
+      <section id="profit-site" className="border-b border-hairline bg-basalt">
+        <div className="mx-auto max-w-6xl px-5 py-28">
+          <p className="reveal chip inline-flex items-center gap-2">
+            <span className="live-dot" aria-hidden="true" />
+            {page.profit.eyebrow}
+          </p>
+          <h2 className="mask-reveal mt-7 text-7xl">
+            <span className="mask-reveal__inner">{page.profit.name}</span>
+          </h2>
+          <p className="reveal mt-7 max-w-[30ch] font-display text-3xl leading-[1.15] text-bone">
+            {page.profit.tagline}
+          </p>
 
+          <div className="mt-16 grid gap-x-16 gap-y-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
+            <div>
               {page.profit.body.map((paragraph) => (
                 <p
                   key={paragraph.slice(0, 32)}
-                  className="mt-5 max-w-[56ch] leading-relaxed text-lichen"
+                  className="reveal prose-col mb-5 text-bone-70"
                 >
                   {paragraph}
                 </p>
               ))}
 
-              <div className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <div className="reveal mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <Link
                   href={publicPath(lang, ["kontakt"])}
-                  className="rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
+                  data-magnetic
+                  className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
                 >
                   {page.profit.cta}
                 </Link>
@@ -145,16 +181,14 @@ export default async function OfferPage({
             </div>
 
             {/* Zakres / termin / cena — trzy obietnice, każda z warunkiem. */}
-            <dl className="grid gap-y-6 self-start sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-1">
+            <dl className="reveal-stagger grid gap-y-8 self-start">
               {page.profit.pillars.map((pillar) => (
-                <div key={pillar.label} className="border-t border-hairline pt-4">
-                  <dt className="text-xs font-medium uppercase tracking-[0.18em] text-lichen">
-                    {pillar.label}
-                  </dt>
-                  <dd className="mt-2 font-display text-xl leading-tight text-bone">
+                <div key={pillar.label} className="panel">
+                  <dt className="text-sm text-lichen">{pillar.label}</dt>
+                  <dd className="mt-2 font-display text-2xl leading-tight text-bone">
                     {pillar.value}
                   </dd>
-                  <dd className="mt-2 max-w-[44ch] text-sm leading-relaxed text-lichen">
+                  <dd className="mt-3 max-w-[44ch] text-sm leading-relaxed text-bone-70">
                     {pillar.note}
                   </dd>
                 </div>
@@ -162,25 +196,26 @@ export default async function OfferPage({
             </dl>
           </div>
 
-          {/* Zawartość pakietu. */}
-          <div className="mt-14 border-t border-hairline pt-8">
-            <h3 className="text-2xl">{page.profit.includesHeading}</h3>
-            <ul className="mt-6 grid gap-x-12 sm:grid-cols-2">
+          {/* Zawartość pakietu — ptaszki rysują się przy przewijaniu. */}
+          <div className="mt-24">
+            <h3 className="mask-reveal text-4xl">
+              <span className="mask-reveal__inner">{page.profit.includesHeading}</span>
+            </h3>
+            <ul className="reveal-stagger mt-10 grid gap-x-14 border-t border-hairline sm:grid-cols-2">
               {page.profit.includes.map((item) => (
                 <li
                   key={item}
-                  className="flex gap-3 border-t border-hairline py-3 text-sm leading-relaxed text-lichen"
+                  className="flex gap-4 border-b border-hairline py-5 leading-relaxed text-bone-70"
                 >
-                  <span
-                    aria-hidden
-                    className="mt-2.5 h-px w-4 shrink-0 bg-signal"
-                  />
-                  <span className="max-w-[48ch]">{item}</span>
+                  <svg className="includes-check" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M3 8.5l3.2 3.2L13 4.5" />
+                  </svg>
+                  <span className="max-w-[46ch]">{item}</span>
                 </li>
               ))}
             </ul>
 
-            <p className="mt-8 max-w-[64ch] text-sm leading-relaxed text-lichen">
+            <p className="reveal mt-10 max-w-[64ch] border-l-2 border-signal pl-5 leading-relaxed text-bone-70">
               {page.profit.notFit}
             </p>
           </div>
@@ -188,94 +223,72 @@ export default async function OfferPage({
       </section>
 
       {/* ------------------------------------------------- cztery obszary */}
-      <section>
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-          <h2 className="text-4xl">{page.categories.heading}</h2>
-          <p className="mt-4 max-w-[56ch] leading-relaxed text-lichen">
-            {page.categories.lead}
-          </p>
+      {/* Wiersze, nie kafelki — nazwa, zakres i usługi czytają się jak spis
+          treści oferty. Hover jak na liście realizacji na głównej. */}
+      <section className="mx-auto max-w-6xl px-5 py-28">
+        <h2 className="mask-reveal max-w-[18ch] text-5xl">
+          <span className="mask-reveal__inner">{page.categories.heading}</span>
+        </h2>
+        <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          {page.categories.lead}
+        </p>
 
-          <ul className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
-            {categories.map((category) => (
-              <li key={category.slug}>
-                <Link
-                  href={publicPath(lang, ["oferta", category.slug])}
-                  className="group block border-t border-hairline pt-5 transition-colors hover:border-signal"
-                >
-                  <h3 className="text-2xl transition-colors group-hover:text-voltage">
-                    {category.title}
-                  </h3>
-                  <p className="mt-3 max-w-[52ch] text-sm leading-relaxed text-lichen">
+        <ul className="mt-14 divide-y divide-hairline border-y border-hairline">
+          {categories.map((category) => (
+            <li key={category.slug} className="reveal">
+              <Link
+                href={publicPath(lang, ["oferta", category.slug])}
+                data-cursor="view"
+                data-cursor-label={cursorViewLabel}
+                className="work-row group grid gap-x-10 gap-y-4 py-10 lg:grid-cols-[minmax(0,19rem)_minmax(0,1fr)]"
+              >
+                <h3 className="work-row__name text-3xl group-hover:text-voltage">
+                  {category.title}
+                </h3>
+                <div>
+                  <p className="max-w-[58ch] leading-relaxed text-bone-70">
                     {category.lead}
                   </p>
-                  <p className="mt-4 text-xs leading-relaxed text-lichen opacity-70">
-                    {category.services.map((s) => s.title).join(" · ")}
-                  </p>
-                  <span className="mt-5 inline-block text-sm font-medium text-voltage underline-offset-4 group-hover:underline">
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {category.services.map((service) => (
+                      <li key={service.slug} className="chip">
+                        {service.title}
+                      </li>
+                    ))}
+                  </ul>
+                  <span className="mt-6 inline-block text-sm font-medium text-voltage underline-offset-4 group-hover:underline">
                     {page.categories.linkLabel}
                   </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* -------------------------------------------------------- proces */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-          <h2 className="text-4xl">{page.process.heading}</h2>
-          <p className="mt-4 max-w-[56ch] leading-relaxed text-lichen">
+      <section className="overflow-x-clip border-t border-hairline">
+        <div className="mx-auto max-w-6xl px-5 py-28">
+          <h2 className="mask-reveal max-w-[18ch] text-5xl">
+            <span className="mask-reveal__inner">{page.process.heading}</span>
+          </h2>
+          <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-lichen">
             {page.process.lead}
           </p>
 
-          <ol className="mt-12 border-t border-hairline">
-            {page.process.steps.map((step, index) => (
-              <li
-                key={step.name}
-                className="grid gap-x-10 gap-y-2 border-b border-hairline py-6 sm:grid-cols-[2.5rem_minmax(0,12rem)_minmax(0,1fr)]"
-              >
-                <span className="text-sm tabular-nums text-lichen opacity-70">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-2xl">{step.name}</h3>
-                <div>
-                  <p className="max-w-[56ch] text-sm leading-relaxed text-lichen">
-                    {step.description}
-                  </p>
-                  <p className="mt-2 max-w-[56ch] text-sm leading-relaxed text-lichen opacity-70">
-                    {step.need}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-14">
+            <ProcessSteps steps={page.process.steps} visual={page.process.visual} />
+          </div>
         </div>
       </section>
 
       {/* ------------------------------------------------------- kontakt */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="max-w-[18ch] text-5xl">{page.cta.heading}</h2>
-          <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
-            {page.cta.lead}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={publicPath(lang, ["kontakt"])}
-              className="rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
-            >
-              {page.cta.button}
-            </Link>
-            <Link
-              href={publicPath(lang, ["realizacje"])}
-              className="rounded-md border border-hairline px-5 py-3 text-sm font-medium text-bone transition-colors hover:border-signal"
-            >
-              {t.home.ctaSecondary}
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaBand
+        heading={page.cta.heading}
+        lead={page.cta.lead}
+        primary={{ label: page.cta.button, href: publicPath(lang, ["kontakt"]) }}
+        secondary={{ label: t.home.ctaSecondary, href: publicPath(lang, ["realizacje"]) }}
+      />
     </>
   );
 }

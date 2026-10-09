@@ -45,10 +45,25 @@ export type OfferOverviewContent = {
     cta: string;
     ctaNote: string;
     notFit: string;
+    /** Podpisy „dokumentu zakresu" w nagłówku (dekoracja). */
+    spec: { caption: string; sign: string };
   };
 
   categories: { heading: string; lead: string; linkLabel: string };
-  process: { heading: string; lead: string; steps: ProcessStep[] };
+  process: {
+    heading: string;
+    lead: string;
+    steps: ProcessStep[];
+    /** Mikroteksty makiety etapów (dekoracja, aria-hidden). */
+    visual: {
+      draftUrl: string;
+      liveUrl: string;
+      online: string;
+      backup: string;
+      ssl: string;
+      updates: string;
+    };
+  };
   cta: { heading: string; lead: string; button: string };
 
   breadcrumb: { label: string; home: string; offer: string };
@@ -139,6 +154,7 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
         "Profit Site nie pasuje do wszystkiego. Jeśli potrzebujesz sklepu, " +
         "portalu z panelem redakcyjnym albo aplikacji pod konkretny proces, " +
         "to inna praca i inna wycena. Wtedy zacznij od obszarów poniżej.",
+      spec: { caption: "Zakres do akceptacji", sign: "Akceptujemy oboje" },
     },
 
     categories: {
@@ -191,6 +207,14 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
           need: "Od Ciebie: nic. Na tym polega ten etap.",
         },
       ],
+      visual: {
+        draftUrl: "podgląd roboczy",
+        liveUrl: "twojafirma.pl",
+        online: "online",
+        backup: "Kopia zapasowa",
+        ssl: "Certyfikat SSL",
+        updates: "Aktualizacje",
+      },
     },
 
     cta: {
@@ -281,6 +305,7 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
         "Profit Site does not fit every job. If you need a store, an editorial " +
         "platform or an application built around one specific process, that is " +
         "different work and a different quote. Start from the areas below.",
+      spec: { caption: "Scope for sign-off", sign: "Signed off by both" },
     },
 
     categories: {
@@ -333,6 +358,14 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
           need: "From you: nothing. That is the whole point of this stage.",
         },
       ],
+      visual: {
+        draftUrl: "staging preview",
+        liveUrl: "yourbusiness.com",
+        online: "online",
+        backup: "Backup",
+        ssl: "SSL certificate",
+        updates: "Updates",
+      },
     },
 
     cta: {
