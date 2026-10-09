@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Wyjścia z podstrony kategorii — pas Profit Site i pozostałe obszary.
+   ========================================================================== */
+
+/* --- Pas Profit Site ------------------------------------------------------ */
+
+.pn {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border-block: 1px solid var(--color-hairline);
+  background-color: var(--color-basalt);
+}
+
+.pn::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto 30%;
+  height: 90%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    50% 60% at 70% 30%,
+    color-mix(in oklab, var(--color-signal) 18%, transparent),
+    transparent 72%
+  );
+}
+
+.pn__name {
+  font-size: var(--text-7xl);
+  line-height: 0.9;
+}
+
+.pn__dot {
+  display: inline-block;
+  width: 0.14em;
+  height: 0.14em;
+  margin-right: 0.22em;
+  vertical-align: 0.12em;
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 0.25em color-mix(in oklab, var(--color-voltage) 55%, transparent);
+}
+
+/* Czternaście kratek — bez wsparcia osi albo przy reduced-motion
+   wszystkie są po prostu pełne. */
+.pn__days {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: clamp(0.1875rem, 0.6vw, 0.5rem);
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+}
+
+.pn__days i {
+  height: clamp(1.25rem, 0.75rem + 1.6vw, 2.5rem);
+  border-radius: 0.25rem;
+  background-color: color-mix(in oklab, var(--color-signal) 62%, transparent);
+  transform-origin: 50% 100%;
+}
+
+.pn__days i:last-child {
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 1.5rem -0.25rem color-mix(in oklab, var(--color-voltage) 70%, transparent);
+}
+
+.pn__points {
+  display: grid;
+}
+
+.pn__points li {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--color-hairline);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-bone);
+}
+
+.pn__points li:last-child {
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.pn__check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: color-mix(in oklab, var(--color-voltage) 14%, transparent);
+  color: var(--color-voltage);
+}
+
+.pn__check svg,
+.oc-row svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pn__check svg {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  stroke-width: 2.6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Nazwa przepływa poziomo, gdy pas przejeżdża przez ekran — przesunięcie
+       w poziomie nie zmienia pozycji w pionie, więc oś view() nie goni
+       własnego ogona. Pas ma overflow: clip — zero poziomego scrolla. */
+    .pn__drift {
+      animation: pn-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    .pn__days i {
+      animation: pn-fill linear both;
+      animation-timeline: view();
+      animation-range:
+        cover calc(10% + var(--i) * 1.8%)
+        cover calc(22% + var(--i) * 1.8%);
+    }
+  }
+}
+
+@keyframes pn-drift {
+  from {
+    transform: translateX(7%);
+  }
+  to {
+    transform: translateX(-4%);
+  }
+}
+
+@keyframes pn-fill {
+  from {
+    opacity: 0.15;
+    transform: scaleY(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Pozostałe obszary ---------------------------------------------------- */
+
+.oc-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(1.25rem, 0.5rem + 2.5vw, 2.5rem);
+  padding-block: 2.25rem;
+  isolation: isolate;
+}
+
+/* Poświata wiersza przy najechaniu — od strony znaku kategorii. */
+.oc-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1rem;
+  z-index: -1;
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+  background: radial-gradient(
+    55% 140% at 12% 50%,
+    color-mix(in oklab, var(--color-signal) 13%, transparent),
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out-quart);
+}
+
+.oc-row__glyph {
+  display: grid;
+  place-items: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-md);
+  color: var(--color-lichen);
+  transition:
+    color 300ms var(--ease-out-quart),
+    border-color 300ms var(--ease-out-quart),
+    background-color 300ms var(--ease-out-quart);
+}
+
+.oc-row__glyph svg {
+  width: 1.625rem;
+  height: 1.625rem;
+  stroke-width: 1.6;
+}
+
+.oc-row__arrow {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 50%;
+  color: var(--color-bone);
+  transition:
+    background-color 350ms var(--ease-out-quart),
+    border-color 350ms var(--ease-out-quart),
+    color 350ms var(--ease-out-quart),
+    translate 600ms var(--ease-out-expo);
+}
+
+.oc-row__arrow svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke-width: 1.8;
+  rotate: -45deg;
+  transition: rotate 600ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .oc-row:hover::before {
+    opacity: 1;
+  }
+
+  .oc-row:hover .oc-row__glyph {
+    border-color: color-mix(in oklab, var(--color-signal) 60%, transparent);
+    background-color: color-mix(in oklab, var(--color-signal) 10%, transparent);
+    color: var(--color-voltage);
+  }
+
+  .oc-row:hover .oc-row__arrow {
+    border-color: var(--color-voltage);
+    background-color: var(--color-voltage);
+    color: var(--color-obsydian);
+    translate: 0.25rem 0;
+  }
+
+  .oc-row:hover .oc-row__arrow svg {
+    rotate: 0deg;
+  }
+}
+
+.oc-row:focus-visible .oc-row__arrow {
+  border-color: var(--color-voltage);
+  background-color: var(--color-voltage);
+  color: var(--color-obsydian);
+}
+
+.oc-row:focus-visible .oc-row__arrow svg {
+  rotate: 0deg;
+}
+
+/* Telefon: bez znaku kategorii, strzałka mniejsza — tytuł dostaje miejsce. */
+@media (max-width: 39.99rem) {
+  .oc-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-block: 1.75rem;
+  }
+
+  .oc-row__glyph {
+    display: none;
+  }
+
+  .oc-row__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}

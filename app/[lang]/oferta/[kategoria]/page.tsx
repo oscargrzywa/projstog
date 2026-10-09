@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
+import { OtherAreas, ProfitBand } from "@/components/OfferCrossLinks";
+import { PageHero } from "@/components/PageHero";
+import { ServiceScrolly } from "@/components/ServiceScrolly";
+import { ServiceStage } from "@/components/ServiceStage";
 import { SITE } from "@/content/site";
 import { OFFER_CATEGORY_PAGE } from "@/content/pages/offer";
 import {
@@ -21,6 +26,9 @@ import {
 } from "@/lib/routes";
 
 type RouteParams = { lang: string; kategoria: string };
+
+/** Kotwica listy usług — cel przycisku w nagłówku. */
+const SERVICES_ANCHOR = "uslugi";
 
 /**
  * Iloczyn: 2 języki × 4 kategorie = 8 podstron prerenderowanych przy buildzie.
@@ -117,6 +125,8 @@ export default async function ServiceCategoryPage({
 
   const page = OFFER_CATEGORY_PAGE[lang];
   const others = all.filter((c) => c.slug !== category.slug);
+  const offerHref = publicPath(lang, ["oferta"]);
+  const contactHref = publicPath(lang, ["kontakt"]);
 
   return (
     <>
@@ -130,155 +140,122 @@ export default async function ServiceCategoryPage({
       />
 
       {/* ---------------------------------------------------- nagłówek */}
-      <section className="mx-auto max-w-6xl px-5 pt-10 pb-14 lg:pt-14">
-        <nav
-          aria-label={page.breadcrumb.label}
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-lichen"
-        >
-          <Link
-            href={publicPath(lang, [])}
-            className="hit underline-offset-4 transition-colors hover:text-bone hover:underline"
-          >
-            {page.breadcrumb.home}
-          </Link>
-          <span aria-hidden className="opacity-50">
-            /
-          </span>
-          <Link
-            href={publicPath(lang, ["oferta"])}
-            className="hit underline-offset-4 transition-colors hover:text-bone hover:underline"
-          >
-            {page.breadcrumb.offer}
-          </Link>
-          <span aria-hidden className="opacity-50">
-            /
-          </span>
-          <span aria-current="page" className="text-bone">
-            {category.title}
-          </span>
-        </nav>
-
-        <h1 className="mt-8 max-w-[18ch] text-5xl">{category.title}</h1>
-        <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-lichen">
-          {category.lead}
-        </p>
-      </section>
+      <PageHero
+        crumbsLabel={page.breadcrumb.label}
+        crumbs={[
+          { label: page.breadcrumb.home, href: publicPath(lang, []) },
+          { label: page.breadcrumb.offer, href: offerHref },
+          { label: category.title },
+        ]}
+        title={category.title}
+        titleClassName="max-w-[15ch]"
+        lead={<p>{category.lead}</p>}
+        actions={
+          <>
+            <Link
+              href={contactHref}
+              data-magnetic
+              className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+            >
+              {page.cta.button}
+            </Link>
+            <a
+              href={`#${SERVICES_ANCHOR}`}
+              data-magnetic
+              className="rounded-full border border-bone-12 px-7 py-3.5 text-sm font-medium text-bone transition-colors duration-250 ease-[var(--ease-out-quart)] hover:border-signal"
+            >
+              {page.jump}
+            </a>
+          </>
+        }
+      />
 
       {/* ------------------------------------------------------- usługi */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-          <h2 className="text-4xl">{page.servicesHeading}</h2>
-          <p className="mt-4 max-w-[56ch] leading-relaxed text-lichen">
-            {page.servicesLead}
-          </p>
+      {/* Scrollytelling: pełne opisy usług renderuje serwer; wyspa
+          ServiceScrolly dokłada tylko numer usługi w kadrze, od którego
+          zależy stan przyklejonej makiety obok (od lg). Do lg każda usługa
+          ma nad opisem statyczną kopię swojej warstwy makiety. */}
+      <section
+        id={SERVICES_ANCHOR}
+        className="mx-auto max-w-6xl scroll-mt-20 px-5 pt-28 pb-24 lg:pb-32"
+      >
+        <h2 className="mask-reveal max-w-[18ch] text-5xl">
+          <span className="mask-reveal__inner">{page.servicesHeading}</span>
+        </h2>
+        <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-lichen">
+          {page.servicesLead}
+        </p>
 
-          <ol className="mt-12">
-            {category.services.map((service, index) => (
-              <li
-                key={service.slug}
-                id={service.slug}
-                className="scroll-mt-24 border-t border-hairline py-8 last:border-b"
-              >
-                <div className="grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
-                  <div>
-                    <span className="text-sm tabular-nums text-lichen opacity-70">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="mt-2 text-3xl">{service.title}</h3>
-                    <p className="mt-4 max-w-[48ch] text-sm leading-relaxed text-lichen">
-                      {service.summary}
-                    </p>
+        <div className="mt-16 lg:mt-12">
+          <ServiceScrolly
+            items={category.services.map(({ slug, title }) => ({ slug, title }))}
+            indexLabel={page.indexLabel}
+            stage={<ServiceStage category={category} copy={page.stage} />}
+          >
+            <ol className="svc-steps">
+              {category.services.map((service, index) => (
+                <li
+                  key={service.slug}
+                  id={service.slug}
+                  data-step={index}
+                  className="svc-step"
+                >
+                  <div className="svc-step__stage reveal" aria-hidden="true" data-s={index}>
+                    <ServiceStage category={category} copy={page.stage} only={index} />
                   </div>
 
-                  <ul className="space-y-3">
+                  <h3 className="mask-reveal text-4xl">
+                    <span className="mask-reveal__inner">{service.title}</span>
+                  </h3>
+                  <p className="reveal mt-6 max-w-[50ch] text-lg leading-[1.55] text-bone-70">
+                    {service.summary}
+                  </p>
+
+                  <ul className="svc-step__bullets reveal-stagger mt-8">
                     {service.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className="flex gap-3 text-sm leading-relaxed text-lichen"
-                      >
-                        <span
-                          aria-hidden
-                          className="mt-2.5 h-px w-4 shrink-0 bg-signal"
-                        />
-                        <span className="max-w-[56ch]">{bullet}</span>
+                      <li key={bullet} className="svc-step__bullet">
+                        <span className="svc-step__check" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" focusable="false">
+                            <path d="M5 12.5l4.2 4.2L19 7" />
+                          </svg>
+                        </span>
+                        <span>{bullet}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              </li>
-            ))}
-          </ol>
+                </li>
+              ))}
+            </ol>
+          </ServiceScrolly>
         </div>
       </section>
 
       {/* ------------------------------------------- produkt wiodący */}
-      <section className="border-t border-hairline bg-basalt">
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          <p className="max-w-[62ch] leading-relaxed text-lichen">
-            {page.profitNudge.text}
-          </p>
-          <Link
-            href={publicPath(lang, ["oferta"])}
-            className="hit mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
-          >
-            {page.profitNudge.link}
-          </Link>
-        </div>
-      </section>
+      <ProfitBand
+        name={page.profitNudge.name}
+        text={page.profitNudge.text}
+        points={page.profitNudge.points}
+        link={page.profitNudge.link}
+        href={offerHref}
+      />
 
       {/* ------------------------------------------- pozostałe obszary */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="text-3xl">{page.other.heading}</h2>
-          <p className="mt-4 max-w-[52ch] leading-relaxed text-lichen">
-            {page.other.lead}
-          </p>
-
-          <ul className="mt-10 grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((other) => (
-              <li key={other.slug}>
-                <Link
-                  href={publicPath(lang, ["oferta", other.slug])}
-                  className="group block border-t border-hairline pt-4 transition-colors hover:border-signal"
-                >
-                  <h3 className="text-xl transition-colors group-hover:text-voltage">
-                    {other.title}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-lichen opacity-70">
-                    {other.services.map((s) => s.title).join(" · ")}
-                  </p>
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link
-                href={publicPath(lang, ["oferta"])}
-                className="group block min-h-11 border-t border-hairline pt-4 transition-colors hover:border-signal"
-              >
-                <h3 className="text-xl transition-colors group-hover:text-voltage">
-                  {page.backToOffer}
-                </h3>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <OtherAreas
+        heading={page.other.heading}
+        lead={page.other.lead}
+        allLabel={page.backToOffer}
+        allHref={offerHref}
+        cursorLabel={page.other.cursor}
+        categories={others}
+        hrefFor={(slug) => publicPath(lang, ["oferta", slug])}
+      />
 
       {/* ------------------------------------------------------ kontakt */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="max-w-[20ch] text-5xl">{page.cta.heading}</h2>
-          <p className="mt-5 max-w-[56ch] leading-relaxed text-lichen">
-            {page.cta.lead}
-          </p>
-          <Link
-            href={publicPath(lang, ["kontakt"])}
-            className="mt-8 inline-block rounded-md bg-signal px-5 py-3 text-sm font-medium text-bone transition-colors hover:bg-voltage hover:text-obsydian"
-          >
-            {page.cta.button}
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        heading={page.cta.heading}
+        lead={page.cta.lead}
+        primary={{ label: page.cta.button, href: contactHref }}
+      />
     </>
   );
 }

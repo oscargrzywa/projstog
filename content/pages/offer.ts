@@ -69,14 +69,68 @@ export type OfferOverviewContent = {
   breadcrumb: { label: string; home: string; offer: string };
 };
 
+/**
+ * Mikroteksty makiet przy liście usług (`components/ServiceStage`).
+ * Dekoracja (aria-hidden): przykładowe, neutralne podpisy elementów
+ * interfejsu — żadnych liczb, nazw firm ani obietnic.
+ */
+export type OfferStageCopy = {
+  web: {
+    /** Przykładowa domena w pasku adresu i w panelu statusu. */
+    domain: string;
+    /** Ścieżki podstron sklepu i bloga w pasku adresu. */
+    paths: { shop: string; blog: string };
+    call: string;
+    send: string;
+    /** Zakładki w stosie podstron strony firmowej (4). */
+    pages: string[];
+    cart: string;
+    newPost: string;
+  };
+  ai: {
+    form: string;
+    sheet: string;
+    inbox: string;
+    calendar: string;
+    assistant: string;
+    /** Kolumny lejka w CRM (3). */
+    pipeline: string[];
+    quote: string;
+  };
+  marketing: {
+    query: string;
+    business: string;
+    open: string;
+    /** Przyciski wizytówki: trasa, telefon, witryna. */
+    actions: string[];
+    /** Ogólnik skreślany w makiecie copywritingu i zdanie, które go zastępuje. */
+    before: string;
+    after: string;
+  };
+  care: {
+    online: string;
+    ssl: string;
+    domain: string;
+    backup: string;
+    updates: string;
+    request: string;
+    done: string;
+  };
+};
+
 export type OfferCategoryContent = {
   backToOffer: string;
+  /** Drugi przycisk w nagłówku — przewija do listy usług. */
+  jump: string;
   servicesHeading: string;
   servicesLead: string;
-  other: { heading: string; lead: string };
-  profitNudge: { text: string; link: string };
+  /** Etykieta spisu usług obok makiety. */
+  indexLabel: string;
+  other: { heading: string; lead: string; cursor: string };
+  profitNudge: { name: string; text: string; link: string; points: string[] };
   cta: { heading: string; lead: string; button: string };
   breadcrumb: { label: string; home: string; offer: string };
+  stage: OfferStageCopy;
 };
 
 /* ------------------------------------------------------- /oferta (przegląd) */
@@ -390,22 +444,27 @@ export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
 export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
   pl: {
     backToOffer: "Cała oferta",
+    jump: "Zobacz, co dostajesz",
     servicesHeading: "Co dokładnie dostajesz",
     servicesLead:
       "Poniżej każda usługa z tego obszaru: po co jest i co konkretnie " +
       "wchodzi w zakres. Jeśli czegoś na liście nie ma, po prostu zapytaj.",
+    indexLabel: "Usługi w tym obszarze",
     other: {
       heading: "Pozostałe obszary",
       lead:
         "Projekty rzadko mieszczą się w jednej szufladzie. Zobacz, co jeszcze " +
         "możesz zdjąć ze swojej głowy.",
+      cursor: "Zobacz",
     },
     profitNudge: {
+      name: "Profit Site",
       text:
         "Potrzebujesz po prostu dobrej strony bez rozkładania wszystkiego na " +
         "czynniki pierwsze? Profit Site ma ustalony zakres, stałą cenę i " +
         "uruchomienie w 14 dni.",
       link: "Poznaj Profit Site",
+      points: ["Ustalony zakres", "Stała cena", "Uruchomienie w 14 dni"],
     },
     cta: {
       heading: "Nie wiesz, czy to ten obszar?",
@@ -420,26 +479,68 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
       home: "Strona główna",
       offer: "Oferta",
     },
+    stage: {
+      web: {
+        domain: "twojafirma.pl",
+        paths: { shop: "/sklep", blog: "/blog" },
+        call: "Zadzwoń",
+        send: "Wyślij",
+        pages: ["Oferta", "Realizacje", "O firmie", "Kontakt"],
+        cart: "Koszyk",
+        newPost: "Nowy wpis",
+      },
+      ai: {
+        form: "Formularz",
+        sheet: "Arkusz",
+        inbox: "Skrzynka",
+        calendar: "Kalendarz",
+        assistant: "Asystent",
+        pipeline: ["Zapytania", "Oferty", "Domknięte"],
+        quote: "Wycena",
+      },
+      marketing: {
+        query: "Twoja branża w pobliżu",
+        business: "Twoja firma",
+        open: "Otwarte",
+        actions: ["Trasa", "Zadzwoń", "Witryna"],
+        before: "Kompleksowe usługi na najwyższym poziomie",
+        after: "Wiesz, co dostajesz i ile to kosztuje",
+      },
+      care: {
+        online: "Strona działa",
+        ssl: "Certyfikat SSL",
+        domain: "Domena",
+        backup: "Kopia zapasowa",
+        updates: "Aktualizacje",
+        request: "Trzeba dziś zmienić godziny otwarcia",
+        done: "Zrobione",
+      },
+    },
   },
 
   en: {
     backToOffer: "All services",
+    jump: "See what you get",
     servicesLead:
       "Every service in this area below: what it is for and what exactly is " +
       "included. If something you need is not on the list, just ask.",
     servicesHeading: "What exactly you get",
+    indexLabel: "Services in this area",
     other: {
       heading: "The other areas",
       lead:
         "Projects rarely fit into a single box. Here is what else I can take " +
         "off your hands.",
+      cursor: "View",
     },
     profitNudge: {
+      name: "Profit Site",
       text:
         "Just need a good website without taking everything apart first? " +
         "Profit Site comes with a fixed scope, a fixed price and a launch in " +
         "14 days.",
       link: "See Profit Site",
+      points: ["Fixed scope", "Fixed price", "Live in 14 days"],
     },
     cta: {
       heading: "Not sure this is the right area?",
@@ -453,6 +554,43 @@ export const OFFER_CATEGORY_PAGE: Record<Locale, OfferCategoryContent> = {
       label: "Breadcrumb",
       home: "Home",
       offer: "Services",
+    },
+    stage: {
+      web: {
+        domain: "yourcompany.com",
+        paths: { shop: "/shop", blog: "/blog" },
+        call: "Call",
+        send: "Send",
+        pages: ["Services", "Work", "About", "Contact"],
+        cart: "Cart",
+        newPost: "New post",
+      },
+      ai: {
+        form: "Form",
+        sheet: "Sheet",
+        inbox: "Inbox",
+        calendar: "Calendar",
+        assistant: "Assistant",
+        pipeline: ["Enquiries", "Quotes", "Won"],
+        quote: "Quote",
+      },
+      marketing: {
+        query: "your trade near me",
+        business: "Your business",
+        open: "Open",
+        actions: ["Directions", "Call", "Website"],
+        before: "Comprehensive services of the highest standard",
+        after: "You know what you get and what it costs",
+      },
+      care: {
+        online: "Site online",
+        ssl: "SSL certificate",
+        domain: "Domain",
+        backup: "Backup",
+        updates: "Updates",
+        request: "Opening hours need changing today",
+        done: "Done",
+      },
     },
   },
 };
