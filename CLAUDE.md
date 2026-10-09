@@ -149,6 +149,13 @@ Uwaga: stara strona używała Geist — czyli **nie zgadzała się z własnym sp
 Rytm 4px, radii 10/16px, elevation „hairline-and-glow", znak „rising-stack / stóg".
 Strona jest **wyłącznie ciemna** — brak trybu jasnego.
 
+**Podstrony** budować z zestawu `components/PageHero.tsx` (nagłówek z okruszkami,
+wejściem i stogiem w tle), `CtaBand.tsx` (pas CTA) i `SiteShot.tsx` (zrzut strony
+klienta w ramce, przewijany). Każda podstrona ma jeden „żywy" element związany
+z treścią (np. etapy na /oferta, mapa na /o-mnie, status na /kontakt) — nie
+rozsypywać efektów. Style strony w osobnym pliku CSS obok jej komponentu.
+Zrzuty realizacji: `public/img/portfolio/<slug>.jpg`, wysokości w `content/case-studies.ts`.
+
 ## Czego NIE powtarzać ze starej strony
 
 - `"use client"` na stronach z treścią — zabija SEO
