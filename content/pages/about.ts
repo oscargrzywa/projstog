@@ -17,7 +17,9 @@ import type { Locale } from "@/lib/routes";
 type AboutPageCopy = {
   seo: { title: string; description: string };
   breadcrumbHome: string;
-  /** Nadtytuł nad H1 — pozycjonowanie w jednym zdaniu. */
+  /** Etykieta dostępności nawigacji okruszków. */
+  crumbsLabel: string;
+  /** Podtytuł pod H1 — pozycjonowanie w jednym zdaniu. */
   kicker: string;
   h1: string;
   lead: string;
@@ -29,8 +31,13 @@ type AboutPageCopy = {
   localLead: string;
   localPunchline: string;
   localDetail: string;
+  /** Podpis na mapie przy linii Mielec–Rzeszów (~49,6 km w linii prostej). */
+  mapDistance: string;
+  /** Tekst pod mapą — mapa jest aria-hidden, więc to on niesie treść. */
+  mapCaption: string;
 
   approachHeading: string;
+  approachLead: string;
   approachPoints: { title: string; body: string }[];
 
   workHeading: string;
@@ -59,6 +66,7 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
         "Twoją stronę internetową robi i utrzymuje jedna osoba z Podkarpacia — Mielec i Rzeszów — od pierwszej rozmowy po wsparcie po uruchomieniu. Bez agencji, pośredników i przekazywania sprawy dalej.",
     },
     breadcrumbHome: "Strona główna",
+    crumbsLabel: "Ścieżka nawigacji",
     kicker: "Nie agencja. Człowiek z Podkarpacia.",
     h1: "Oscar Grzywa",
     lead:
@@ -73,8 +81,13 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Ja pracuję w Mielcu i w Rzeszowie, więc możesz umówić się ze mną na spotkanie.",
     localDetail:
       "Dla Ciebie to znaczy, że przyjadę na spotkanie, obejrzę Twój lokal albo realizacje na miejscu, a teksty na Twoją stronę napiszę z wiedzą o lokalnym rynku. Nie zgaduję, jak wygląda sytuacja w Dębicy, Tarnobrzegu czy Kolbuszowej — jeżdżę tamtędy.",
+    mapDistance: "ok. 50 km",
+    mapCaption:
+      "Mielec i Rzeszów dzieli ok. 50 km w linii prostej, a Dębica, Kolbuszowa i Tarnobrzeg leżą w promieniu 40 km od Mielca. Na spotkanie przyjadę do Ciebie.",
 
     approachHeading: "Jak wygląda współpraca",
+    approachLead:
+      "Cztery rzeczy, na które możesz liczyć w każdym projekcie — czy to wizytówka, czy sklep.",
     approachPoints: [
       {
         title: "Jeden kontakt, od początku do końca",
@@ -125,6 +138,7 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
         "Your website, built and maintained by one person based in Mielec and Rzeszów — from the first call to post-launch support. No agency, no middlemen, no passing your case along.",
     },
     breadcrumbHome: "Home",
+    crumbsLabel: "Breadcrumb",
     kicker: "Not an agency. One person from Podkarpacie.",
     h1: "Oscar Grzywa",
     lead:
@@ -139,8 +153,13 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. I work in Mielec and Rzeszów, so you can meet me in person.",
     localDetail:
       "For you, that means I come to the meeting, look at your premises or your work on site, and write your copy knowing the local market. I do not guess what things look like in Dębica, Tarnobrzeg or Kolbuszowa — I drive through them.",
+    mapDistance: "approx. 50 km",
+    mapCaption:
+      "Mielec and Rzeszów are about 50 km apart in a straight line, and Dębica, Kolbuszowa and Tarnobrzeg are all within 40 km of Mielec. I come to you for the meeting.",
 
     approachHeading: "How working together goes",
+    approachLead:
+      "Four things you can count on in every project — whether it is a business card site or an online store.",
     approachPoints: [
       {
         title: "One contact, start to finish",

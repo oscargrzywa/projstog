@@ -1,0 +1,345 @@
+/* ==========================================================================
+   Mapa „Mielec – Rzeszów" (components/LocalMap.tsx).
+
+   Układ: kadr o proporcjach mapy (km × km), w nim siatka kropek co 2 km
+   (tło CSS), SVG z pierścieniami i linią oraz etykiety w HTML-u.
+   Ruch: oś view() całej figury (`--lmap`) — pierścienie, potem linia,
+   potem odległość. Stan bazowy jest pełny: bez wsparcia osi i przy
+   ograniczonym ruchu mapa jest po prostu narysowana.
+   ========================================================================== */
+
+.lmap {
+  margin: 0;
+  view-timeline-name: --lmap;
+}
+
+.lmap__canvas {
+  position: relative;
+  overflow: clip;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  background-image:
+    radial-gradient(
+      circle at var(--mx) var(--my),
+      color-mix(in oklab, var(--color-signal) 15%, transparent) 0%,
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg in oklab,
+      color-mix(in oklab, var(--color-basalt) 70%, transparent),
+      transparent
+    );
+}
+
+/* Siatka kropek: 39 × 42 kafle = co 2 km w obu osiach. Wygaszona
+   promieniście od Mielca, żeby kadr nie kończył się twardą krawędzią. */
+.lmap__grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-bone) 22%, transparent) 0.9px,
+    transparent 1.4px
+  );
+  background-size: calc(100% / 39) calc(100% / 42);
+  mask-image: radial-gradient(
+    circle at var(--mx) var(--my),
+    #000 0%,
+    rgb(0 0 0 / 0.55) 45%,
+    transparent 92%
+  );
+}
+
+.lmap__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Geometria (jednostki SVG = kilometry) ---------------------------- */
+
+.lmap__ring {
+  fill: none;
+  stroke: color-mix(in oklab, var(--color-signal) 42%, transparent);
+  stroke-width: 0.16;
+}
+
+.lmap__ring--1 {
+  stroke: color-mix(in oklab, var(--color-signal) 30%, transparent);
+  stroke-dasharray: 0.5 0.75;
+}
+
+.lmap__track {
+  fill: none;
+  stroke: var(--color-bone-12);
+  stroke-width: 0.24;
+  stroke-dasharray: 0.7 0.9;
+  stroke-linecap: round;
+}
+
+.lmap__line {
+  fill: none;
+  stroke: var(--color-voltage);
+  stroke-width: 0.42;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.lmap__line--glow {
+  stroke: color-mix(in oklab, var(--color-voltage) 22%, transparent);
+  stroke-width: 1.8;
+}
+
+/* --- Miasta ----------------------------------------------------------- */
+
+/* Kotwica o zerowym rozmiarze dokładnie w punkcie miasta. */
+.lmap__city {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.lmap__pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.3125rem;
+  height: 0.3125rem;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background-color: var(--color-bone-45);
+}
+
+.lmap__city--main .lmap__pin {
+  width: 0.625rem;
+  height: 0.625rem;
+  background-color: var(--color-voltage);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--color-voltage) 14%, transparent),
+    0 0 20px 2px color-mix(in oklab, var(--color-voltage) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Ten sam puls co dioda w okruszkach (`live-ping` z page-kit.css).
+     Rzeszów pulsuje w przeciwfazie — dwa punkty, jeden rytm. */
+  .lmap__city--main .lmap__pin::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--color-voltage);
+    animation: live-ping 2.4s var(--ease-out-quart) infinite;
+  }
+
+  .lmap__city--end .lmap__pin::after {
+    animation-delay: 1.2s;
+  }
+}
+
+/* Etykieta: rozmiar pisma na kontenerze, żeby `em` w pozycji wyrównywało
+   środek nazwy z punktem niezależnie od wielkości tekstu. */
+.lmap__label {
+  position: absolute;
+  top: -0.6em;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.lmap__city--main .lmap__label {
+  font-size: 1rem;
+}
+
+.lmap__city[data-side="left"] .lmap__label {
+  right: 0.85rem;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.lmap__city[data-side="right"] .lmap__label {
+  left: 0.7rem;
+}
+
+.lmap__city[data-side="below"] .lmap__label {
+  top: 0.9rem;
+  right: -0.35rem;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.lmap__name {
+  color: var(--color-lichen);
+}
+
+.lmap__city--main .lmap__name {
+  font-family: var(--font-display);
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  color: var(--color-bone);
+}
+
+.lmap__coords {
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--color-bone-45);
+}
+
+/* --- Podpisy na mapie ------------------------------------------------- */
+
+.lmap__ring-label,
+.lmap__distance {
+  position: absolute;
+  translate: -50% -50%;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  line-height: 1.2;
+  white-space: nowrap;
+  background-color: color-mix(in oklab, var(--color-obsydian) 82%, transparent);
+}
+
+.lmap__ring-label {
+  font-size: 0.625rem;
+  color: var(--color-lichen);
+}
+
+.lmap__distance {
+  rotate: var(--angle);
+  font-size: 0.6875rem;
+  color: var(--color-voltage);
+  border: 1px solid color-mix(in oklab, var(--color-voltage) 28%, transparent);
+}
+
+.lmap__north {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1;
+  color: var(--color-bone-45);
+}
+
+.lmap__north svg {
+  width: 0.5rem;
+  fill: var(--color-bone-45);
+}
+
+/* --- Podpis pod mapą -------------------------------------------------- */
+
+.lmap__caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  max-width: 58ch;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-bone-70);
+}
+
+/* Legenda: ten sam odcinek voltage co linia na mapie. */
+.lmap__legend {
+  flex: none;
+  width: 1.25rem;
+  height: 2px;
+  border-radius: 2px;
+  translate: 0 -0.3em;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--color-voltage) 50%, transparent);
+}
+
+/* --- Ruch ------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .lmap__ring {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: lmap-ring linear both;
+      animation-timeline: --lmap;
+      animation-range: entry 0% cover 36%;
+    }
+
+    .lmap__ring--1 {
+      animation-range: entry 12% cover 44%;
+    }
+
+    .lmap__line {
+      animation: lmap-draw linear both;
+      animation-timeline: --lmap;
+      animation-range: entry 35% cover 52%;
+    }
+
+    .lmap__ring-label {
+      animation: lmap-fade linear both;
+      animation-timeline: --lmap;
+      animation-range: entry 40% cover 42%;
+    }
+
+    .lmap__distance {
+      animation: lmap-fade linear both;
+      animation-timeline: --lmap;
+      animation-range: cover 48% cover 56%;
+    }
+
+    /* Rzeszów „zapala się", gdy linia do niego dociera. */
+    .lmap__city--end .lmap__pin {
+      animation: lmap-land linear both;
+      animation-timeline: --lmap;
+      animation-range: cover 47% cover 53%;
+    }
+  }
+}
+
+@keyframes lmap-ring {
+  from {
+    transform: scale(0.25);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes lmap-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes lmap-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lmap-land {
+  from {
+    scale: 0.3;
+    opacity: 0.4;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}

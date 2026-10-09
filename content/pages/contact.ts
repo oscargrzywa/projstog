@@ -1,9 +1,11 @@
 /**
  * Treści strony kontaktu i formularza.
  *
- * ⚠ Formularz jest jedynym komponentem klienckim na stronie, więc teksty
+ * ⚠ Formularz jest jedynym dużym komponentem klienckim na stronie, więc teksty
  * interfejsu formularza trzymamy w osobnym eksporcie (`CONTACT_FORM_COPY`).
  * Dzięki temu do paczki klienta trafia tylko ta część, a nie treść strony.
+ * Małe wyspy (status „na żywo", kopiowanie NIP) dostają swoje teksty
+ * przez propsy z Server Componentu.
  *
  * Słowniki interfejsu (`content/dictionary.ts`) celowo NIE puchną o te teksty —
  * mieszkają tu, bo dotyczą jednej strony.
@@ -233,11 +235,37 @@ export const CONTACT_FORM_COPY: Record<Locale, FormCopy> = {
    Treść strony (Server Component — nie trafia do paczki klienta)
    ========================================================================== */
 
+/**
+ * Status „na żywo" przy telefonie (wyspa kliencka `LiveStatus`).
+ *
+ * Serwer renderuje wariant neutralny (bez godziny), przeglądarka po
+ * hydratacji podmienia go na „odbieram teraz" albo „oddzwonię …".
+ * Placeholdery: {opens}, {closes} — z `SITE.hours`; {day} — „dziś",
+ * „jutro" albo dzień tygodnia z przyimkiem.
+ */
+export type LiveStatusCopy = {
+  neutralTitle: string;
+  neutralDetail: string;
+  openTitle: string;
+  openDetail: string;
+  closedTitle: string;
+  closedDetail: string;
+  today: string;
+  tomorrow: string;
+  /** Dzień tygodnia z przyimkiem, od niedzieli — jak `Date.getUTCDay()`. */
+  weekdays: string[];
+};
+
 type ContactPageCopy = {
   seo: { title: string; description: string };
   breadcrumbHome: string;
+  /** Etykieta dostępności nawigacji okruszków. */
+  crumbsLabel: string;
   h1: string;
   lead: string;
+  /** Przycisk w nagłówku — skok do formularza. */
+  formJump: string;
+  liveStatus: LiveStatusCopy;
   /** Etykiety przy klikalnych danych kontaktowych. */
   phoneLabel: string;
   phoneNote: string;
@@ -252,11 +280,18 @@ type ContactPageCopy = {
   locationBody: string;
   locationTravel: string;
   mapsLinkLabel: string;
+  /** Podpis na mapie przy linii Mielec–Rzeszów (~49,6 km w linii prostej). */
+  mapDistance: string;
+  /** Tekst pod mapą — mapa jest aria-hidden, więc to on niesie treść. */
+  mapCaption: string;
   /** Dane rejestrowe z CEIDG. */
   companyHeading: string;
   companyLabels: { name: string; nip: string; regon: string; address: string };
   companyNote: string;
   companyLink: string;
+  /** Przycisk kopiowania NIP / REGON (wyspa `CopyValue`). */
+  copyLabel: string;
+  copiedLabel: string;
 };
 
 export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
@@ -267,9 +302,31 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
         "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Mielec i Rzeszów, woj. podkarpackie.",
     },
     breadcrumbHome: "Strona główna",
+    crumbsLabel: "Ścieżka nawigacji",
     h1: "Kontakt",
     lead:
       "Dzwonisz albo piszesz prosto do osoby, która zrobi Twoją stronę. Bez infolinii, systemu zgłoszeń i opiekuna klienta, który przekaże sprawę dalej.",
+    formJump: "Wypełnij formularz",
+    liveStatus: {
+      neutralTitle: "Odbieram od poniedziałku do piątku",
+      neutralDetail:
+        "W godzinach {opens}–{closes}. Poza nimi napisz — oddzwonię w następny dzień roboczy.",
+      openTitle: "Teraz odbieram — zadzwoń",
+      openDetail: "Dziś jestem pod telefonem do {closes}.",
+      closedTitle: "Teraz poza godzinami",
+      closedDetail: "Napisz przez formularz — oddzwonię {day} od {opens}.",
+      today: "dziś",
+      tomorrow: "jutro",
+      weekdays: [
+        "w niedzielę",
+        "w poniedziałek",
+        "we wtorek",
+        "w środę",
+        "w czwartek",
+        "w piątek",
+        "w sobotę",
+      ],
+    },
     phoneLabel: "Telefon",
     phoneNote: "Najszybsza droga — dzwoń śmiało w godzinach pracy.",
     emailLabel: "E-mail",
@@ -290,10 +347,14 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     locationTravel:
       "Jeśli jesteś z Mielca, Rzeszowa albo okolic, przyjadę do Ciebie na spotkanie. Do dalszych miast regionu też — wystarczy ustalić termin.",
     mapsLinkLabel: "Zobacz w Mapach Google",
+    mapDistance: "ok. 50 km",
+    mapCaption: "Mielec i Rzeszów dzieli ok. 50 km w linii prostej.",
     companyHeading: "Dane firmy",
     companyLabels: { name: "Firma", nip: "NIP", regon: "REGON", address: "Adres" },
     companyNote: "Fakturę dostajesz na te dane.",
     companyLink: "Sprawdź wpis w CEIDG",
+    copyLabel: "Kopiuj",
+    copiedLabel: "Skopiowano",
   },
 
   en: {
@@ -303,9 +364,31 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
         "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Mielec and Rzeszów, south-eastern Poland.",
     },
     breadcrumbHome: "Home",
+    crumbsLabel: "Breadcrumb",
     h1: "Contact",
     lead:
       "You call or write straight to the person who will build your site. No call centre, no ticket queue and no account manager passing your case along.",
+    formJump: "Fill in the form",
+    liveStatus: {
+      neutralTitle: "Taking calls Monday to Friday",
+      neutralDetail:
+        "Between {opens} and {closes}. Outside those hours, write — I will call you back on the next working day.",
+      openTitle: "Taking calls now — ring me",
+      openDetail: "Today I am by the phone until {closes}.",
+      closedTitle: "Outside working hours now",
+      closedDetail: "Use the form — I will call you back {day} from {opens}.",
+      today: "today",
+      tomorrow: "tomorrow",
+      weekdays: [
+        "on Sunday",
+        "on Monday",
+        "on Tuesday",
+        "on Wednesday",
+        "on Thursday",
+        "on Friday",
+        "on Saturday",
+      ],
+    },
     phoneLabel: "Phone",
     phoneNote: "The fastest route — call during working hours.",
     emailLabel: "Email",
@@ -326,10 +409,14 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     locationTravel:
       "If you are in Mielec, Rzeszów or nearby, I will come to you for a meeting. The wider region too — we just agree a date.",
     mapsLinkLabel: "Open in Google Maps",
+    mapDistance: "approx. 50 km",
+    mapCaption: "Mielec and Rzeszów are about 50 km apart in a straight line.",
     companyHeading: "Company details",
     companyLabels: { name: "Company", nip: "Tax ID (NIP)", regon: "REGON", address: "Address" },
     companyNote: "Your invoice is issued from these details.",
     companyLink: "Verify in CEIDG, the Polish business register",
+    copyLabel: "Copy",
+    copiedLabel: "Copied",
   },
 };
 

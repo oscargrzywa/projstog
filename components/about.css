@@ -1,0 +1,397 @@
+/* ==========================================================================
+   Strona „O mnie" (app/[lang]/o-mnie/page.tsx).
+
+   Wszystko, co się tu rusza, jedzie na osiach przewijania (CSS) — zero
+   listenerów. Stan bazowy jest pełny i widoczny: bez wsparcia osi
+   i przy ograniczonym ruchu strona jest po prostu statyczna.
+   ========================================================================== */
+
+/* --- Portret w nagłówku -----------------------------------------------
+   Narożniki-celownik po przekątnej, jak w znaku PROJSTOG. Zdjęcie jest
+   lekko powiększone w ramce, żeby parallax miał zapas i nie odsłaniał
+   krawędzi. */
+
+.about-portrait {
+  --corner-offset: -0.625rem;
+  position: relative;
+  max-width: 24rem;
+  margin: 0;
+}
+
+@media (min-width: 64rem) {
+  .about-portrait {
+    --corner-offset: -0.875rem;
+    max-width: none;
+  }
+}
+
+.about-portrait__frame {
+  position: relative;
+  overflow: clip;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 30%, var(--color-hairline));
+  border-radius: var(--radius-lg);
+  background-color: var(--color-basalt);
+  box-shadow: 0 40px 90px -40px color-mix(in oklab, var(--color-voltage) 32%, transparent);
+}
+
+.about-portrait__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1.12;
+}
+
+/* Cień od dołu pod podpisem. */
+.about-portrait__frame::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    0deg in oklab,
+    color-mix(in oklab, var(--color-obsydian) 86%, transparent),
+    transparent
+  );
+}
+
+.about-portrait__caption {
+  position: absolute;
+  z-index: 1;
+  left: 1.125rem;
+  right: 1.125rem;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--color-bone);
+}
+
+.about-portrait__corner {
+  position: absolute;
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  pointer-events: none;
+  border: 0 solid color-mix(in oklab, var(--color-signal) 75%, transparent);
+}
+
+.about-portrait__corner--tl {
+  top: var(--corner-offset);
+  left: var(--corner-offset);
+  border-top-width: 2px;
+  border-left-width: 2px;
+  border-top-left-radius: 0.5rem;
+}
+
+.about-portrait__corner--br {
+  right: var(--corner-offset);
+  bottom: var(--corner-offset);
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Parallax: oś przewinięcia dokumentu, zakres pierwszego ekranu (jak
+   warstwy hero na głównej). Zdjęcie zostaje w tyle, narożniki uciekają
+   do przodu — dwie prędkości dają głębię. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .about-portrait__img {
+      animation: portrait-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+
+    .about-portrait__corner {
+      animation: portrait-corner linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+
+@keyframes portrait-drift {
+  from {
+    translate: 0 -4%;
+  }
+  to {
+    translate: 0 5%;
+  }
+}
+
+@keyframes portrait-corner {
+  to {
+    translate: 0 -1.5rem;
+  }
+}
+
+/* --- Współpraca: zasady + rosnący stóg --------------------------------
+   Każda zasada wystawia własną oś widoczności (`--ap-0…3`), a
+   `timeline-scope` na sekcji udostępnia je stojącemu po lewej znakowi.
+   Słupek n rośnie, gdy zasada n dojeżdża do środka ekranu. */
+
+.about-approach {
+  timeline-scope: --ap-0, --ap-1, --ap-2, --ap-3;
+}
+
+.about-principle {
+  position: relative;
+  padding: 2.25rem 0 2.25rem 2rem;
+}
+
+.about-principle:first-child {
+  padding-top: 0.5rem;
+}
+
+.about-principle:last-child {
+  padding-bottom: 0.5rem;
+}
+
+/* Szyna: linia włosowa, w którą wlewa się światło. */
+.about-principle::before,
+.about-principle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+}
+
+.about-principle::before {
+  background-color: var(--color-hairline);
+}
+
+.about-principle::after {
+  background-color: var(--color-signal);
+  transform-origin: top;
+}
+
+.about-stack {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .about-stack {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.625rem;
+    width: max-content;
+    height: 8.5rem;
+    margin-top: 3.5rem;
+    padding-inline: 0.25rem;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+}
+
+.about-stack span {
+  width: 2rem;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 40%, transparent);
+  border-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-image: linear-gradient(
+    180deg in oklab,
+    color-mix(in oklab, var(--c) 42%, transparent),
+    color-mix(in oklab, var(--c) 6%, transparent)
+  );
+  transform-origin: 50% 100%;
+  --c: var(--color-signal);
+}
+
+.about-stack span:nth-child(1) { height: 34%; }
+.about-stack span:nth-child(2) { height: 52%; }
+.about-stack span:nth-child(3) { height: 74%; }
+.about-stack span:nth-child(4) { height: 100%; --c: var(--color-voltage); }
+
+/* Krawędź jak pasek postępu builda — ta sama co w stogu nagłówków. */
+.about-stack span::before {
+  content: "";
+  display: block;
+  height: 2px;
+  margin-inline: 20%;
+  border-radius: 2px;
+  background-color: color-mix(in oklab, var(--c) 70%, var(--color-voltage));
+  box-shadow: 0 0 14px 1px color-mix(in oklab, var(--color-voltage) 45%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (timeline-scope: --ap-0) {
+    .about-principle:nth-child(1) { view-timeline-name: --ap-0; }
+    .about-principle:nth-child(2) { view-timeline-name: --ap-1; }
+    .about-principle:nth-child(3) { view-timeline-name: --ap-2; }
+    .about-principle:nth-child(4) { view-timeline-name: --ap-3; }
+
+    /* Zasada rozjaśnia się przy dojeździe do środka ekranu i taka zostaje. */
+    .about-principle {
+      animation: ap-focus linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 45%;
+    }
+
+    .about-principle::after {
+      background-color: var(--color-voltage);
+      animation: ap-rail linear both;
+      animation-range: cover 20% cover 55%;
+    }
+
+    .about-principle:nth-child(1)::after { animation-timeline: --ap-0; }
+    .about-principle:nth-child(2)::after { animation-timeline: --ap-1; }
+    .about-principle:nth-child(3)::after { animation-timeline: --ap-2; }
+    .about-principle:nth-child(4)::after { animation-timeline: --ap-3; }
+
+    .about-stack span {
+      animation: ap-bar linear both;
+      animation-range: entry 30% cover 45%;
+    }
+
+    .about-stack span:nth-child(1) { animation-timeline: --ap-0; }
+    .about-stack span:nth-child(2) { animation-timeline: --ap-1; }
+    .about-stack span:nth-child(3) { animation-timeline: --ap-2; }
+    .about-stack span:nth-child(4) { animation-timeline: --ap-3; }
+  }
+}
+
+@keyframes ap-focus {
+  from {
+    opacity: 0.28;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ap-rail {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes ap-bar {
+  from {
+    scale: 1 0.06;
+    opacity: 0.3;
+  }
+  to {
+    scale: 1 1;
+    opacity: 1;
+  }
+}
+
+/* --- Kategorie oferty jako linki -------------------------------------- */
+
+.about-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  line-height: 1.3;
+  color: var(--color-bone);
+  transition:
+    border-color 250ms var(--ease-out-quart),
+    background-color 250ms var(--ease-out-quart);
+}
+
+.about-pill:hover,
+.about-pill:focus-visible {
+  border-color: var(--color-signal);
+  background-color: color-mix(in oklab, var(--color-signal) 12%, transparent);
+}
+
+.about-pill__arrow {
+  color: var(--color-voltage);
+  transition: translate 450ms var(--ease-out-expo);
+}
+
+.about-pill:hover .about-pill__arrow,
+.about-pill:focus-visible .about-pill__arrow {
+  translate: 0.2rem 0;
+}
+
+/* --- Wizytówka „W skrócie" -------------------------------------------- */
+
+.about-facts {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  align-self: start;
+  padding: 1.75rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  background-image:
+    radial-gradient(
+      120% 70% at 100% 0%,
+      color-mix(in oklab, var(--color-signal) 14%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg in oklab, var(--color-basalt), var(--color-obsydian));
+}
+
+/* Światło na górnej krawędzi — „hairline-and-glow". */
+.about-facts::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-voltage) 60%, transparent),
+    transparent
+  );
+}
+
+.about-facts__mark {
+  position: absolute;
+  z-index: -1;
+  right: -2.5rem;
+  bottom: -2.5rem;
+  width: 13rem;
+  opacity: 0.08;
+}
+
+.about-facts__grid {
+  display: grid;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 30rem) {
+  .about-facts__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-facts__cell:nth-child(4) {
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--color-hairline);
+  }
+}
+
+.about-facts__cell {
+  padding-block: 1rem;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.about-facts__cell--wide {
+  grid-column: 1 / -1;
+}
+
+.about-facts__cell dt {
+  font-size: var(--text-xs);
+  color: var(--color-lichen);
+}
+
+.about-facts__cell dd {
+  margin-top: 0.5rem;
+}

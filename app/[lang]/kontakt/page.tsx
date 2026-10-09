@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ContactForm } from "@/components/ContactForm";
+import { CopyValue } from "@/components/CopyValue";
 import { JsonLd } from "@/components/JsonLd";
+import { LiveStatus } from "@/components/LiveStatus";
+import { LocalMap } from "@/components/LocalMap";
+import { PageHero } from "@/components/PageHero";
 import { CEIDG_URL, CONTACT_PAGE, GOOGLE_MAPS_URL } from "@/content/pages/contact";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
 import { breadcrumbSchema } from "@/lib/schema";
-import { isLocale, metadataAlternates } from "@/lib/routes";
+import { isLocale, metadataAlternates, publicPath } from "@/lib/routes";
+
+import "@/components/contact.css";
 
 export async function generateMetadata({
   params,
@@ -23,6 +29,17 @@ export async function generateMetadata({
     description: copy.seo.description,
     alternates: metadataAlternates(lang, ["kontakt"]),
   };
+}
+
+/** Strzałka w kółku przy klikalnym wierszu karty kontaktu. */
+function GoArrow() {
+  return (
+    <span aria-hidden="true" className="contact-card__go">
+      <svg viewBox="0 0 16 16">
+        <path d="M3 8h10M9 4l4 4-4 4" />
+      </svg>
+    </span>
+  );
 }
 
 export default async function ContactPage({
@@ -45,81 +62,123 @@ export default async function ContactPage({
         ])}
       />
 
-      <div className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-        <h1 className="max-w-[16ch] text-6xl">{copy.h1}</h1>
-        <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-lichen">
-          {copy.lead}
-        </p>
+      {/* ============================================================ nagłówek */}
+      {/* Telefon i mail w karcie obok nagłówka — kto chce zadzwonić, nie
+          przewija przez formularz. Na górze karty status „na żywo":
+          odbieram teraz albo kiedy oddzwonię. */}
+      <PageHero
+        crumbs={[
+          { label: copy.breadcrumbHome, href: publicPath(lang, []) },
+          { label: t.nav.contact },
+        ]}
+        crumbsLabel={copy.crumbsLabel}
+        title={copy.h1}
+        lead={copy.lead}
+        actions={
+          <a
+            href="#formularz"
+            data-magnetic
+            className="btn-fill rounded-full bg-signal px-7 py-3.5 text-sm font-medium text-bone"
+          >
+            {copy.formJump}
+          </a>
+        }
+        aside={
+          <div className="contact-card">
+            <LiveStatus
+              copy={copy.liveStatus}
+              opens={SITE.hours.opens}
+              closes={SITE.hours.closes}
+            />
 
-        {/* Telefon i mail nad formularzem — kto chce zadzwonić, nie powinien
-            najpierw przewijać przez cały formularz. */}
-        <dl className="mt-12 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
-          <div className="bg-obsydian p-6">
-            <dt className="text-sm text-lichen">{copy.phoneLabel}</dt>
-            <dd className="mt-2">
-              <a
-                href={`tel:${SITE.phoneRaw}`}
-                className="hit font-display text-2xl text-bone transition-colors hover:text-voltage"
-              >
-                {SITE.phone}
-              </a>
-              <p className="mt-2 text-sm text-lichen">{copy.phoneNote}</p>
-            </dd>
+            <dl>
+              <div className="contact-card__row">
+                <dt>{copy.phoneLabel}</dt>
+                <dd>
+                  <a
+                    href={`tel:${SITE.phoneRaw}`}
+                    className="contact-card__link font-display text-2xl whitespace-nowrap sm:text-3xl"
+                  >
+                    {SITE.phone}
+                  </a>
+                  <p className="contact-card__note">{copy.phoneNote}</p>
+                  <GoArrow />
+                </dd>
+              </div>
+
+              <div className="contact-card__row">
+                <dt>{copy.emailLabel}</dt>
+                <dd>
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="contact-card__link font-display text-xl break-all"
+                  >
+                    {SITE.email}
+                  </a>
+                  <p className="contact-card__note">{copy.emailNote}</p>
+                  <GoArrow />
+                </dd>
+              </div>
+
+              <div className="contact-card__row">
+                <dt>{copy.hoursLabel}</dt>
+                <dd>
+                  <span className="mt-1.5 block font-display text-xl text-bone tabular">
+                    {SITE.hours.opens}–{SITE.hours.closes}
+                  </span>
+                  <p className="contact-card__note">{copy.hoursNote}</p>
+                </dd>
+              </div>
+            </dl>
           </div>
+        }
+      />
 
-          <div className="bg-obsydian p-6">
-            <dt className="text-sm text-lichen">{copy.emailLabel}</dt>
-            <dd className="mt-2">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="hit font-display text-xl break-all text-bone transition-colors hover:text-voltage"
-              >
-                {SITE.email}
-              </a>
-              <p className="mt-2 text-sm text-lichen">{copy.emailNote}</p>
-            </dd>
-          </div>
-
-          <div className="bg-obsydian p-6">
-            <dt className="text-sm text-lichen">{copy.hoursLabel}</dt>
-            <dd className="mt-2">
-              <span className="font-display text-xl text-bone">
-                {SITE.hours.opens}–{SITE.hours.closes}
-              </span>
-              <p className="mt-2 text-sm text-lichen">{copy.hoursNote}</p>
-            </dd>
-          </div>
-        </dl>
-
-        <div className="mt-16 grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-20">
-          <section>
-            <h2 className="text-3xl">{copy.formHeading}</h2>
-            <div className="mt-8">
+      {/* ========================================================= formularz */}
+      <section id="formularz" className="scroll-mt-20">
+        <div className="mx-auto grid max-w-6xl gap-14 px-5 py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)] lg:gap-16 lg:py-28">
+          <div>
+            <h2 className="mask-reveal max-w-[16ch] text-5xl">
+              <span className="mask-reveal__inner">{copy.formHeading}</span>
+            </h2>
+            {/* Opakowanie zmienia tylko wygląd — logika formularza bez zmian. */}
+            <div className="contact-form-shell reveal mt-10">
               <ContactForm locale={lang} />
             </div>
-          </section>
+          </div>
 
-          <aside className="space-y-12">
-            <section>
-              <h2 className="text-2xl">{copy.responseHeading}</h2>
-              <ul className="mt-5 space-y-3">
-                {copy.responsePoints.map((point) => (
-                  <li
-                    key={point}
-                    className="border-l border-hairline pl-4 text-sm leading-relaxed text-lichen"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </section>
+          <aside className="lg:sticky lg:top-28 lg:self-start lg:pt-24">
+            <h2 className="mask-reveal text-3xl">
+              <span className="mask-reveal__inner">{copy.responseHeading}</span>
+            </h2>
+            <ul className="contact-promises reveal-stagger mt-8">
+              {copy.responsePoints.map((point) => (
+                <li key={point}>
+                  <span aria-hidden="true" className="contact-promises__check">
+                    <svg viewBox="0 0 16 16">
+                      <path d="M3.5 8.5L6.5 11.5L12.5 4.5" />
+                    </svg>
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </section>
 
-            <section>
-              <h2 className="text-2xl">{copy.locationHeading}</h2>
-              <p className="mt-5 text-sm leading-relaxed text-lichen">
+      {/* ============================================= spotkanie + dane firmy */}
+      <section className="overflow-x-clip border-y border-hairline bg-basalt">
+        <div className="mx-auto max-w-6xl px-5 py-24 lg:py-32">
+          <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:items-center lg:gap-20">
+            <div>
+              <h2 className="mask-reveal max-w-[14ch] text-5xl">
+                <span className="mask-reveal__inner">{copy.locationHeading}</span>
+              </h2>
+              <p className="reveal mt-8 max-w-[52ch] text-lg leading-relaxed text-bone-70">
                 {copy.locationBody}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-lichen">
+              <p className="reveal mt-5 max-w-[52ch] leading-relaxed text-lichen">
                 {copy.locationTravel}
               </p>
 
@@ -129,40 +188,22 @@ export default async function ContactPage({
                 href={GOOGLE_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hit mt-4 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+                className="hit reveal mt-8 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
               >
-                {copy.mapsLinkLabel}
+                {copy.mapsLinkLabel} ↗
               </a>
-            </section>
+            </div>
 
-            {/* Dane rejestrowe — identyczne z CEIDG i JSON-LD (NAP). */}
-            <section>
-              <h2 className="text-2xl">{copy.companyHeading}</h2>
-              <dl className="mt-5 divide-y divide-hairline border-y border-hairline text-sm">
-                <div className="flex justify-between gap-4 py-3">
-                  <dt className="text-lichen">{copy.companyLabels.name}</dt>
-                  <dd className="text-right text-bone">{SITE.legalName}</dd>
-                </div>
-                <div className="flex justify-between gap-4 py-3">
-                  <dt className="text-lichen">{copy.companyLabels.nip}</dt>
-                  <dd className="text-right font-mono text-bone">{SITE.nip}</dd>
-                </div>
-                <div className="flex justify-between gap-4 py-3">
-                  <dt className="text-lichen">{copy.companyLabels.regon}</dt>
-                  <dd className="text-right font-mono text-bone">{SITE.regon}</dd>
-                </div>
-                <div className="flex justify-between gap-4 py-3">
-                  <dt className="text-lichen">{copy.companyLabels.address}</dt>
-                  <dd className="text-right text-bone">
-                    <address className="not-italic">
-                      {SITE.address.street}
-                      <br />
-                      {SITE.address.postalCode} {SITE.address.city}
-                    </address>
-                  </dd>
-                </div>
-              </dl>
-              <p className="mt-4 text-sm leading-relaxed text-lichen">
+            <LocalMap distance={copy.mapDistance} caption={copy.mapCaption} />
+          </div>
+
+          {/* Dane rejestrowe — identyczne z CEIDG i JSON-LD (NAP). */}
+          <section aria-labelledby="dane-firmy" className="contact-record reveal mt-24">
+            <div className="contact-record__head">
+              <h2 id="dane-firmy" className="text-3xl">
+                {copy.companyHeading}
+              </h2>
+              <p className="text-sm leading-relaxed text-lichen">
                 {copy.companyNote}{" "}
                 <a
                   href={CEIDG_URL}
@@ -173,10 +214,51 @@ export default async function ContactPage({
                   {copy.companyLink} ↗
                 </a>
               </p>
-            </section>
-          </aside>
+            </div>
+
+            <dl className="contact-record__grid">
+              <div className="contact-record__cell">
+                <dt>{copy.companyLabels.name}</dt>
+                <dd className="font-display text-xl text-bone">{SITE.legalName}</dd>
+              </div>
+              <div className="contact-record__cell">
+                <dt>{copy.companyLabels.nip}</dt>
+                <dd>
+                  <span className="font-mono text-lg text-bone tabular">{SITE.nip}</span>
+                  <CopyValue
+                    value={SITE.nip}
+                    label={copy.companyLabels.nip}
+                    copyLabel={copy.copyLabel}
+                    copiedLabel={copy.copiedLabel}
+                  />
+                </dd>
+              </div>
+              <div className="contact-record__cell">
+                <dt>{copy.companyLabels.regon}</dt>
+                <dd>
+                  <span className="font-mono text-lg text-bone tabular">{SITE.regon}</span>
+                  <CopyValue
+                    value={SITE.regon}
+                    label={copy.companyLabels.regon}
+                    copyLabel={copy.copyLabel}
+                    copiedLabel={copy.copiedLabel}
+                  />
+                </dd>
+              </div>
+              <div className="contact-record__cell">
+                <dt>{copy.companyLabels.address}</dt>
+                <dd>
+                  <address className="not-italic leading-relaxed text-bone">
+                    {SITE.address.street}
+                    <br />
+                    {SITE.address.postalCode} {SITE.address.city}
+                  </address>
+                </dd>
+              </div>
+            </dl>
+          </section>
         </div>
-      </div>
+      </section>
     </>
   );
 }
