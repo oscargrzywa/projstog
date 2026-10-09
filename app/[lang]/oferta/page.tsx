@@ -11,7 +11,7 @@ import { SITE } from "@/content/site";
 import { OFFER_PAGE } from "@/content/pages/offer";
 import { getDictionary } from "@/content/dictionary";
 import { listServiceCategories, type ServiceCategory } from "@/lib/cms";
-import { breadcrumbSchema } from "@/lib/schema";
+import { areaServedSchema, breadcrumbSchema } from "@/lib/schema";
 import { isLocale, metadataAlternates, publicPath, type Locale } from "@/lib/routes";
 
 export async function generateMetadata({
@@ -55,10 +55,7 @@ function profitSiteSchema(
     serviceType:
       locale === "pl" ? "Tworzenie stron internetowych" : "Web design",
     provider: { "@id": `${SITE.url}/#firma` },
-    areaServed: SITE.areaServed.map((region) => ({
-      "@type": "AdministrativeArea",
-      name: `województwo ${region}`,
-    })),
+    areaServed: areaServedSchema(),
     url: absolute(publicPath(locale, ["oferta"])),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

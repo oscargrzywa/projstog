@@ -15,7 +15,7 @@ import {
   listServiceCategories,
   type ServiceCategory,
 } from "@/lib/cms";
-import { breadcrumbSchema } from "@/lib/schema";
+import { areaServedSchema, breadcrumbSchema } from "@/lib/schema";
 import {
   DEFAULT_LOCALE,
   LOCALES,
@@ -89,10 +89,7 @@ function categoryServiceSchema(
     description: category.seo.description,
     serviceType: category.title,
     provider: { "@id": `${SITE.url}/#firma` },
-    areaServed: SITE.areaServed.map((region) => ({
-      "@type": "AdministrativeArea",
-      name: `województwo ${region}`,
-    })),
+    areaServed: areaServedSchema(),
     url: absolute(publicPath(locale, ["oferta", category.slug])),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

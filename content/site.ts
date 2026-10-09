@@ -57,8 +57,11 @@ export const SITE = {
    */
   priceRange: "1500 PLN - 15000 PLN",
 
-  /** Obszar obsługi — do `areaServed` w JSON-LD. */
-  areaServed: [VOIVODESHIP],
+  /**
+   * Obszar obsługi — cała Polska (decyzja właściciela, 2026-10-09).
+   * Do `areaServed` w JSON-LD; musi zgadzać się z „Zasięg" na /o-mnie.
+   */
+  areaServed: { country: "PL", name: "Polska" },
 
   social: {
     facebook: "https://www.facebook.com/oscar.grzywa",

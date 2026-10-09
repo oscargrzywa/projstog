@@ -29,6 +29,11 @@ function postalAddress() {
   };
 }
 
+/** Obszar obsługi — wspólny dla profilu firmy i wszystkich `Service`. */
+export function areaServedSchema() {
+  return { "@type": "Country", name: SITE.areaServed.name };
+}
+
 /**
  * Profil firmy. Obecny na każdej podstronie przez root layout.
  *
@@ -69,15 +74,9 @@ export function localBusinessSchema(locale: Locale) {
     taxID: SITE.nip,
     identifier: { "@type": "PropertyValue", propertyID: "REGON", value: SITE.regon },
     sameAs: Object.values(SITE.social).filter(Boolean),
-    /* Obszar obsługi — miasta działania i województwo. Google nie wymienia
-       `areaServed` w dokumentacji, to nie jest dźwignia rankingowa. */
-    areaServed: [
-      ...SITE.cities.map((city) => ({ "@type": "City", name: city })),
-      ...SITE.areaServed.map((region) => ({
-        "@type": "AdministrativeArea",
-        name: `województwo ${region}`,
-      })),
-    ],
+    /* Google nie wymienia `areaServed` w dokumentacji — to nie jest
+       dźwignia rankingowa, tylko zgodność z treścią strony. */
+    areaServed: areaServedSchema(),
     priceRange: SITE.priceRange,
   };
 }

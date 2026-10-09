@@ -122,7 +122,7 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       reach: "Zasięg",
       contact: "Kontakt",
     },
-    reachValue: "Całe Podkarpacie",
+    reachValue: "Cała Polska",
 
     ctaHeading: "Powiedz, czego potrzebuje Twoja firma",
     ctaBody:
@@ -194,7 +194,7 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
       reach: "Coverage",
       contact: "Contact",
     },
-    reachValue: "The whole Podkarpackie region",
+    reachValue: "All of Poland",
 
     ctaHeading: "Tell me what your business needs",
     ctaBody:
