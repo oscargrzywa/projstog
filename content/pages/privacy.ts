@@ -32,6 +32,7 @@ export type PrivacySection = {
 type PrivacyPageCopy = {
   seo: { title: string; description: string };
   breadcrumbHome: string;
+  breadcrumbLabel: string;
   h1: string;
   updated: string;
   /** Ostrzeżenie o statusie dokumentu — renderowane na samej górze. */
@@ -44,7 +45,7 @@ type PrivacyPageCopy = {
 };
 
 /** ⚠ Aktualizować przy każdej zmianie treści polityki. */
-export const PRIVACY_UPDATED_AT = "2026-09-25";
+export const PRIVACY_UPDATED_AT = "2026-10-09";
 
 export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
   pl: {
@@ -54,6 +55,7 @@ export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
         "Zasady przetwarzania danych osobowych przekazanych przez formularz kontaktowy na projstog.pl.",
     },
     breadcrumbHome: "Strona główna",
+    breadcrumbLabel: "Okruszki nawigacyjne",
     h1: "Polityka prywatności",
     updated: "Ostatnia aktualizacja",
 
@@ -225,6 +227,7 @@ export const PRIVACY_PAGE: Record<Locale, PrivacyPageCopy> = {
         "How personal data submitted through the contact form on projstog.pl is processed.",
     },
     breadcrumbHome: "Home",
+    breadcrumbLabel: "Breadcrumb",
     h1: "Privacy Policy",
     updated: "Last updated",
 
