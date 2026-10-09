@@ -29,8 +29,6 @@ type AboutPageCopy = {
   /** Sekcja przewagi lokalnej — najważniejszy blok na stronie. */
   localHeading: string;
   localLead: string;
-  /** Miasta, z których działa konkurencja rankująca na Podkarpaciu. */
-  competitorOrigins: { city: string; distance: string }[];
   localPunchline: string;
   localDetail: string;
 
@@ -73,12 +71,6 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     localHeading: "Masz wykonawcę stąd. Większość konkurencji jest daleko.",
     localLead:
       "Wpisz w Google hasło o stronach internetowych na Podkarpaciu i sprawdź, skąd są firmy na górze wyników. Prawie żadna nie ma siedziby w regionie.",
-    competitorOrigins: [
-      { city: "Sochaczew", distance: "woj. mazowieckie" },
-      { city: "Piła", distance: "woj. wielkopolskie" },
-      { city: "Czechowice-Dziedzice", distance: "woj. śląskie" },
-      { city: "Kraków", distance: "woj. małopolskie" },
-    ],
     localPunchline:
       "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Ja mieszkam i pracuję w Mielcu, więc możesz umówić się ze mną na spotkanie.",
     localDetail:
@@ -145,12 +137,6 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     localHeading: "Your contractor is local. Most of the competition is far away.",
     localLead:
       "Search Google for web design anywhere in south-eastern Poland and check where the companies at the top are based. Almost none of them are in the region.",
-    competitorOrigins: [
-      { city: "Sochaczew", distance: "Mazowieckie voivodeship" },
-      { city: "Piła", distance: "Wielkopolskie voivodeship" },
-      { city: "Czechowice-Dziedzice", distance: "Śląskie voivodeship" },
-      { city: "Kraków", distance: "Małopolskie voivodeship" },
-    ],
     localPunchline:
       "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. I live and work in Mielec, so you can meet me in person.",
     localDetail:

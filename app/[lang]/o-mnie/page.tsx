@@ -81,17 +81,6 @@ export default async function AboutPage({
             {copy.localLead}
           </p>
 
-          <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
-            {copy.competitorOrigins.map((origin) => (
-              <li key={origin.city} className="border-l border-hairline pl-4">
-                <span className="block font-display text-lg text-bone">
-                  {origin.city}
-                </span>
-                <span className="text-sm text-lichen">{origin.distance}</span>
-              </li>
-            ))}
-          </ul>
-
           <p className="mt-8 max-w-[52ch] font-display text-2xl text-voltage">
             {copy.localPunchline}
           </p>
