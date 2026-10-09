@@ -4,10 +4,8 @@ import { notFound } from "next/navigation";
 import { ContactForm } from "@/components/ContactForm";
 import { CopyValue } from "@/components/CopyValue";
 import { JsonLd } from "@/components/JsonLd";
-import { LiveStatus } from "@/components/LiveStatus";
-import { LocalMap } from "@/components/LocalMap";
 import { PageHero } from "@/components/PageHero";
-import { CEIDG_URL, CONTACT_PAGE, GOOGLE_MAPS_URL } from "@/content/pages/contact";
+import { CEIDG_URL, CONTACT_PAGE } from "@/content/pages/contact";
 import { getDictionary } from "@/content/dictionary";
 import { SITE } from "@/content/site";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -64,8 +62,7 @@ export default async function ContactPage({
 
       {/* ============================================================ nagłówek */}
       {/* Telefon i mail w karcie obok nagłówka — kto chce zadzwonić, nie
-          przewija przez formularz. Na górze karty status „na żywo":
-          odbieram teraz albo kiedy oddzwonię. */}
+          przewija przez formularz. */}
       <PageHero
         crumbs={[
           { label: copy.breadcrumbHome, href: publicPath(lang, []) },
@@ -85,12 +82,6 @@ export default async function ContactPage({
         }
         aside={
           <div className="contact-card">
-            <LiveStatus
-              copy={copy.liveStatus}
-              opens={SITE.hours.opens}
-              closes={SITE.hours.closes}
-            />
-
             <dl>
               <div className="contact-card__row">
                 <dt>{copy.phoneLabel}</dt>
@@ -117,16 +108,6 @@ export default async function ContactPage({
                   </a>
                   <p className="contact-card__note">{copy.emailNote}</p>
                   <GoArrow />
-                </dd>
-              </div>
-
-              <div className="contact-card__row">
-                <dt>{copy.hoursLabel}</dt>
-                <dd>
-                  <span className="mt-1.5 block font-display text-xl text-bone tabular">
-                    {SITE.hours.opens}–{SITE.hours.closes}
-                  </span>
-                  <p className="contact-card__note">{copy.hoursNote}</p>
                 </dd>
               </div>
             </dl>
@@ -167,38 +148,11 @@ export default async function ContactPage({
         </div>
       </section>
 
-      {/* ============================================= spotkanie + dane firmy */}
-      <section className="overflow-x-clip border-y border-hairline bg-basalt">
-        <div className="mx-auto max-w-6xl px-5 py-24 lg:py-32">
-          <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:items-center lg:gap-20">
-            <div>
-              <h2 className="mask-reveal max-w-[14ch] text-5xl">
-                <span className="mask-reveal__inner">{copy.locationHeading}</span>
-              </h2>
-              <p className="reveal mt-8 max-w-[52ch] text-lg leading-relaxed text-bone-70">
-                {copy.locationBody}
-              </p>
-              <p className="reveal mt-5 max-w-[52ch] leading-relaxed text-lichen">
-                {copy.locationTravel}
-              </p>
-
-              {/* Zamiast iframe'a Google Maps — link. Osadzona mapa kosztuje
-                  LCP i dokłada third-party na stronie, która ma być szybka. */}
-              <a
-                href={GOOGLE_MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hit reveal mt-8 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
-              >
-                {copy.mapsLinkLabel} ↗
-              </a>
-            </div>
-
-            <LocalMap distance={copy.mapDistance} caption={copy.mapCaption} />
-          </div>
-
+      {/* ========================================================= dane firmy */}
+      <section className="border-y border-hairline bg-basalt">
+        <div className="mx-auto max-w-6xl px-5 py-24 lg:py-28">
           {/* Dane rejestrowe — identyczne z CEIDG i JSON-LD (NAP). */}
-          <section aria-labelledby="dane-firmy" className="contact-record reveal mt-24">
+          <section aria-labelledby="dane-firmy" className="contact-record reveal">
             <div className="contact-record__head">
               <h2 id="dane-firmy" className="text-3xl">
                 {copy.companyHeading}

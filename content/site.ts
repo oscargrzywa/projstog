@@ -48,8 +48,6 @@ export const SITE = {
   /** Współrzędne adresu z CEIDG (OpenStreetMap). */
   geo: { latitude: 50.04112, longitude: 22.01601 },
 
-  /** Godziny pracy — muszą zgadzać się z wizytówką Google Moja Firma. */
-  hours: { opens: "09:00", closes: "17:00" },
 
   /**
    * Widełki cenowe. Konkurencja w regionie cen NIE podaje — jawny cennik

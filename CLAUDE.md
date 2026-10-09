@@ -105,7 +105,8 @@ Stara strona miała pod to zerowe fundamenty. Nowa musi mieć:
   to główny dług SEO, nie powtarzać tego błędu)
 - `metadataBase`, `openGraph`, `alternates.canonical` + `alternates.languages`
 - `sitemap.ts` i `robots.ts` (stary `robots.txt` obiecywał sitemapę, której nie było)
-- **JSON-LD `LocalBusiness`** z adresem, telefonem, godzinami, `areaServed`
+- **JSON-LD `LocalBusiness`** z adresem, telefonem, `areaServed` — **bez godzin
+  pracy** (właściciel nie podaje ich na stronie, decyzja 2026-10-09)
 - spójność NAP (nazwa, adres, telefon) z wizytówką Google Moja Firma
 - **blog** budujący topical authority
 

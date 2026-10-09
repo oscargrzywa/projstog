@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Strona kontaktu (app/[lang]/kontakt/page.tsx) i jej wyspy:
-   LiveStatus (status „na żywo") i CopyValue (kopiowanie NIP / REGON).
+   Strona kontaktu (app/[lang]/kontakt/page.tsx) i jej wyspa
+   CopyValue (kopiowanie NIP / REGON).
    ========================================================================== */
 
 /* --- Karta kontaktu w nagłówku ----------------------------------------- */
@@ -47,6 +47,11 @@
   padding: 1.25rem 1.5rem;
   border-top: 1px solid var(--color-hairline);
   transition: background-color 250ms var(--ease-out-quart);
+}
+
+/* Pierwszy wiersz leży na krawędzi karty — jej obrys wystarczy. */
+.contact-card__row:first-child {
+  border-top: 0;
 }
 
 .contact-card__row dt {
@@ -125,120 +130,6 @@
   border-color: var(--color-signal);
   background-color: var(--color-signal);
   color: var(--color-bone);
-}
-
-/* --- Status „na żywo" (components/LiveStatus.tsx) ---------------------- */
-
-.live-status {
-  padding: 1.5rem 1.5rem 2.25rem;
-}
-
-.live-status__head {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 560;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--color-bone);
-}
-
-.live-status__title {
-  flex: 1;
-  min-width: 0;
-}
-
-/* Dwie klasy — wygrywa z rozmiarem `.live-dot` z page-kit.css
-   niezależnie od kolejności arkuszy. */
-.live-status .live-status__dot {
-  flex: none;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-}
-
-.live-status__dot--idle {
-  background-color: var(--color-bone-45);
-}
-
-.live-status[data-state="neutral"] .live-status__dot--idle {
-  background-color: var(--color-signal);
-}
-
-.live-status__clock {
-  flex: none;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 400;
-  color: var(--color-bone-45);
-}
-
-/* Miejsce na dwa wiersze opisu od pierwszej klatki — podmiana tekstu
-   po hydratacji nie przesuwa karty. */
-.live-status__detail {
-  min-height: 3.1em;
-  margin-top: 0.5rem;
-  font-size: var(--text-sm);
-  line-height: 1.55;
-  color: var(--color-bone-70);
-}
-
-.live-status__day {
-  position: relative;
-  height: 0.375rem;
-  margin-top: 1.125rem;
-  border-radius: 999px;
-  background-color: color-mix(in oklab, var(--color-bone) 8%, transparent);
-}
-
-.live-status__window {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  border-radius: 999px;
-  background-color: var(--color-signal);
-}
-
-/* Dzień wolny: okno godzin przygaszone — dziś nie obowiązuje. */
-.live-status__day[data-off] .live-status__window {
-  background-color: color-mix(in oklab, var(--color-signal) 30%, transparent);
-}
-
-.live-status__needle {
-  position: absolute;
-  top: -0.3125rem;
-  bottom: -0.3125rem;
-  left: var(--at);
-  width: 2px;
-  translate: -50% 0;
-  border-radius: 2px;
-  background-color: var(--color-voltage);
-  box-shadow: 0 0 10px 1px color-mix(in oklab, var(--color-voltage) 60%, transparent);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .live-status__needle {
-    animation: needle-in 700ms var(--ease-out-expo) both;
-  }
-}
-
-@keyframes needle-in {
-  from {
-    opacity: 0;
-    scale: 1 0.2;
-  }
-}
-
-.live-status__tick {
-  position: absolute;
-  top: calc(100% + 0.45rem);
-  translate: -50% 0;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  line-height: 1;
-  color: var(--color-bone-45);
 }
 
 /* --- Formularz --------------------------------------------------------- */

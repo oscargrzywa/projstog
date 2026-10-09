@@ -62,14 +62,9 @@ export function localBusinessSchema(locale: Locale) {
       latitude: SITE.geo.latitude,
       longitude: SITE.geo.longitude,
     },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: SITE.hours.opens,
-        closes: SITE.hours.closes,
-      },
-    ],
+    /* Celowo bez `openingHoursSpecification` — strona nie podaje godzin
+       pracy (decyzja właściciela, 2026-10-09), a dane strukturalne nie
+       mogą mówić więcej niż treść. */
     founder: { "@type": "Person", "@id": OWNER_ID, name: SITE.owner },
     taxID: SITE.nip,
     identifier: { "@type": "PropertyValue", propertyID: "REGON", value: SITE.regon },
