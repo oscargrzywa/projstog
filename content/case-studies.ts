@@ -17,7 +17,7 @@
 import type { Locale } from "@/lib/routes";
 import type { CaseStudy } from "@/lib/cms/types";
 
-export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
+const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
   pl: [
     {
       slug: "finanse-szelagowski",
@@ -630,3 +630,42 @@ export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
     },
   ],
 };
+
+/**
+ * Zrzuty CAŁYCH stron klientów (1440 px szerokości, ucięte na 5400 px),
+ * zrobione z żywych adresów 2026-10-09. Nakładki (cookies, popupy,
+ * bramka wieku) usunięte przed zrzutem — poza tym strona jak na żywo.
+ * Wysokość musi zgadzać się z plikiem: od niej zależy przewijanie zrzutu.
+ */
+const COVER_HEIGHTS: Record<string, number> = {
+  "finanse-szelagowski": 4985,
+  apartsea: 5400,
+  "moja-gruzja": 5400,
+  landrew: 5400,
+  "luksusowy-ogrod": 4240,
+  "kasza-ubezpieczenia": 4652,
+};
+
+const COVER_ALT: Record<Locale, (domain: string) => string> = {
+  pl: (domain) => `Strona ${domain} — zrzut całej strony głównej`,
+  en: (domain) => `${domain} — full home page screenshot`,
+};
+
+export const CASE_STUDIES: Record<Locale, CaseStudy[]> = {
+  pl: STUDIES.pl.map((study) => withCover("pl", study)),
+  en: STUDIES.en.map((study) => withCover("en", study)),
+};
+
+function withCover(locale: Locale, study: Omit<CaseStudy, "cover">): CaseStudy {
+  const height = COVER_HEIGHTS[study.slug];
+  if (!height) return study;
+  return {
+    ...study,
+    cover: {
+      src: `/img/portfolio/${study.slug}.jpg`,
+      alt: COVER_ALT[locale](study.domain),
+      width: 1440,
+      height,
+    },
+  };
+}
