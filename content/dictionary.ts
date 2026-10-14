@@ -63,12 +63,6 @@ const pl = {
       lead:
         "Strona firmowa, sklep z panelem do zarządzania produktami, rezerwacje domków albo stolików. Każda powstaje od pustej siatki, każda działa na komputerze, tablecie i telefonie — i każdy jej etap robię sam.",
       cta: "Chcę taką stronę",
-      controls: {
-        play: "Odtwórz animację",
-        pause: "Zatrzymaj animację",
-        cursorPlay: "Odtwórz",
-        cursorPause: "Pauza",
-      },
       demo: {
         status: [
           "układam siatkę…",
@@ -81,7 +75,6 @@ const pl = {
           "wracam na desktop…",
           "online",
           "online",
-          "następny projekt…",
         ],
         cabins: {
           domain: "twojedomki.pl",
@@ -289,12 +282,6 @@ const en: Dictionary = {
       lead:
         "A company site, a shop with a panel for managing products, bookings for cabins or tables. Each one starts from an empty grid, each works on desktop, tablet and phone — and I handle every stage myself.",
       cta: "I want a site like this",
-      controls: {
-        play: "Play animation",
-        pause: "Pause animation",
-        cursorPlay: "Play",
-        cursorPause: "Pause",
-      },
       demo: {
         status: [
           "setting the grid…",
@@ -307,7 +294,6 @@ const en: Dictionary = {
           "back to desktop…",
           "online",
           "online",
-          "next project…",
         ],
         cabins: {
           domain: "yourcabins.pl",

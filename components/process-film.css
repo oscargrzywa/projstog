@@ -22,26 +22,24 @@
 }
 
 .pf {
+  /* Droga przewijania na jeden etap budowy. */
+  --pf-step: 24svh;
   position: relative;
 }
 
-/* Zegar faz — niewidoczny, liczy tylko czas. */
-.pf-clock {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-  animation: pf-clock var(--dur) linear both;
+/* Tor przewijania: o dziewięć kroków wyższy od makiety, która stoi w nim
+   przypięta. Dystans to osobny element, nie padding — sticky nie wchodzi
+   w padding rodzica. Szerokość makiety ograniczona wysokością ekranu, żeby
+   cała mieściła się pod nawigacją także na laptopie. Bez ruchu toru nie ma. */
+.pf[data-animated] .pf-run {
+  height: calc(9 * var(--pf-step));
 }
 
-@keyframes pf-clock {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(1px);
-  }
+.pf[data-animated] .pf-pin {
+  position: sticky;
+  top: max(6rem, calc(50svh - var(--pf-pin-h, 0px) / 2 + 2rem));
+  max-width: calc((100svh - 9rem) * 1.45);
+  margin-inline: auto;
 }
 
 /* ==========================================================================
@@ -55,10 +53,6 @@
   padding-top: 2.75rem;
   perspective: 2600px;
   perspective-origin: 50% 20%;
-}
-
-.pf[data-animated] .pf-stage {
-  cursor: pointer;
 }
 
 .pf-stage::before {
@@ -205,6 +199,14 @@
     margin-bottom: 0.5rem;
     font-size: 0.5625rem;
   }
+
+  .pf {
+    --pf-step: 20svh;
+  }
+
+  .pf[data-animated] .pf-pin {
+    max-width: calc((100svh - 7rem) * 0.8);
+  }
 }
 
 /* --- Pasek adresu i status ---------------------------------------------- */
@@ -329,46 +331,6 @@
   }
 }
 
-/* --- Przycisk pauzy (WCAG 2.2.2) ---------------------------------------- */
-
-.pf-toggle {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: -3.95rem;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid var(--color-bone-12);
-  border-radius: 50%;
-  background-color: color-mix(in oklab, var(--color-obsydian) 70%, transparent);
-  color: var(--color-bone-70);
-  cursor: pointer;
-  transition:
-    border-color 250ms var(--ease-out-quart),
-    color 250ms var(--ease-out-quart);
-}
-
-.pf-toggle:hover {
-  border-color: var(--color-signal);
-  color: var(--color-bone);
-}
-
-.pf-icon-pause {
-  width: 0.625rem;
-  height: 0.75rem;
-  border-inline: 0.1875rem solid currentColor;
-}
-
-.pf-icon-play {
-  width: 0;
-  height: 0;
-  margin-left: 0.1875rem;
-  border-block: 0.4375rem solid transparent;
-  border-left: 0.6875rem solid currentColor;
-}
-
 /* ==========================================================================
    Tożsamość projektów: akcent, krój i styl nagłówków
    ========================================================================== */
@@ -447,19 +409,12 @@
   background-color: var(--color-slate-moss);
   font-family: var(--font-sans);
   animation: pf-screen-in 700ms var(--ease-out-quart) both;
-  transition: opacity 500ms var(--ease-out-quart);
 }
 
 @keyframes pf-screen-in {
   from {
     opacity: 0;
   }
-}
-
-/* Koniec projektu: gotowa strona gaśnie, potem następny od zera. */
-.pf[data-reset] .pf-screen {
-  opacity: 0;
-  transition-duration: 700ms;
 }
 
 /* Marka „rozlewa się" z logo: miękki okrąg rośnie na całą stronę. */
@@ -2903,12 +2858,4 @@
     transition-delay: 0s !important;
     animation-timeline: auto !important;
   }
-}
-
-/* Pauza: jedno przełączenie zatrzymuje zegar i całą scenę. */
-.pf[data-paused] .pf-clock,
-.pf[data-paused] .pf-stage *,
-.pf[data-paused] .pf-stage *::before,
-.pf[data-paused] .pf-stage *::after {
-  animation-play-state: paused;
 }

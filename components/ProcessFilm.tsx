@@ -3,12 +3,17 @@
 /**
  * Makieta „strony budują się same — i są responsywne".
  *
- * W pętli powstaje kolejno pięć różnych projektów (domki na wynajem,
- * sklep, panel sklepu, strona firmowa, kawiarnia). Każdy przechodzi tę samą
- * drogę: siatka → bloki → teksty → kolor i marka → zdjęcia i detale →
- * okno zwęża się (desktop → tablet → telefon) i wraca → strona żyje
- * (kursor klika, stan się zmienia, potwierdzenie) → pauza → następny.
- * W DOM-ie jest zawsze tylko jeden projekt.
+ * Budową steruje przewijanie: makieta stoi przypięta (sticky) w wyższym
+ * torze, a każdy krok przewinięcia dokłada etap — siatka → bloki → teksty →
+ * kolor i marka → zdjęcia i detale → okno zwęża się (desktop → tablet →
+ * telefon) i wraca → strona żyje (kursor klika, stan się zmienia,
+ * potwierdzenie). Przewijanie w górę cofa budowę; pełne cofnięcie przed
+ * tor zmienia projekt na następny (domki, sklep, panel sklepu, strona
+ * firmowa, kawiarnia). W DOM-ie jest zawsze tylko jeden projekt.
+ *
+ * Bez przechwytywania kółka i dotyku — zwykły scroll i `position: sticky`,
+ * a krok liczy się z pozycji toru. Ruch zaczyna odwiedzający, więc
+ * przycisk pauzy jest zbędny.
  *
  * Responsywność jest prawdziwa: okno animuje szerokość, a strona w środku
  * przelewa się przez container queries (progi w em = `--pf-u`).
@@ -17,10 +22,7 @@
  * Nagłówek, lead i CTA sekcji renderuje Server Component (page.tsx);
  * cała makieta jest dekoracją (aria-hidden).
  *
- * Zegar: niewidoczny element z animacją CSS o długości bieżącej fazy;
- * `animationend` przełącza fazę. Pauza (przycisk, klik w makietę, sekcja
- * poza widokiem, ukryta karta) to jedno `animation-play-state: paused`.
- * Bez JS i przy reduced-motion widać gotowy pierwszy projekt (HOLD).
+ * Bez JS i przy reduced-motion: bez toru, widać gotowy pierwszy projekt (HOLD).
  */
 
 import {
@@ -29,7 +31,6 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
-  type AnimationEvent,
   type CSSProperties,
   type ReactNode,
   type RefObject,
@@ -45,23 +46,13 @@ type Demo = ProcessCopy["demo"];
 const PROJECTS = ["cabins", "shop", "admin", "company", "cafe"] as const;
 type ProjectKey = (typeof PROJECTS)[number];
 
-/* Fazy jednego projektu (ms). Indeksy odpowiadają `demo.status`. */
-const PHASES = [
-  1000, // 0 siatka
-  1200, // 1 bloki
-  2300, // 2 teksty
-  1800, // 3 kolor i marka
-  2000, // 4 zdjęcia i detale
-  2800, // 5 tablet
-  4200, // 6 telefon
-  1800, // 7 powrót na desktop
-  4200, // 8 strona żyje
-  1600, // 9 pauza na gotowej stronie
-  900, //  10 wygaszenie → następny projekt
-];
+/* Kroki przewijania. Indeksy odpowiadają `demo.status`:
+   0 siatka, 1 bloki, 2 teksty, 3 kolor i marka, 4 zdjęcia i detale,
+   5 tablet, 6 telefon, 7 powrót na desktop, 8 strona żyje.
+   HOLD — gotowa strona bez ruchu (reduced-motion, serwer). */
+const STEPS = 9;
 const LIVE = 8;
 const HOLD = 9;
-const LAST = PHASES.length - 1;
 
 /* Szerokość „prawdziwego" ekranu dla wskaźnika. */
 const DESKTOP_PX = 1440;
@@ -79,13 +70,6 @@ const getReduced = () => window.matchMedia(REDUCED_QUERY).matches;
 /* Serwer renderuje gotową stronę (jak przy reduced-motion). */
 const getReducedServer = () => true;
 
-function subscribeVisibility(onChange: () => void) {
-  document.addEventListener("visibilitychange", onChange);
-  return () => document.removeEventListener("visibilitychange", onChange);
-}
-const getVisible = () => document.visibilityState === "visible";
-const getVisibleServer = () => true;
-
 /* --- flagi --------------------------------------------------------------- */
 
 function phaseFlags(p: number) {
@@ -99,7 +83,6 @@ function phaseFlags(p: number) {
     "data-bp": p === 5 ? "tablet" : p === 6 ? "phone" : "desktop",
     "data-resize": on(p >= 5 && p <= 7),
     "data-live": on(p >= LIVE),
-    "data-reset": on(p === LAST),
   };
 }
 
@@ -764,42 +747,70 @@ function centerIn(el: HTMLElement, root: HTMLElement) {
   return { x, y };
 }
 
-export function ProcessFilm({ copy }: { copy: Pick<ProcessCopy, "controls" | "demo"> }) {
-  const { controls, demo } = copy;
+export function ProcessFilm({ copy }: { copy: Pick<ProcessCopy, "demo"> }) {
+  const { demo } = copy;
 
   const reduced = useSyncExternalStore(subscribeReduced, getReduced, getReducedServer);
-  const tabVisible = useSyncExternalStore(subscribeVisibility, getVisible, getVisibleServer);
   const animated = !reduced;
 
-  const [step, setStep] = useState({ project: 0, phase: 0 });
-  const [started, setStarted] = useState(false);
-  const [inView, setInView] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
+  /* -1 = pusty ekran przed torem: budowa zaczyna się od zera na oczach widza. */
+  const [step, setStep] = useState(-1);
+  const [projectIndex, setProjectIndex] = useState(0);
 
-  const rootRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const browserRef = useRef<HTMLDivElement>(null);
   const widthRef = useRef<HTMLSpanElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLSpanElement>(null);
 
-  /* Bez ruchu: gotowy pierwszy projekt. Z ruchem, przed wejściem w widok:
-     pusty ekran, żeby budowa zaczęła się od zera na oczach widza. */
-  const scene = !animated ? HOLD : started ? step.phase : -1;
-  const project = PROJECTS[animated ? step.project : 0];
-  const running = animated && started && inView && tabVisible && !userPaused;
+  /* Bez ruchu: gotowy pierwszy projekt. */
+  const scene = animated ? step : HOLD;
+  const project = PROJECTS[animated ? projectIndex : 0];
 
+  /* Krok z pozycji toru. Postęp 0 → 1 to droga, jaką przypięta makieta
+     przebywa w torze; przed torem pusty ekran, za torem strona żyje.
+     Wysokość makiety idzie do CSS (`--pf-pin-h`) — z niej liczy się
+     przypięcie na środku ekranu. */
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root || !animated) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        setInView(entry.isIntersecting);
-        if (entry.isIntersecting) setStarted(true);
-      },
-      { threshold: 0.3 },
-    );
-    io.observe(root);
-    return () => io.disconnect();
+    const track = trackRef.current;
+    const pin = pinRef.current;
+    if (!track || !pin || !animated) return;
+
+    let frame = 0;
+    let reachedLive = false;
+
+    const update = () => {
+      frame = 0;
+      const stickyTop = parseFloat(getComputedStyle(pin).top) || 0;
+      const travel = Math.max(1, track.offsetHeight - pin.offsetHeight);
+      const progress = (stickyTop - track.getBoundingClientRect().top) / travel;
+      const next = progress < 0 ? -1 : Math.min(STEPS - 1, Math.floor(progress * STEPS));
+
+      if (next === LIVE) reachedLive = true;
+      if (next === -1 && reachedLive) {
+        reachedLive = false;
+        setProjectIndex((i) => (i + 1) % PROJECTS.length);
+      }
+      setStep(next);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    const ro = new ResizeObserver(() => {
+      track.style.setProperty("--pf-pin-h", `${pin.offsetHeight}px`);
+      schedule();
+    });
+    ro.observe(pin);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
   }, [animated]);
 
   /* Wskaźnik szerokości okna: szerokość okna względem pełnej szerokości
@@ -836,99 +847,62 @@ export function ProcessFilm({ copy }: { copy: Pick<ProcessCopy, "controls" | "de
     }
   }, [scene, project]);
 
-  const onClockEnd = (event: AnimationEvent<HTMLSpanElement>) => {
-    if (event.target !== event.currentTarget || !animated) return;
-    setStep((s) =>
-      s.phase === LAST
-        ? { project: (s.project + 1) % PROJECTS.length, phase: 0 }
-        : { project: s.project, phase: s.phase + 1 },
-    );
-  };
-
-  const togglePause = () => setUserPaused((p) => !p);
-  const showPlaying = animated && !userPaused;
   const live = scene >= LIVE;
   const status = demo.status[scene] ?? "";
 
   return (
     <div
-      ref={rootRef}
+      ref={trackRef}
       className="pf"
       data-animated={animated ? "" : undefined}
-      data-paused={animated && !running ? "" : undefined}
       {...phaseFlags(scene)}
     >
-      {animated && started && (
-        <span
-          key={`${step.project}-${step.phase}`}
-          className="pf-clock"
-          style={css({ "--dur": `${PHASES[step.phase]}ms` })}
-          onAnimationEnd={onClockEnd}
-          aria-hidden="true"
-        />
-      )}
-
-      <div
-        className="pf-stage"
-        aria-hidden="true"
-        data-cursor={animated ? "view" : undefined}
-        data-cursor-label={showPlaying ? controls.cursorPause : controls.cursorPlay}
-        onClick={animated ? togglePause : undefined}
-      >
-        <div className="pf-scene">
-          <div ref={browserRef} className="pf-browser browser">
-            <span className="pf-width">
-              <span className="pf-width__line" />
-              <span ref={widthRef} className="pf-width__label tabular">
-                {DESKTOP_PX} px
-              </span>
-              <span className="pf-width__line" />
-            </span>
-
-            <div className="browser__bar">
-              <span className="browser__dots">
-                <span />
-                <span />
-                <span />
-              </span>
-              <span className="browser__url pf-url">
-                <span className="pf-url__lock" />
-                <span key={project} className="pf-url__text">
-                  {demo[project].domain}
+      <div ref={pinRef} className="pf-pin">
+        <div className="pf-stage" aria-hidden="true">
+          <div className="pf-scene">
+            <div ref={browserRef} className="pf-browser browser">
+              <span className="pf-width">
+                <span className="pf-width__line" />
+                <span ref={widthRef} className="pf-width__label tabular">
+                  {DESKTOP_PX} px
                 </span>
+                <span className="pf-width__line" />
               </span>
-              <span className="pf-status" data-on={live ? "" : undefined}>
-                <span className="pf-status__dot" />
-                <span key={scene} className="pf-status__text">
-                  {status}
-                </span>
-              </span>
-            </div>
 
-            <div className="pf-view">
-              <Screen
-                key={project}
-                project={project}
-                demo={demo}
-                screenRef={screenRef}
-                cursorRef={cursorRef}
-              />
+              <div className="browser__bar">
+                <span className="browser__dots">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+                <span className="browser__url pf-url">
+                  <span className="pf-url__lock" />
+                  <span key={project} className="pf-url__text">
+                    {demo[project].domain}
+                  </span>
+                </span>
+                <span className="pf-status" data-on={live ? "" : undefined}>
+                  <span className="pf-status__dot" />
+                  <span key={scene} className="pf-status__text">
+                    {status}
+                  </span>
+                </span>
+              </div>
+
+              <div className="pf-view">
+                <Screen
+                  key={project}
+                  project={project}
+                  demo={demo}
+                  screenRef={screenRef}
+                  cursorRef={cursorRef}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {animated && (
-        <button
-          type="button"
-          className="pf-toggle"
-          onClick={togglePause}
-          aria-pressed={userPaused}
-          aria-label={userPaused ? controls.play : controls.pause}
-        >
-          <span className={userPaused ? "pf-icon-play" : "pf-icon-pause"} aria-hidden="true" />
-        </button>
-      )}
+      <div className="pf-run" />
     </div>
   );
 }
