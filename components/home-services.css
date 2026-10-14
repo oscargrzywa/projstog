@@ -1,15 +1,17 @@
 /* ==========================================================================
-   Obszary usług na stronie głównej — karty ze znakiem kategorii.
+   Obszary usług na stronie głównej — karty z żywą sceną u góry.
    Elevation „hairline-and-glow": obrys + poświata, bez cieni rzucanych.
    ========================================================================== */
 
 .hs-card {
+  --hs-pad: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
   position: relative;
   isolation: isolate;
   overflow: clip;
   display: flex;
   flex-direction: column;
-  padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  align-items: flex-start;
+  padding: var(--hs-pad);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-lg);
   background-color: var(--color-basalt);
@@ -18,62 +20,62 @@
     box-shadow 500ms var(--ease-out-quart);
 }
 
-/* Poświata spod kafelka znaku — przy najechaniu rozlewa się na kartę. */
-.hs-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    60% 55% at 0% 0%,
-    color-mix(in oklab, var(--color-signal) 14%, transparent),
-    transparent 75%
-  );
-  opacity: 0.55;
-  transition: opacity 500ms var(--ease-out-quart);
+/* Scena jak okładka — od krawędzi do krawędzi karty. Poza ekranem
+   przeglądarka jej nie rysuje, więc pętle nic nie kosztują. */
+.hs-card__scene {
+  position: relative;
+  align-self: stretch;
+  height: 11rem;
+  margin: calc(-1 * var(--hs-pad)) calc(-1 * var(--hs-pad)) 0;
+  overflow: clip;
+  border-bottom: 1px solid var(--color-hairline);
+  background:
+    radial-gradient(
+      70% 90% at 50% 100%,
+      color-mix(in oklab, var(--color-signal) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklab, var(--color-bone) 8%, transparent) 1px,
+        transparent 0
+      )
+      0 0 / 1rem 1rem,
+    var(--color-obsydian);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 11rem;
+  transition: border-color 300ms var(--ease-out-quart);
 }
 
-/* Duży znak w rogu — liniowe tło, stała grubość kreski przy każdej skali. */
-.hs-card__mark {
-  position: absolute;
-  right: -2.25rem;
-  bottom: -2.25rem;
-  z-index: -1;
-  width: clamp(9rem, 6rem + 9vw, 12.5rem);
-  height: auto;
-  color: var(--color-signal);
-  opacity: 0.17;
-  rotate: -8deg;
-  transition:
-    opacity 500ms var(--ease-out-quart),
-    rotate 900ms var(--ease-out-expo);
-}
-
-.hs-card__mark path {
-  stroke-width: 1.25;
-  vector-effect: non-scaling-stroke;
+/* Kafelek znaku i strzałka — środkami na dolnej krawędzi sceny. */
+.hs-card__edge {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  margin-top: -1.75rem;
 }
 
 .hs-card__glyph {
   display: grid;
   flex: none;
   place-items: center;
-  width: 4rem;
-  height: 4rem;
-  border: 1px solid color-mix(in oklab, var(--color-signal) 38%, transparent);
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 45%, transparent);
   border-radius: var(--radius-md);
-  background-color: color-mix(in oklab, var(--color-signal) 10%, transparent);
+  background-color: color-mix(in oklab, var(--color-signal) 14%, var(--color-basalt));
   color: var(--color-voltage);
   transition:
     border-color 300ms var(--ease-out-quart),
-    background-color 300ms var(--ease-out-quart),
     box-shadow 300ms var(--ease-out-quart);
 }
 
 .hs-card__glyph svg {
-  width: 1.875rem;
-  height: 1.875rem;
+  width: 1.625rem;
+  height: 1.625rem;
   stroke-width: 1.6;
 }
 
@@ -85,6 +87,7 @@
   height: 2.75rem;
   border: 1px solid var(--color-bone-12);
   border-radius: 50%;
+  background-color: var(--color-basalt);
   color: var(--color-bone);
   transition:
     background-color 350ms var(--ease-out-quart),
@@ -110,18 +113,12 @@
     box-shadow: 0 0 48px -12px color-mix(in oklab, var(--color-voltage) 22%, transparent);
   }
 
-  .hs-card:hover::before {
-    opacity: 1;
-  }
-
-  .hs-card:hover .hs-card__mark {
-    opacity: 0.3;
-    rotate: 0deg;
+  .hs-card:hover .hs-card__scene {
+    border-bottom-color: color-mix(in oklab, var(--color-signal) 45%, transparent);
   }
 
   .hs-card:hover .hs-card__glyph {
-    border-color: color-mix(in oklab, var(--color-voltage) 55%, transparent);
-    background-color: color-mix(in oklab, var(--color-signal) 18%, transparent);
+    border-color: color-mix(in oklab, var(--color-voltage) 60%, transparent);
     box-shadow: 0 0 24px -6px color-mix(in oklab, var(--color-voltage) 45%, transparent);
   }
 

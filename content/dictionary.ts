@@ -43,6 +43,23 @@ const pl = {
       lead:
         "Wybierasz to, czego potrzebujesz: stronę, sklep, automatyzację, widoczność w Google albo opiekę. Zakres i cenę znasz przed startem, więc w trakcie nic Cię nie zaskoczy.",
       all: "Pełna oferta",
+      /* Teksty żywych scen na kartach (components/ServiceScenes) —
+         dekoracja (aria-hidden), fikcyjne dane klienta. */
+      scenes: {
+        web: { toast: "Nowe zamówienie", amount: "249 zł" },
+        ai: {
+          from: "E-mail",
+          mid: "AI",
+          to: "CRM",
+          log: [
+            "Zapytanie trafiło do CRM",
+            "Faktura przepisana do arkusza",
+            "Klient dostał odpowiedź",
+          ],
+        },
+        seo: { query: "hydraulik Rzeszów", you: "Twoja firma" },
+        care: { status: "Strona działa", ssl: "SSL", backup: "Kopia zapasowa zrobiona" },
+      },
     },
 
     notAgency: {
@@ -265,6 +282,21 @@ const en: Dictionary = {
       lead:
         "Pick what you need: a website, a store, automation, visibility in Google or ongoing care. You know the scope and price before we start, so nothing surprises you halfway through.",
       all: "Full service list",
+      scenes: {
+        web: { toast: "New order", amount: "PLN 249" },
+        ai: {
+          from: "Email",
+          mid: "AI",
+          to: "CRM",
+          log: [
+            "Enquiry added to the CRM",
+            "Invoice copied to the sheet",
+            "Customer got a reply",
+          ],
+        },
+        seo: { query: "plumber Rzeszów", you: "Your business" },
+        care: { status: "Site is up", ssl: "SSL", backup: "Backup completed" },
+      },
     },
 
     notAgency: {

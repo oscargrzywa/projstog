@@ -170,6 +170,7 @@ export default async function HomePage({
 
         <HomeServices
           categories={categories}
+          scenes={t.home.services.scenes}
           hrefFor={(slug) => publicPath(lang, ["oferta", slug])}
           cursorLabel={cursorViewLabel}
         />

@@ -1,0 +1,951 @@
+/* ==========================================================================
+   Żywe sceny na kartach obszarów usług (components/ServiceScenes).
+
+   Każda scena to pętla CSS: transform i opacity (kilka drobnych wyjątków
+   na małych elementach). Stan bazowy = gotowa scena; keyframes opisują
+   tylko ruch, więc przy reduced-motion scena stoi kompletna.
+   Pozycje względem sceny w jednostkach kontenera (`cqw`).
+   ========================================================================== */
+
+.sc {
+  position: absolute;
+  inset: 0;
+  container-type: size;
+  font-family: var(--font-sans);
+  color: var(--color-bone-70);
+}
+
+.sc svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sc-check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 50%;
+  background-color: color-mix(in oklab, var(--color-voltage) 16%, transparent);
+  color: var(--color-voltage);
+}
+
+.sc-check svg {
+  width: 0.6875rem;
+  height: 0.6875rem;
+  stroke-width: 3;
+}
+
+/* --- Strony i sklepy ----------------------------------------------------- */
+
+.sc-web__browser {
+  position: absolute;
+  top: 1.375rem;
+  bottom: -1px;
+  left: 7cqw;
+  width: 58cqw;
+  overflow: clip;
+  border: 1px solid var(--color-bone-12);
+  border-bottom: 0;
+  border-radius: 0.625rem 0.625rem 0 0;
+  background-color: var(--color-slate-moss);
+}
+
+.sc-web__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 1.25rem;
+  padding-inline: 0.5rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.sc-web__bar i {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background-color: var(--color-bone-12);
+}
+
+.sc-web__bar span {
+  width: 40%;
+  height: 0.375rem;
+  margin-left: 0.5rem;
+  border-radius: 999px;
+  background-color: var(--color-bone-12);
+}
+
+.sc-web__page {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.4rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.sc-web__h {
+  width: 62%;
+  height: 0.55rem;
+  border-radius: 999px;
+  background-color: var(--color-bone-45);
+}
+
+.sc-web__p {
+  width: 44%;
+  height: 0.35rem;
+  border-radius: 999px;
+  background-color: var(--color-bone-12);
+}
+
+.sc-web__btn {
+  width: 3.2rem;
+  height: 0.85rem;
+  margin-top: 0.15rem;
+  border-radius: 999px;
+  background-color: var(--color-signal);
+}
+
+.sc-web__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.sc-web__card {
+  height: 2.6rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 0.375rem;
+  background-color: color-mix(in oklab, var(--color-bone) 6%, transparent);
+}
+
+/* Strona składa się kawałek po kawałku, na końcu pętli gaśnie. */
+.sc-web__piece {
+  transform-origin: 0 50%;
+  animation: sc-build 6s var(--ease-out-expo) calc(var(--i) * 110ms) infinite both;
+}
+
+.sc-web__card {
+  transform-origin: 50% 100%;
+  animation-name: sc-build-up;
+}
+
+/* Produkt, w który klika klient. */
+.sc-web__card:nth-child(2) {
+  animation:
+    sc-build-up 6s var(--ease-out-expo) calc(var(--i) * 110ms) infinite both,
+    sc-web-pick 6s linear infinite both;
+}
+
+@keyframes sc-build {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  9%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sc-build-up {
+  0% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  9%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sc-web-pick {
+  0%,
+  52% {
+    border-color: var(--color-hairline);
+  }
+  56%,
+  88% {
+    border-color: color-mix(in oklab, var(--color-voltage) 70%, transparent);
+    background-color: color-mix(in oklab, var(--color-signal) 18%, transparent);
+  }
+}
+
+.sc-web__cursor {
+  position: absolute;
+  top: 6.3rem;
+  left: 50%;
+  z-index: 1;
+  width: 0.8rem;
+  height: 1rem;
+  animation: sc-web-cursor 6s var(--ease-out-quart) infinite both;
+}
+
+.sc .sc-web__cursor {
+  fill: var(--color-bone);
+  stroke: var(--color-obsydian);
+  stroke-width: 1.2;
+}
+
+@keyframes sc-web-cursor {
+  0%,
+  30% {
+    top: 110%;
+    left: 92%;
+    opacity: 0;
+  }
+  36% {
+    opacity: 1;
+  }
+  50% {
+    top: 6.3rem;
+    left: 50%;
+    transform: none;
+  }
+  53% {
+    transform: scale(0.8);
+  }
+  57%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  92%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.sc-web__toast {
+  position: absolute;
+  right: 5cqw;
+  bottom: 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.85rem 0.55rem 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 45%, transparent);
+  border-radius: 0.625rem;
+  background-color: color-mix(in oklab, var(--color-basalt) 94%, transparent);
+  box-shadow:
+    0 0.75rem 2rem -0.75rem color-mix(in oklab, var(--color-obsydian) 90%, transparent),
+    0 0 1.5rem -0.5rem color-mix(in oklab, var(--color-voltage) 35%, transparent);
+  animation: sc-web-toast 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-web__toast-text {
+  display: grid;
+  line-height: 1.25;
+}
+
+.sc-web__toast b {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-bone);
+}
+
+.sc-web__toast small {
+  font-size: 0.6875rem;
+  color: var(--color-voltage);
+}
+
+@keyframes sc-web-toast {
+  0%,
+  56% {
+    opacity: 0;
+    transform: translateY(0.6rem) scale(0.96);
+  }
+  62%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --- AI i automatyzacje -------------------------------------------------- */
+
+.sc-ai {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  height: 100%;
+  padding: 1.125rem 7cqw 2.125rem;
+}
+
+.sc-ai__flow {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sc-ai__node {
+  display: grid;
+  flex: none;
+  justify-items: center;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.sc-ai__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 0.75rem;
+  background-color: var(--color-slate-moss);
+  color: var(--color-bone-70);
+}
+
+.sc-ai__icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke-width: 1.6;
+}
+
+.sc-ai__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-bone-45);
+}
+
+/* Węzeł AI większy o pół rema — boczne zsunięte o połowę różnicy,
+   żeby środki ikon i przewody leżały na jednej linii. */
+.sc-ai__node--hub {
+  margin-top: 0;
+}
+
+.sc-ai__node--hub .sc-ai__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: color-mix(in oklab, var(--color-signal) 55%, transparent);
+  background-color: color-mix(in oklab, var(--color-signal) 14%, var(--color-slate-moss));
+  color: var(--color-voltage);
+  animation: sc-ai-hub 3s var(--ease-out-quart) infinite both;
+}
+
+.sc-ai__node--hub svg {
+  animation: sc-ai-think 3s var(--ease-out-expo) infinite both;
+}
+
+.sc-ai__node--hub .sc-ai__icon::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--color-voltage);
+  border-radius: inherit;
+  opacity: 0;
+  animation: sc-ai-ring 3s var(--ease-out-quart) infinite both;
+}
+
+.sc-ai__flow > .sc-ai__node:last-child .sc-ai__icon {
+  animation: sc-ai-hit 3s var(--ease-out-quart) infinite both;
+}
+
+.sc-ai__wire {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  margin: 1.75rem 0.5rem 0;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-bone-12) 0 0.3rem,
+    transparent 0.3rem 0.55rem
+  );
+}
+
+/* Paczka danych: najpierw z poczty do AI, półtorej sekundy później z AI do CRM. */
+.sc-ai__wire i {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: -0.25rem 0 0 -0.25rem;
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 0.75rem var(--color-voltage);
+  opacity: 0;
+  animation: sc-ai-travel 3s linear calc(var(--w) * 1.5s) infinite both;
+}
+
+@keyframes sc-ai-travel {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  34% {
+    left: 100%;
+    opacity: 1;
+  }
+  38%,
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes sc-ai-hub {
+  0%,
+  32%,
+  58%,
+  100% {
+    box-shadow: none;
+  }
+  40% {
+    box-shadow: 0 0 2rem -0.25rem color-mix(in oklab, var(--color-voltage) 55%, transparent);
+  }
+}
+
+@keyframes sc-ai-think {
+  0%,
+  34%,
+  56%,
+  100% {
+    transform: none;
+  }
+  42% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes sc-ai-ring {
+  0%,
+  33% {
+    opacity: 0;
+    transform: none;
+  }
+  36% {
+    opacity: 0.9;
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
+@keyframes sc-ai-hit {
+  0%,
+  84%,
+  100% {
+    border-color: var(--color-bone-12);
+    color: var(--color-bone-70);
+    box-shadow: none;
+  }
+  89% {
+    border-color: var(--color-voltage);
+    color: var(--color-voltage);
+    box-shadow: 0 0 1.5rem -0.25rem color-mix(in oklab, var(--color-voltage) 55%, transparent);
+  }
+}
+
+/* Dziennik zadań: przewija się o wpis za każdym dotarciem paczki do CRM. */
+.sc-ai__log {
+  justify-self: center;
+  width: min(100%, 17rem);
+  height: calc(1.6rem + 2px);
+  overflow: clip;
+  padding-inline: 0.55rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background-color: color-mix(in oklab, var(--color-basalt) 85%, transparent);
+}
+
+.sc-ai__tape {
+  display: grid;
+  animation: sc-ai-tape 9s var(--ease-out-expo) infinite both;
+}
+
+.sc-ai__line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 1.6rem;
+  overflow: clip;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  color: var(--color-bone-70);
+}
+
+@keyframes sc-ai-tape {
+  0%,
+  30% {
+    transform: none;
+  }
+  33.33%,
+  63.33% {
+    transform: translateY(-1.6rem);
+  }
+  66.66%,
+  96.66% {
+    transform: translateY(-3.2rem);
+  }
+  100% {
+    transform: translateY(-4.8rem);
+  }
+}
+
+/* --- Marketing i widoczność ---------------------------------------------- */
+
+.sc-seo {
+  display: grid;
+  grid-template-columns: 34% minmax(0, 1fr);
+  gap: 5cqw;
+  height: 100%;
+  padding: 1.25rem 6cqw 2rem;
+}
+
+.sc-seo__map {
+  position: relative;
+  overflow: clip;
+  border: 1px solid var(--color-hairline);
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 44%,
+      color-mix(in oklab, var(--color-signal) 20%, transparent) 44% 51%,
+      transparent 51%
+    ),
+    repeating-linear-gradient(0deg, var(--color-hairline) 0 1px, transparent 1px 1.1rem),
+    repeating-linear-gradient(90deg, var(--color-hairline) 0 1px, transparent 1px 1.1rem),
+    var(--color-slate-moss);
+}
+
+.sc-seo__pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin: -1.9rem 0 0 -1rem;
+  color: var(--color-voltage);
+  animation: sc-seo-drop 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-seo__pin svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.8;
+}
+
+.sc .sc-seo__pin svg {
+  fill: color-mix(in oklab, var(--color-voltage) 18%, transparent);
+}
+
+.sc-seo__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3rem;
+  height: 1.2rem;
+  margin: -0.6rem 0 0 -1.5rem;
+  border: 1px solid var(--color-voltage);
+  border-radius: 50%;
+  opacity: 0;
+  animation: sc-seo-ring 2s var(--ease-out-quart) calc(var(--r) * 1s) infinite both;
+}
+
+@keyframes sc-seo-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  8% {
+    opacity: 1;
+    transform: none;
+  }
+  11% {
+    transform: translateY(-0.3rem);
+  }
+  14%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sc-seo-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+.sc-seo__serp {
+  display: grid;
+  align-content: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.sc-seo__search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 1.75rem;
+  overflow: clip;
+  padding-inline: 0.65rem;
+  border: 1px solid var(--color-bone-12);
+  border-radius: 999px;
+  background-color: var(--color-slate-moss);
+  font-size: 0.75rem;
+  color: var(--color-bone);
+}
+
+.sc-seo__search svg {
+  flex: none;
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke-width: 2;
+  color: var(--color-bone-45);
+}
+
+/* Fraza wpisuje się znak po znaku. */
+.sc-seo__query {
+  overflow: clip;
+  padding-right: 2px;
+  border-right: 1px solid var(--color-voltage);
+  white-space: nowrap;
+  animation: sc-seo-type 6s steps(17, end) infinite both;
+}
+
+@keyframes sc-seo-type {
+  0% {
+    max-width: 0;
+  }
+  18%,
+  100% {
+    max-width: 9rem;
+  }
+}
+
+/* Wyniki: Twoja firma startuje z trzeciego miejsca i wjeżdża na pierwsze. */
+.sc-seo__results {
+  --step: 1.8rem;
+  position: relative;
+  height: calc(3 * var(--step) - 0.35rem);
+  animation: sc-seo-list 6s linear infinite both;
+}
+
+.sc-seo__row {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 1.45rem;
+  padding-inline: 0.6rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 0.5rem;
+  background-color: color-mix(in oklab, var(--color-bone) 4%, var(--color-obsydian));
+}
+
+.sc-seo__row i {
+  height: 0.35rem;
+  border-radius: 999px;
+  background-color: var(--color-bone-12);
+}
+
+.sc-seo__row i:first-child {
+  width: 38%;
+}
+
+.sc-seo__row i:last-child {
+  width: 22%;
+}
+
+.sc-seo__row--a {
+  top: var(--step);
+  animation: sc-seo-down 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-seo__row--b {
+  top: calc(2 * var(--step));
+  animation: sc-seo-down 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-seo__row--you {
+  top: 0;
+  z-index: 1;
+  justify-content: space-between;
+  border-color: color-mix(in oklab, var(--color-signal) 65%, transparent);
+  background-color: color-mix(in oklab, var(--color-signal) 16%, var(--color-obsydian));
+  animation: sc-seo-you 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-seo__row--you b {
+  overflow: clip;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-bone);
+}
+
+.sc-seo__rank {
+  flex: none;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background-color: var(--color-voltage);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-obsydian);
+  animation: sc-seo-rank 6s var(--ease-out-expo) infinite both;
+}
+
+@keyframes sc-seo-list {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  26%,
+  90% {
+    opacity: 1;
+  }
+  97%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sc-seo-you {
+  0%,
+  36% {
+    transform: translateY(calc(2 * var(--step)));
+  }
+  48%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes sc-seo-down {
+  0%,
+  36% {
+    transform: translateY(calc(-1 * var(--step)));
+  }
+  48%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes sc-seo-rank {
+  0%,
+  48% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  55%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Opieka i wsparcie --------------------------------------------------- */
+
+.sc-care {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 0.7rem;
+  height: 100%;
+  padding: 1.25rem 6cqw 2rem;
+}
+
+.sc-care__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.sc-care__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-bone);
+}
+
+.sc-care__status i {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--color-voltage);
+  box-shadow: 0 0 0.6rem var(--color-voltage);
+}
+
+.sc-care__status i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-voltage);
+  border-radius: 50%;
+  opacity: 0;
+  animation: sc-care-ping 2s var(--ease-out-quart) infinite;
+}
+
+.sc-care__ssl {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--color-signal) 45%, transparent);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-voltage);
+}
+
+@keyframes sc-care-ping {
+  0% {
+    opacity: 0.9;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+/* Puls strony: dwie długości linii przesuwane o połowę — pętla bez szwu. */
+.sc-care__pulse {
+  overflow: clip;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-obsydian) 15%,
+    var(--color-obsydian) 85%,
+    transparent
+  );
+}
+
+.sc-care__pulse svg {
+  display: block;
+  width: 200%;
+  height: 100%;
+  color: var(--color-voltage);
+  filter: drop-shadow(0 0 4px color-mix(in oklab, var(--color-voltage) 60%, transparent));
+  animation: sc-care-ecg 4s linear infinite;
+}
+
+.sc-care__pulse path {
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+@keyframes sc-care-ecg {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Dostępność z ostatnich dni — rozbłysk przebiega po słupkach. */
+.sc-care__bars {
+  display: grid;
+  grid-template-columns: repeat(28, minmax(0, 1fr));
+  gap: 3px;
+  height: 0.85rem;
+}
+
+.sc-care__bars i {
+  border-radius: 2px;
+  background-color: color-mix(in oklab, var(--color-signal) 45%, transparent);
+  animation: sc-care-bar 2.8s linear calc(var(--i) * 100ms - 2.8s) infinite both;
+}
+
+@keyframes sc-care-bar {
+  0% {
+    background-color: var(--color-voltage);
+  }
+  18%,
+  100% {
+    background-color: color-mix(in oklab, var(--color-signal) 45%, transparent);
+  }
+}
+
+/* Po prawej — lewy dolny róg sceny zasłania kafelek znaku karty. */
+.sc-care__backup {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: var(--color-bone-70);
+}
+
+.sc-care__backup .sc-check {
+  animation: sc-pop 6s var(--ease-out-expo) infinite both;
+}
+
+.sc-care__backup .sc-check path {
+  stroke-dasharray: 20;
+  animation: sc-draw 6s var(--ease-out-quart) infinite both;
+}
+
+@keyframes sc-draw {
+  0%,
+  60% {
+    stroke-dashoffset: 20;
+  }
+  72%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sc-pop {
+  0%,
+  60%,
+  76%,
+  100% {
+    transform: none;
+    box-shadow: none;
+  }
+  66% {
+    transform: scale(1.25);
+    box-shadow: 0 0 1rem color-mix(in oklab, var(--color-voltage) 50%, transparent);
+  }
+}
+
+/* --- Bez ruchu: gotowe sceny ---------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .sc *,
+  .sc *::before,
+  .sc *::after {
+    animation: none !important;
+  }
+}

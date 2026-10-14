@@ -1,16 +1,18 @@
 /**
  * Obszary usług na stronie głównej — Server Component.
  *
- * Każdy obszar to osobna karta ze swoim znakiem (`CategoryGlyph`): mały
- * w kafelku przy nazwie i duży, liniowy w rogu karty jako tło. Dzięki
- * temu cztery obszary odróżniają się na pierwszy rzut oka, zanim ktoś
- * przeczyta nagłówek. Strzałka w rogu działa jak w wierszach `.oc-row`.
+ * Każdy obszar to karta z żywą sceną u góry (`ServiceScene`) — w pętli
+ * widać, co klient dostaje: zamówienie ze strony, dane płynące przez AI,
+ * awans w Google, stały nadzór. Na krawędzi sceny siedzą kafelek ze znakiem
+ * kategorii (`CategoryGlyph`) i strzałka jak w wierszach `.oc-row`.
  */
 
 import Link from "next/link";
 
+import type { Dictionary } from "@/content/dictionary";
 import type { ServiceCategory, ServiceCategorySlug } from "@/lib/cms";
 import { CategoryGlyph } from "@/components/CategoryGlyph";
+import { ServiceScene } from "@/components/ServiceScenes";
 
 import "./home-services.css";
 
@@ -18,10 +20,12 @@ const ARROW = "M5 12h14M13 6l6 6-6 6";
 
 export function HomeServices({
   categories,
+  scenes,
   hrefFor,
   cursorLabel,
 }: {
   categories: ServiceCategory[];
+  scenes: Dictionary["home"]["services"]["scenes"];
   hrefFor: (slug: ServiceCategorySlug) => string;
   cursorLabel: string;
 }) {
@@ -35,9 +39,12 @@ export function HomeServices({
           data-cursor-label={cursorLabel}
           className="hs-card group"
         >
-          <CategoryGlyph slug={category.slug} className="hs-card__mark" />
+          <div className="hs-card__scene">
+            <ServiceScene slug={category.slug} scenes={scenes} />
+          </div>
 
-          <div className="flex items-start justify-between gap-6">
+          {/* Znak i strzałka siedzą na krawędzi sceny — nie zasłaniają jej. */}
+          <div className="hs-card__edge">
             <span className="hs-card__glyph">
               <CategoryGlyph slug={category.slug} />
             </span>
@@ -48,7 +55,7 @@ export function HomeServices({
             </span>
           </div>
 
-          <h3 className="mt-8 text-3xl transition-colors group-hover:text-voltage">
+          <h3 className="mt-5 text-3xl transition-colors group-hover:text-voltage">
             {category.title}
           </h3>
           <p className="mt-4 max-w-[50ch] text-sm leading-[1.6] text-bone-70">
