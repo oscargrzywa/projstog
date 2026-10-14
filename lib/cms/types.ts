@@ -80,6 +80,8 @@ export type CaseStudySummary = {
   url: string;
   /** Branża — „ogrody", „ubezpieczenia". */
   industry: string;
+  /** Miejscowość siedziby klienta — „Mielec". Nazwa własna, bez tłumaczenia. */
+  location: string;
   /** Jednozdaniowy efekt: po co to powstało i co dało. */
   outcome: string;
   tech: string[];

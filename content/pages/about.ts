@@ -61,9 +61,9 @@ type AboutPageCopy = {
 export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
   pl: {
     seo: {
-      title: "O mnie — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
+      title: "O mnie — Oscar Grzywa, PROJSTOG Rzeszów / Mielec",
       description:
-        "Twoją stronę internetową robi i utrzymuje jedna osoba z Podkarpacia — Mielec i Rzeszów — od pierwszej rozmowy po wsparcie po uruchomieniu. Bez agencji, pośredników i przekazywania sprawy dalej.",
+        "Twoją stronę internetową robi i utrzymuje jedna osoba z Podkarpacia — Rzeszów i Mielec — od pierwszej rozmowy po wsparcie po uruchomieniu. Bez agencji, pośredników i przekazywania sprawy dalej.",
     },
     breadcrumbHome: "Strona główna",
     crumbsLabel: "Ścieżka nawigacji",
@@ -72,18 +72,18 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     lead:
       "Prowadzę PROJSTOG jednoosobowo, więc przez cały projekt masz jeden kontakt. Rozmawiasz ze mną, ofertę dostajesz ode mnie, kod piszę ja i ja odbieram telefon, gdy po uruchomieniu trzeba coś poprawić. Na żadnym etapie nie trafiasz do account managera ani do podwykonawcy, o którym nic nie wiesz.",
     photoAlt: "Oscar Grzywa, właściciel PROJSTOG",
-    photoCaption: "Oscar Grzywa · PROJSTOG · Mielec / Rzeszów",
+    photoCaption: "Oscar Grzywa · PROJSTOG · Rzeszów / Mielec",
 
     localHeading: "Masz wykonawcę stąd. Większość konkurencji jest daleko.",
     localLead:
       "Wpisz w Google hasło o stronach internetowych na Podkarpaciu i sprawdź, skąd są firmy na górze wyników. Prawie żadna nie ma siedziby w regionie.",
     localPunchline:
-      "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Ja pracuję w Mielcu i w Rzeszowie, więc możesz umówić się ze mną na spotkanie.",
+      "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Firma działa w Rzeszowie, a mieszkam w Mielcu, więc spotkasz się ze mną na miejscu w obu miastach.",
     localDetail:
       "Dla Ciebie to znaczy, że przyjadę na spotkanie, obejrzę Twój lokal albo realizacje na miejscu, a teksty na Twoją stronę napiszę z wiedzą o lokalnym rynku. Nie zgaduję, jak wygląda sytuacja w Dębicy, Tarnobrzegu czy Kolbuszowej — jeżdżę tamtędy.",
     mapDistance: "ok. 50 km",
     mapCaption:
-      "Mielec i Rzeszów dzieli ok. 50 km w linii prostej, a Dębica, Kolbuszowa i Tarnobrzeg leżą w promieniu 40 km od Mielca. Na spotkanie przyjadę do Ciebie.",
+      "Rzeszów i Mielec dzieli ok. 50 km w linii prostej, a Dębica, Kolbuszowa i Tarnobrzeg leżą w promieniu 40 km od Mielca. Na spotkanie przyjadę do Ciebie.",
 
     approachHeading: "Jak wygląda współpraca",
     approachLead:
@@ -133,9 +133,9 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
 
   en: {
     seo: {
-      title: "About — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
+      title: "About — Oscar Grzywa, PROJSTOG Rzeszów / Mielec",
       description:
-        "Your website, built and maintained by one person based in Mielec and Rzeszów — from the first call to post-launch support. No agency, no middlemen, no passing your case along.",
+        "Your website, built and maintained by one person based in Rzeszów and Mielec — from the first call to post-launch support. No agency, no middlemen, no passing your case along.",
     },
     breadcrumbHome: "Home",
     crumbsLabel: "Breadcrumb",
@@ -144,18 +144,18 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     lead:
       "I run PROJSTOG on my own, so you have one contact for the whole project. You talk to me, the quote comes from me, I write the code, and I pick up the phone when something needs fixing after launch. At no point are you handed to an account manager or an unnamed subcontractor.",
     photoAlt: "Oscar Grzywa, owner of PROJSTOG",
-    photoCaption: "Oscar Grzywa · PROJSTOG · Mielec / Rzeszów",
+    photoCaption: "Oscar Grzywa · PROJSTOG · Rzeszów / Mielec",
 
     localHeading: "Your contractor is local. Most of the competition is far away.",
     localLead:
       "Search Google for web design anywhere in south-eastern Poland and check where the companies at the top are based. Almost none of them are in the region.",
     localPunchline:
-      "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. I work in Mielec and Rzeszów, so you can meet me in person.",
+      "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. The business is based in Rzeszów and I live in Mielec, so you can meet me in person in either town.",
     localDetail:
       "For you, that means I come to the meeting, look at your premises or your work on site, and write your copy knowing the local market. I do not guess what things look like in Dębica, Tarnobrzeg or Kolbuszowa — I drive through them.",
     mapDistance: "approx. 50 km",
     mapCaption:
-      "Mielec and Rzeszów are about 50 km apart in a straight line, and Dębica, Kolbuszowa and Tarnobrzeg are all within 40 km of Mielec. I come to you for the meeting.",
+      "Rzeszów and Mielec are about 50 km apart in a straight line, and Dębica, Kolbuszowa and Tarnobrzeg are all within 40 km of Mielec. I come to you for the meeting.",
 
     approachHeading: "How working together goes",
     approachLead:

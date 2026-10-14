@@ -266,9 +266,9 @@ type ContactPageCopy = {
 export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
   pl: {
     seo: {
-      title: "Kontakt — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
+      title: "Kontakt — Oscar Grzywa, PROJSTOG Rzeszów / Mielec",
       description:
-        "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Mielec i Rzeszów, woj. podkarpackie.",
+        "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Rzeszów i Mielec, woj. podkarpackie.",
     },
     breadcrumbHome: "Strona główna",
     crumbsLabel: "Ścieżka nawigacji",
@@ -298,9 +298,9 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
 
   en: {
     seo: {
-      title: "Contact — Oscar Grzywa, PROJSTOG Mielec / Rzeszów",
+      title: "Contact — Oscar Grzywa, PROJSTOG Rzeszów / Mielec",
       description:
-        "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Mielec and Rzeszów, south-eastern Poland.",
+        "Call, write or use the contact form. You talk straight to the person who will build your project — no middlemen. Rzeszów and Mielec, south-eastern Poland.",
     },
     breadcrumbHome: "Home",
     crumbsLabel: "Breadcrumb",

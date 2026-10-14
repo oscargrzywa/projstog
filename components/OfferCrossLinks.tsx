@@ -14,21 +14,12 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import type { ServiceCategory, ServiceCategorySlug } from "@/lib/cms";
+import { CategoryGlyph } from "@/components/CategoryGlyph";
 
 import "./offer-cross-links.css";
 
 const ARROW = "M5 12h14M13 6l6 6-6 6";
 const CHECK = "M5 12.5l4.2 4.2L19 7";
-
-/* Znaki kategorii — ten sam motyw, co makieta danej kategorii. */
-const GLYPHS: Record<ServiceCategorySlug, string> = {
-  "strony-i-sklepy": "M3.5 5h17v14h-17zM3.5 9h17M6.5 7h.01M9 7h.01",
-  "sztuczna-inteligencja":
-    "M5 9a2.5 2.5 0 1 0 0-5a2.5 2.5 0 1 0 0 5zM19 9a2.5 2.5 0 1 0 0-5a2.5 2.5 0 1 0 0 5zM12 20.5a2.5 2.5 0 1 0 0-5a2.5 2.5 0 1 0 0 5zM7.3 7.6l3.5 8M16.7 7.6l-3.5 8M7.5 6.5h9",
-  "marketing-i-widocznosc":
-    "M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21zM12 12.2a2.2 2.2 0 1 0 0-4.4a2.2 2.2 0 1 0 0 4.4z",
-  "opieka-i-wsparcie": "M3 12h4l2.5-6 4 12 2.5-6H21",
-};
 
 function Svg({ d, className }: { d: string; className?: string }) {
   return (
@@ -143,7 +134,7 @@ export function OtherAreas({
               className="work-row oc-row group"
             >
               <span className="oc-row__glyph" aria-hidden="true">
-                <Svg d={GLYPHS[category.slug]} />
+                <CategoryGlyph slug={category.slug} />
               </span>
 
               <div className="min-w-0">

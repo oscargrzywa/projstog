@@ -40,7 +40,7 @@ blokuje `.env*`, `node_modules/`, buildy i artefakty `.playwright-mcp/`.
 
 | | |
 |---|---|
-| Działanie | **Mielec / Rzeszów**, woj. podkarpackie |
+| Działanie | **Rzeszów / Mielec**, woj. podkarpackie — firma działa w Rzeszowie, właściciel mieszka w Mielcu. W treści zawsze kolejność **Rzeszów / Mielec** |
 | Adres (CEIDG) | ul. Jana i Jędrzeja Śniadeckich 20D/7, 35-006 Rzeszów |
 | Firma (CEIDG) | PROJSTOG Oscar Grzywa · NIP 8172228348 · REGON 545844575 |
 | E-mail | biuro@projstog.pl |
@@ -73,7 +73,7 @@ lokalne SEO, social media, copywriting, hosting i wsparcie.
 
 | Obszar | Decyzja |
 |---|---|
-| Zasięg | Siedziba Mielec / Rzeszów, **obsługa: cała Polska** (`areaServed` = Country), **bez podstron miast** |
+| Zasięg | Siedziba Rzeszów / Mielec, **obsługa: cała Polska** (`areaServed` = Country), **bez podstron miast** |
 | Oferta | Produkt wiodący „Profit Site" + 4 kategorie usług |
 | Języki | PL bez prefiksu + EN pod `/en/...`, `hreflang`, serwerowo |
 | Wizualia | Restart — zostaje tylko paleta i logo z brand-concept |
@@ -114,7 +114,7 @@ Stara strona miała pod to zerowe fundamenty. Nowa musi mieć:
 
 Podstrony lokalizacyjne (`/strony-internetowe/[miasto]`, hub
 `/strony-internetowe`, `content/cities.ts`) zostały **usunięte decyzją
-właściciela 2026-09-29**. Lokalne SEO = **Mielec / Rzeszów** (decyzja
+właściciela 2026-09-29**. Lokalne SEO = **Rzeszów / Mielec** (decyzja
 2026-10-09): w treści oba miasta, w JSON-LD `LocalBusiness` adres z CEIDG
 (Rzeszów) + wizytówka Google Moja Firma. Dane firmy (NAP, NIP, REGON) żyją
 w `content/site.ts` (`SITE`).
@@ -182,7 +182,7 @@ z identycznym cennikiem i FAQ.
 
 Z tego wynikają cztery przewagi do wyeksponowania:
 
-1. **Realny adres w Mielcu** — nie do skopiowania przez farmy. Eksponować
+1. **Realny adres w Rzeszowie** (CEIDG) — nie do skopiowania przez farmy. Eksponować
    wysoko, nie w stopce.
 2. **Jawny cennik** — większość konkurencji cen nie podaje.
 3. **Case studies z konkretami** — lokalni konkurenci pokazują wyłącznie
@@ -196,7 +196,7 @@ Z tego wynikają cztery przewagi do wyeksponowania:
 | Zasada | Powód |
 |---|---|
 | **Żadnego bloku „obsługujemy także: [lista miast]"** | Google wymienia to wprost w polityce keyword stuffing |
-| **Nigdy `PostalAddress` z adresem Mielca na stronie innego miasta** | Wprowadzanie w błąd, ryzyko ręcznej kary |
+| **Nigdy `PostalAddress` z adresem firmy na stronie innego miasta** | Wprowadzanie w błąd, ryzyko ręcznej kary |
 | **`LocalBusiness` + `Organization`, nie `ProfessionalService`** | schema.org wycofało ten typ |
 | **Bez `aggregateRating` na własnej stronie** | Google nie pokazuje gwiazdek dla opinii kontrolowanych przez opisywany podmiot |
 | **Bez `nosnippet` i `max-snippet:0`** | Wykluczają z AI Overviews |

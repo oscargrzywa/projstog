@@ -13,6 +13,7 @@
 
 import Link from "next/link";
 
+import { CaseLocation } from "@/components/CaseLocation";
 import { SiteShot } from "@/components/SiteShot";
 import type { CaseStudySummary } from "@/lib/cms/types";
 
@@ -73,7 +74,10 @@ export function WorkFeature({
         )}
 
         <div className="reveal-stagger">
-          <p className="text-sm text-lichen">{study.industry}</p>
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-lichen">
+            {study.industry}
+            <CaseLocation location={study.location} className="text-bone-70" />
+          </p>
           <h2 className="work-row__name mt-4 text-4xl group-hover:text-voltage">
             {study.name}
           </h2>

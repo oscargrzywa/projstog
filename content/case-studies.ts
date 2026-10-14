@@ -21,10 +21,11 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
   pl: [
     {
       slug: "finanse-szelagowski",
-      name: "Adam Szelągowski — Finanse",
+      name: "Finanse Adam Szelągowski",
       domain: "finanseszelagowski.pl",
       url: "https://finanseszelagowski.pl",
       industry: "ubezpieczenia i kredyty",
+      location: "Włodawa",
       outcome:
         "Strona niezależnego doradcy z Włodawy, która porządkuje trzy osobne obszary jego pracy — ubezpieczenia, kredyty i pomoc kredytobiorcom — i za każdym razem kończy się umówieniem konsultacji.",
       tech: ["Next.js", "React", "Tailwind CSS"],
@@ -64,7 +65,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
         },
       ],
       seo: {
-        title: "Finanse Szelągowski — strona doradcy | PROJSTOG",
+        title: "Finanse Adam Szelągowski — strona doradcy | PROJSTOG",
         description:
           "Strona dla niezależnego doradcy ubezpieczeniowego i kredytowego z Włodawy. Trzy rozdzielone ścieżki usług, kalkulator OC, zakup polisy online. Next.js.",
       },
@@ -75,6 +76,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "apartsea.pl",
       url: "https://apartsea.pl",
       industry: "apartamenty na wynajem",
+      location: "Sierakowice",
       outcome:
         "Jedna strona dla pięciu obiektów nad Bałtykiem, która prowadzi gościa od wyboru miejscowości do rezerwacji w systemie, bez pośrednika i bez prowizji portalu.",
       tech: ["Next.js", "React", "Tailwind CSS", "Hotres"],
@@ -125,6 +127,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "mojagruzja.pl",
       url: "https://mojagruzja.pl",
       industry: "hurtowa dystrybucja alkoholi",
+      location: "Gdańsk",
       outcome:
         "Katalog B2B gruzińskich win i alkoholi, który zastępuje wysyłanie PDF-ów z ofertą i pozwala restauracji albo sklepowi samodzielnie przejrzeć cały asortyment.",
       tech: ["Next.js", "React", "Tailwind CSS"],
@@ -176,6 +179,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "landrew.pl",
       url: "https://landrew.pl",
       industry: "konstrukcje drewniane",
+      location: "Głogów Małopolski",
       outcome:
         "Strona wykonawcy konstrukcji drewnianych z Głogowa Małopolskiego, na której zdjęcia realizacji robią robotę przed pierwszą rozmową, a wycena zaczyna się od jednego formularza.",
       tech: ["Next.js", "React"],
@@ -227,6 +231,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "luksusowyogrod.pl",
       url: "https://luksusowyogrod.pl",
       industry: "ogrody i architektura krajobrazu",
+      location: "Bochnia",
       outcome:
         "Strona firmy ogrodniczej z Bochni, która zbiera dziesięć bardzo różnych usług w jedną czytelną ofertę i pokazuje gotowe ogrody zamiast je opisywać.",
       tech: ["WordPress", "PHP"],
@@ -277,6 +282,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "kaszaubezpieczenia.pl",
       url: "https://kaszaubezpieczenia.pl",
       industry: "ubezpieczenia",
+      location: "Mielec",
       outcome:
         "Strona mieleckiego biura ubezpieczeniowego, która obsługuje klienta w dwóch trybach naraz: szybki zakup polisy online i spokojna rozmowa w biurze przy Wolności.",
       tech: ["WordPress", "PHP"],
@@ -327,10 +333,11 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
   en: [
     {
       slug: "finanse-szelagowski",
-      name: "Adam Szelągowski — Financial Advisory",
+      name: "Finanse Adam Szelągowski",
       domain: "finanseszelagowski.pl",
       url: "https://finanseszelagowski.pl",
       industry: "insurance and lending",
+      location: "Włodawa",
       outcome:
         "A site for an independent adviser in Włodawa that keeps his three lines of work — insurance, loans and borrower support — apart, and routes every one of them to a booked consultation.",
       tech: ["Next.js", "React", "Tailwind CSS"],
@@ -381,6 +388,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "apartsea.pl",
       url: "https://apartsea.pl",
       industry: "holiday apartment rentals",
+      location: "Sierakowice",
       outcome:
         "One site covering five Baltic coast properties that carries a guest from picking a town to a confirmed booking, with no marketplace commission in between.",
       tech: ["Next.js", "React", "Tailwind CSS", "Hotres booking engine"],
@@ -431,6 +439,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "mojagruzja.pl",
       url: "https://mojagruzja.pl",
       industry: "beverage wholesale",
+      location: "Gdańsk",
       outcome:
         "A B2B catalogue of Georgian wines and spirits that replaces emailing PDF price lists and lets a restaurant or shop browse the full range on its own.",
       tech: ["Next.js", "React", "Tailwind CSS"],
@@ -482,6 +491,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "landrew.pl",
       url: "https://landrew.pl",
       industry: "timber structures",
+      location: "Głogów Małopolski",
       outcome:
         "A site for a timber construction firm near Głogów Małopolski where finished projects do the convincing before the first call, and a quote starts with a single form.",
       tech: ["Next.js", "React"],
@@ -533,6 +543,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "luksusowyogrod.pl",
       url: "https://luksusowyogrod.pl",
       industry: "gardens and landscaping",
+      location: "Bochnia",
       outcome:
         "A site for a Bochnia landscaping firm that pulls ten very different services into one readable offer and shows finished gardens instead of describing them.",
       tech: ["WordPress", "PHP"],
@@ -583,6 +594,7 @@ const STUDIES: Record<Locale, Omit<CaseStudy, "cover">[]> = {
       domain: "kaszaubezpieczenia.pl",
       url: "https://kaszaubezpieczenia.pl",
       industry: "insurance",
+      location: "Mielec",
       outcome:
         "A site for an insurance office in Mielec that serves two modes at once: buying a policy online in minutes, or sitting down with an agent on Wolności street.",
       tech: ["WordPress", "PHP"],

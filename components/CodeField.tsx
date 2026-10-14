@@ -60,7 +60,7 @@ const SNIPPETS: readonly (readonly string[])[] = [
     '    "addressCountry": "PL"',
     "  },",
     '  "taxID": "8172228348",',
-    '  "areaServed": ["Mielec", "Rzeszów"]',
+    '  "areaServed": ["Rzeszów", "Mielec"]',
     "}",
     "</script>",
   ],

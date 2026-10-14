@@ -15,6 +15,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { RichText } from "@/components/RichText";
+import { CaseLocation } from "@/components/CaseLocation";
 import { SiteShot } from "@/components/SiteShot";
 import { WorkArrow } from "@/components/WorkFeature";
 import type { CaseStudySummary, ImageRef, RichText as Blocks } from "@/lib/cms/types";
@@ -102,7 +103,10 @@ export function NextStudy({
           className="work-row next-card group"
         >
           <div className="reveal-stagger next-card__text">
-            <p className="text-sm text-lichen">{study.industry}</p>
+            <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-lichen">
+              {study.industry}
+              <CaseLocation location={study.location} className="text-bone-70" />
+            </p>
             {/* text-4xl, nie większy: najdłuższe słowo w nazwach
                 („Ubezpieczenia") musi zmieścić się w kolumnie 5/12. */}
             <h3 className="work-row__name mt-5 text-4xl group-hover:text-voltage">

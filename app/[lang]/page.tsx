@@ -9,6 +9,8 @@ import { HeroLens } from "@/components/HeroLens";
 import { CodeField } from "@/components/CodeField";
 import { StackWipe } from "@/components/StackWipe";
 import { ProcessFilm } from "@/components/ProcessFilm";
+import { HomeServices } from "@/components/HomeServices";
+import { CaseLocation } from "@/components/CaseLocation";
 import { SITE } from "@/content/site";
 import { listServiceCategories, listCaseStudies, listPosts } from "@/lib/cms";
 import { personSchema } from "@/lib/schema";
@@ -25,11 +27,11 @@ export async function generateMetadata({
   const pl = lang === "pl";
   return {
     title: pl
-      ? "Strony internetowe Mielec, Rzeszów i Podkarpacie — PROJSTOG"
-      : "Web design in Mielec, Rzeszów and south-eastern Poland — PROJSTOG",
+      ? "Strony internetowe Rzeszów, Mielec i Podkarpacie — PROJSTOG"
+      : "Web design in Rzeszów, Mielec and south-eastern Poland — PROJSTOG",
     description: pl
-      ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Mielca, Rzeszowa, Dębicy i całego Podkarpacia. Robi je jedna osoba — od rozmowy po wsparcie po wdrożeniu."
-      : "Websites, online stores and AI automation for companies in Mielec, Rzeszów, Dębica and the wider region. Built by one person, start to finish.",
+      ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Rzeszowa, Mielca, Dębicy i całego Podkarpacia. Robi je jedna osoba — od rozmowy po wsparcie po wdrożeniu."
+      : "Websites, online stores and AI automation for companies in Rzeszów, Mielec, Dębica and the wider region. Built by one person, start to finish.",
     alternates: metadataAlternates(lang, []),
   };
 }
@@ -166,27 +168,11 @@ export default async function HomePage({
           {t.home.services.lead}
         </p>
 
-        <div className="reveal-stagger mt-14 grid gap-5 md:grid-cols-2">
-          {categories.map((category) => (
-            <Link
-              key={category.slug}
-              href={publicPath(lang, ["oferta", category.slug])}
-              className="panel flex flex-col"
-            >
-              <h3 className="text-3xl">{category.title}</h3>
-              <p className="mt-4 max-w-[50ch] text-sm leading-[1.6] text-bone-70">
-                {category.lead}
-              </p>
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {category.services.map((service) => (
-                  <li key={service.slug} className="chip">
-                    {service.title}
-                  </li>
-                ))}
-              </ul>
-            </Link>
-          ))}
-        </div>
+        <HomeServices
+          categories={categories}
+          hrefFor={(slug) => publicPath(lang, ["oferta", slug])}
+          cursorLabel={cursorViewLabel}
+        />
       </section>
 
       {/* ========================================================= nie agencja */}
@@ -278,8 +264,9 @@ export default async function HomePage({
                   <h3 className="work-row__name text-2xl group-hover:text-voltage">
                     {study.name}
                   </h3>
-                  <span className="mt-1 block text-xs text-lichen">
+                  <span className="mt-1.5 flex flex-col items-start gap-1 text-xs text-lichen">
                     {study.industry}
+                    <CaseLocation location={study.location} className="text-bone-70" />
                   </span>
                 </div>
 

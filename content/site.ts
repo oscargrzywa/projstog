@@ -7,7 +7,8 @@
  */
 
 /**
- * Firma działa w Mielcu i Rzeszowie (decyzja właściciela, 2026-10-09).
+ * Firma działa w Rzeszowie, właściciel mieszka w Mielcu (2026-10-14) —
+ * w treści zawsze kolejność „Rzeszów / Mielec".
  * Adres rejestrowy — z CEIDG — jest w Rzeszowie i to on trafia do JSON-LD.
  * Podstron miast nie ma (decyzja z 2026-09-29).
  */
@@ -22,9 +23,9 @@ export const SITE = {
   regon: "545844575",
 
   /** Miasta działania — do haseł i meta tagów. */
-  cities: ["Mielec", "Rzeszów"],
-  /** Etykieta „Mielec / Rzeszów" do treści. */
-  citiesLabel: "Mielec / Rzeszów",
+  cities: ["Rzeszów", "Mielec"],
+  /** Etykieta „Rzeszów / Mielec" do treści. */
+  citiesLabel: "Rzeszów / Mielec",
 
   /** Domena produkcyjna — baza dla canonical, OG i sitemapy. */
   url: "https://projstog.pl",

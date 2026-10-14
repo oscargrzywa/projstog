@@ -8,6 +8,7 @@ import {
   CaseStage,
   NextStudy,
 } from "@/components/CaseStudy";
+import { CaseLocation } from "@/components/CaseLocation";
 import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
@@ -175,6 +176,10 @@ export default async function CaseStudyPage({
           <CaseFacts
             items={[
               { label: copy.work.industry, value: study.industry },
+              {
+                label: copy.work.location,
+                value: <CaseLocation location={study.location} />,
+              },
               ...(study.tech.length > 0
                 ? [
                     {

@@ -30,7 +30,7 @@ const pl = {
   },
 
   home: {
-    badge: "Mielec / Rzeszów · Podkarpacie",
+    badge: "Rzeszów / Mielec · Podkarpacie",
     h1: "Strona, która zarabia dla Twojej firmy.",
     lead:
       "Dostajesz stronę, sklep albo automatyzację, która pomaga Ci zdobywać klientów i zdejmuje z Ciebie ręczną robotę. Od pierwszej rozmowy po opiekę po starcie masz jeden numer telefonu i jedną osobę, która odpowiada za całość.",
@@ -259,7 +259,7 @@ const en: Dictionary = {
   },
 
   home: {
-    badge: "Mielec / Rzeszów · south-eastern Poland",
+    badge: "Rzeszów / Mielec · south-eastern Poland",
     h1: "A website that earns for your business.",
     lead:
       "You get a website, an online store or an automation that helps you win customers and takes manual work off your plate. From the first call to support after launch, you have one phone number and one person responsible for all of it.",
