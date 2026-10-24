@@ -627,6 +627,13 @@
   transform: none;
 }
 
+/* Tryb lite (lib/perf): karty etapów 3 i 4 są i tak niemal kryjące —
+   rozmycie pod nimi to koszt bez widocznego efektu. */
+html[data-perf="lite"] :is(.pv__serp, .pv__care) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 /* Etap 4 — opieka: pasek dostępności i odhaczone zadania. */
 .pv__care {
   position: absolute;

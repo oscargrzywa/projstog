@@ -101,6 +101,14 @@ body:has(> main [data-nav-overlay]) .site-nav-spacer {
   transition: opacity 500ms var(--ease-out-quart);
 }
 
+/* Tryb lite (lib/perf): bez rozmycia tła — przy przewijaniu GPU liczyłby
+   je od nowa w każdej klatce. Gęstsze tło zastępuje szkło. */
+html[data-perf="lite"] .site-nav__bar::before {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background-color: color-mix(in oklab, var(--color-obsydian) 94%, transparent);
+}
+
 /* --- Stan „kapsuła" ----------------------------------------------------
    Przy otwartym menu mobilnym pasek wraca do stanu z góry strony —
    nakładka ma własne, pełne tło. */

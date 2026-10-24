@@ -8,11 +8,16 @@
    - czytelność H1 ponad wszystko: bone ~13% krycia, voltage maks. 35%,
      do tego maska — najmocniej po prawej i u góry, słabo za nagłówkiem,
    - kolory z tokenów CSS, żadnych hexów w kodzie rysującym,
-   - maks. 30 kl./s, DPR maks. 2, pętla stoi poza ekranem i w ukrytej karcie,
+   - maks. 30 kl./s (20 w trybie lite, lib/perf), DPR maks. 2, pętla stoi
+     poza ekranem i w ukrytej karcie,
+   - czyścimy, rysujemy i maskujemy tylko prostokąt edytora (z klipem),
+     nie całą kanwę hero — to ok. 1/3 pikseli na klatkę,
    - reduced motion → jedna statyczna klatka, bez karetki,
    - mobile → 1–2 bloki i jeszcze słabsze krycie. */
 
 import { useEffect, useRef } from "react";
+
+import { isLite } from "@/lib/perf";
 
 // --- treść ------------------------------------------------------------------
 // Prawdziwa robota, nie ozdobnik: to, co faktycznie powstaje przy stronach.
@@ -259,6 +264,7 @@ const tokens = () => (TOKENS ??= SNIPPETS.map((s) => s.map(tokenize)));
 
 // --- stałe wyglądu ---------------------------------------------------------------
 const FPS = 30;
+const FPS_LITE = 20;
 const FONT_FAMILY =
   'ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace';
 // Jeden blok po prawej, więc może być wyraźny — nagłówek stoi po lewej,
@@ -602,12 +608,45 @@ export function CodeField() {
     };
 
     // --- rysowanie --------------------------------------------------------------
+    // Prostokąt edytora w tej klatce, z zapasem na glitch, podświetlenie,
+    // karetkę i linię wygasającą nad blokiem. Poprzedni pamiętamy — nowy
+    // snippet startuje wyżej albo niżej i stary ślad trzeba zetrzeć.
+    type Rect = { x: number; y: number; w: number; h: number };
+    let prevRect: Rect | null = null;
+    const blockRect = (): Rect | null => {
+      if (!blocks.length) return null;
+      let x0 = W;
+      let y0 = H;
+      let x1 = 0;
+      let y1 = 0;
+      for (const b of blocks) {
+        x0 = Math.min(x0, b.x - 8);
+        x1 = Math.max(x1, b.x + (b.cols + 1) * charW + 8);
+        y0 = Math.min(y0, b.y - lh - b.drift - 2);
+        y1 = Math.max(y1, b.y + b.rows * lh + 2);
+      }
+      const x = Math.max(0, Math.floor(x0));
+      const y = Math.max(0, Math.floor(y0));
+      const w = Math.min(W, Math.ceil(x1)) - x;
+      const h = Math.min(H, Math.ceil(y1)) - y;
+      return w > 0 && h > 0 ? { x, y, w, h } : null;
+    };
+
     const draw = (caret: boolean) => {
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 1;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const rect = blockRect();
+      if (prevRect) ctx.clearRect(prevRect.x, prevRect.y, prevRect.w, prevRect.h);
+      prevRect = rect;
+      if (!rect) return;
+      ctx.clearRect(rect.x, rect.y, rect.w, rect.h);
+      // Klip: tekst i maska (destination-in) dotykają tylko tego prostokąta.
+      // Bez klipu destination-in przeliczałby całą kanwę hero.
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rect.x, rect.y, rect.w, rect.h);
+      ctx.clip();
       const pad = (lh - fontSize) / 2;
       const vmax = VOLTAGE_MAX * (mobile ? 0.65 : 1);
 
@@ -669,11 +708,24 @@ export function CodeField() {
         }
       });
 
-      // Maska na końcu: zostaje tylko to, co maska przepuszcza.
+      // Maska na końcu: zostaje tylko to, co maska przepuszcza. Z maski
+      // (1/4 rozdzielczości) bierzemy ten sam wycinek co prostokąt edytora.
       ctx.globalCompositeOperation = "destination-in";
       ctx.globalAlpha = 1;
-      ctx.drawImage(mask, 0, 0, W, H);
-      ctx.globalCompositeOperation = "source-over";
+      const mx = mask.width / W;
+      const my = mask.height / H;
+      ctx.drawImage(
+        mask,
+        rect.x * mx,
+        rect.y * my,
+        rect.w * mx,
+        rect.h * my,
+        rect.x,
+        rect.y,
+        rect.w,
+        rect.h,
+      );
+      ctx.restore();
     };
 
     // --- rozmiar ----------------------------------------------------------------
@@ -688,6 +740,7 @@ export function CodeField() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
+      prevRect = null; // zmiana rozmiaru i tak wyczyściła kanwę
       mobile = W < 768;
       // Na dużych ekranach root font-size rośnie (globals.css) — kod w tle
       // i szerokość kontenera skalują się razem z resztą strony.
@@ -714,8 +767,9 @@ export function CodeField() {
 
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick);
-      const elapsed = last ? now - last : 1000 / FPS;
-      if (elapsed < 1000 / FPS - 2) return;
+      const step = 1000 / (isLite() ? FPS_LITE : FPS);
+      const elapsed = last ? now - last : step;
+      if (elapsed < step - 2) return;
       last = now;
       update(Math.min(elapsed, 100) / 1000);
       draw(true);

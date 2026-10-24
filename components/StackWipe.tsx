@@ -10,16 +10,25 @@
  *
  * Wyzwalacz: znacznik (w miejscu komponentu) mija przy przewijaniu w dół
  * linię na 65% wysokości ekranu. Powrót nad linię uzbraja efekt ponownie.
- * Canvas istnieje tylko w trakcie animacji, pointer-events: none.
- * prefers-reduced-motion: reduce → nic się nie dzieje.
+ * Canvasy istnieją tylko w trakcie animacji, pointer-events: none.
+ * prefers-reduced-motion: reduce albo tryb lite (lib/perf) → nic się nie dzieje.
+ *
+ * Wydajność: efekt gra w trakcie przewijania, więc nie może zjadać klatek.
+ * Dym (wielkie gradienty) leży na osobnej kanwie w 1/4 rozdzielczości —
+ * jest rozmyty z natury, a skalowanie CSS-em nic mu nie odbiera; to ~16×
+ * mniej pikseli niż w pełnej rozdzielczości. Warstwy w maks. 1.5 DPR.
  */
 
 import { useEffect, useRef, useState } from "react";
+
+import { isLite } from "@/lib/perf";
 
 type RGB = [number, number, number];
 
 const DURATION = 1500;
 const LINE = 0.65;
+// Rozdzielczość kanwy dymu względem pikseli CSS.
+const SMOKE_SCALE = 0.25;
 
 const easeInOut = (t: number) =>
   t < 0.5 ? 16 * t ** 5 : 1 - Math.pow(-2 * t + 2, 5) / 2;
@@ -38,6 +47,7 @@ const rgba = ([r, g, b]: RGB, a: number) => `rgba(${r}, ${g}, ${b}, ${a})`;
 
 export function StackWipe() {
   const markerRef = useRef<HTMLDivElement>(null);
+  const smokeRef = useRef<HTMLCanvasElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // n = licznik wystrzałów (0 = spoczynek), up = przewijanie w górę.
   const [playing, setPlaying] = useState({ n: 0, up: false });
@@ -56,7 +66,7 @@ export function StackWipe() {
         const nowAbove = !entry.isIntersecting && entry.boundingClientRect.top < rootTop;
         if (nowAbove === above) return;
         above = nowAbove;
-        if (reduced.matches) return;
+        if (reduced.matches || isLite()) return;
         setPlaying((prev) => ({ n: prev.n + 1, up: !nowAbove }));
       },
       { threshold: 0, rootMargin: `-${LINE * 100}% 0px 0px 0px` }
@@ -68,17 +78,24 @@ export function StackWipe() {
   useEffect(() => {
     if (!playing.n) return;
     const canvas = canvasRef.current;
+    const smokeCanvas = smokeRef.current;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+    const smoke = smokeCanvas?.getContext("2d");
+    if (!canvas || !smokeCanvas || !ctx || !smoke) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const W = window.innerWidth;
     const H = window.innerHeight;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    // W górę: ta sama animacja odbita w pionie.
-    if (playing.up) ctx.setTransform(dpr, 0, 0, -dpr, 0, H * dpr);
-    else ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    smokeCanvas.width = Math.max(1, Math.round(W * SMOKE_SCALE));
+    smokeCanvas.height = Math.max(1, Math.round(H * SMOKE_SCALE));
+    // W górę: ta sama animacja odbita w pionie. Obie kanwy rysują
+    // w pikselach CSS — skalę niesie transformacja.
+    const orient = (c: CanvasRenderingContext2D, s: number) =>
+      playing.up ? c.setTransform(s, 0, 0, -s, 0, H * s) : c.setTransform(s, 0, 0, s, 0, 0);
+    orient(ctx, dpr);
+    orient(smoke, SMOKE_SCALE);
 
     const obsydian = readRgb("--color-obsydian", [6, 8, 7]);
     const basalt = readRgb("--color-basalt", [14, 19, 14]);
@@ -112,20 +129,21 @@ export function StackWipe() {
       const t = Math.min(1, (now - start) / DURATION);
       ctx.clearRect(0, 0, W, H);
 
-      // Dym pod spodem — unosi się przez cały czas trwania przejścia.
-      ctx.globalCompositeOperation = "lighter";
+      // Dym pod spodem (osobna kanwa, niska rozdzielczość) — unosi się
+      // przez cały czas trwania przejścia.
+      smoke.clearRect(0, 0, W, H);
+      smoke.globalCompositeOperation = "lighter";
       const smokeA = Math.sin(t * Math.PI) * 0.2;
       for (const s of puffs) {
         const y = H * 1.2 - H * 1.6 * t;
         const x = s.x + s.drift * t;
-        const g = ctx.createRadialGradient(x, y, 0, x, y, s.r);
+        const g = smoke.createRadialGradient(x, y, 0, x, y, s.r);
         g.addColorStop(0, rgba(signal, smokeA));
         g.addColorStop(0.5, rgba(voltage, smokeA * 0.3));
         g.addColorStop(1, rgba(signal, 0));
-        ctx.fillStyle = g;
-        ctx.fillRect(x - s.r, y - s.r, s.r * 2, s.r * 2);
+        smoke.fillStyle = g;
+        smoke.fillRect(x - s.r, y - s.r, s.r * 2, s.r * 2);
       }
-      ctx.globalCompositeOperation = "source-over";
 
       for (let c = 0; c < cols; c++) {
         // Każda kolumna: faza budowania (0–0.5) i odlotu (0.5–1).
@@ -185,11 +203,18 @@ export function StackWipe() {
     <>
       <div ref={markerRef} className="h-px w-full" aria-hidden="true" />
       {playing.n > 0 && (
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-[60] h-full w-full"
-        />
+        <>
+          <canvas
+            ref={smokeRef}
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[60] h-full w-full"
+          />
+          <canvas
+            ref={canvasRef}
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[60] h-full w-full"
+          />
+        </>
       )}
     </>
   );

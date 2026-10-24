@@ -134,6 +134,13 @@ body::after {
   background-size: 160px 160px;
 }
 
+/* Tryb lite (lib/perf — urządzenie gubiło klatki): bez nakładki ziarna.
+   To pełnoekranowa warstwa nad wszystkim, którą GPU dokłada do każdej
+   klatki; przy 4% krycia jej brak jest praktycznie niewidoczny. */
+html[data-perf="lite"] body::after {
+  display: none;
+}
+
 /* ==========================================================================
    Typografia
 

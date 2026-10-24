@@ -5,8 +5,8 @@
  *
  * Czysta dekoracja: aria-hidden, nie łapie fokusu, nie dotyka focus-visible.
  * Włącza się wyłącznie na urządzeniach z precyzyjnym wskaźnikiem i bez
- * `prefers-reduced-motion` — na dotyku i przy ograniczonym ruchu nic się
- * nie renderuje, zostaje natywny kursor.
+ * `prefers-reduced-motion` — na dotyku, przy ograniczonym ruchu i w trybie
+ * lite (lib/perf) nic się nie renderuje, zostaje natywny kursor.
  *
  * API atrybutów (wszystko przez delegację, zero listenerów per element):
  * - `data-cursor="view"` — pierścień rośnie i pokazuje etykietę,
@@ -17,6 +17,8 @@
  */
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+
+import { isLite, isLiteServer, subscribePerf } from "@/lib/perf";
 
 import "./cursor.css";
 
@@ -56,7 +58,10 @@ const getServerSnapshot = () => false;
 const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v));
 
 export function Cursor() {
-  const enabled = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const capable = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  // Tryb lite (lib/perf): natywny kursor — zero pracy przy każdym ruchu myszy.
+  const lite = useSyncExternalStore(subscribePerf, isLite, isLiteServer);
+  const enabled = capable && !lite;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);

@@ -26,6 +26,7 @@
  */
 
 import {
+  memo,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -669,7 +670,9 @@ function Cafe({ c }: { c: Demo["cafe"] }) {
   );
 }
 
-function Screen({
+/* memo: etap budowy żyje w atrybutach toru (CSS), więc zmiana kroku przy
+   przewijaniu nie musi przeliczać całej makiety w React — tylko projekt. */
+const Screen = memo(function Screen({
   project,
   demo,
   screenRef,
@@ -727,7 +730,7 @@ function Screen({
       </span>
     </div>
   );
-}
+});
 
 /* ========================================================================
    Komponent
@@ -803,11 +806,28 @@ export function ProcessFilm({ copy }: { copy: Pick<ProcessCopy, "demo"> }) {
       schedule();
     });
     ro.observe(pin);
-    window.addEventListener("scroll", schedule, { passive: true });
+
+    /* Scroll słuchamy tylko, gdy tor jest blisko ekranu — reszta strony
+       nie płaci za odczyt układu w każdej klatce przewijania. Przy wyjściu
+       jeszcze jeden pomiar: ustala stan „przed torem" / „za torem" także
+       po szybkim skoku (Home/End). */
+    let listening = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        schedule();
+        if (entry.isIntersecting === listening) return;
+        listening = entry.isIntersecting;
+        if (listening) window.addEventListener("scroll", schedule, { passive: true });
+        else window.removeEventListener("scroll", schedule);
+      },
+      { rootMargin: "50% 0px" },
+    );
+    io.observe(track);
     window.addEventListener("resize", schedule);
     return () => {
       cancelAnimationFrame(frame);
       ro.disconnect();
+      io.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };

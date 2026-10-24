@@ -207,7 +207,9 @@
   max-width: none;
   transform: translateY(0);
   transition: transform 900ms var(--ease-out-quart);
-  will-change: transform;
+  /* Bez stałego `will-change`: każdy wysoki zrzut byłby wtedy osobną
+     warstwą GPU na stałe (na liście realizacji kilka naraz). Przeglądarka
+     i tak promuje obraz na czas przejścia i animacji. */
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {

@@ -8,12 +8,18 @@
      przechwytuje, a po natywnym skoku sam synchronizuje pozycję,
    - elementy z własnym overflow i otwarte <details> przewijają się
      normalnie (allowNestedScroll + prevent + data-lenis-prevent),
-   - prefers-reduced-motion: reduce → instancja w ogóle nie powstaje. */
+   - prefers-reduced-motion: reduce → instancja w ogóle nie powstaje,
+   - tryb lite (lib/perf) → Lenis znika i zostaje natywny scroll. Lenis
+     przenosi przewijanie na główny wątek, więc na słabym sprzęcie każda
+     dłuższa klatka byłaby szarpnięciem; natywny scroll idzie wątkiem
+     kompozytora i zostaje płynny niezależnie od reszty strony. */
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+
+import { isLite, subscribePerf } from "@/lib/perf";
 
 export function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -51,7 +57,7 @@ export function SmoothScroll() {
       lenisRef.current = null;
     };
 
-    const sync = () => (media.matches ? stop() : start());
+    const sync = () => (media.matches || isLite() ? stop() : start());
     const onPopState = () => {
       fromHistory.current = true;
     };
@@ -59,8 +65,10 @@ export function SmoothScroll() {
     sync();
     media.addEventListener("change", sync);
     window.addEventListener("popstate", onPopState);
+    const unsubscribePerf = subscribePerf(sync);
 
     return () => {
+      unsubscribePerf();
       media.removeEventListener("change", sync);
       window.removeEventListener("popstate", onPopState);
       stop();

@@ -4,7 +4,12 @@
    Surowy WebGL (bez three.js), jeden fragment shader: domain-warped noise
    w zieleniach + miękkie zafalowanie w miejscu kursora, które wygasa.
    Zasady:
-   - renderujemy w ~0.5× DPR i skalujemy CSS-em — to tło, ma być miękkie,
+   - renderujemy w ~0.5× DPR (i maks. ~400 tys. pikseli bufora) i skalujemy
+     CSS-em — to tło, ma być miękkie,
+   - maks. 60 kl./s (30 na słabszym sprzęcie) — ekran 144 Hz nie liczy
+     shadera 144 razy na sekundę,
+   - WebGL tylko programowy (bez GPU) albo tryb lite (lib/perf) → sama
+     .aurora / jedna statyczna klatka,
    - jasność maks. jak .aurora (zieleń ~20% krycia w szczycie), równo na
      całym hero — sufit krycia pilnuje kontrastu H1,
    - kolory z tokenów CSS (uniformy), żadnych hexów w shaderze,
@@ -13,6 +18,11 @@
    - brak WebGL / błąd shadera → nic; pod spodem zostaje .aurora. */
 
 import { useEffect, useRef, useState } from "react";
+
+import { isLite, markLite, subscribePerf } from "@/lib/perf";
+
+// Sufit pikseli bufora — powyżej tego miękki dym i tak wygląda tak samo.
+const MAX_PIXELS = 400_000;
 
 const VERTEX = `
 attribute vec2 a_pos;
@@ -98,8 +108,13 @@ void main() {
   // Lekkie rozjaśnienie pod kursorem, gaśnie razem z siłą.
   float near = exp(-dot(uv - m, uv - m) * 14.0) * u_force;
 
+  // Miękkie przejście w kolejną sekcję na dolnych 12% — w shaderze,
+  // nie maską CSS, która co klatkę kosztowałaby osobny przebieg GPU
+  // w pełnej rozdzielczości ekranu.
+  float edge = clamp(gl_FragCoord.y / (u_res.y * 0.12), 0.0, 1.0);
+
   float light = glow * 0.14 + caustic * 0.07 + near * 0.05;
-  float alpha = clamp(light, 0.0, 0.22);
+  float alpha = clamp(light, 0.0, 0.22) * edge;
   vec3 col = mix(u_signal, u_voltage, clamp(caustic * 0.8 + near, 0.0, 1.0));
 
   // Premultiplied alpha — kanwa nakłada się na obsydian i .aurora.
@@ -157,9 +172,18 @@ export function LiquidField({ className }: { className?: string }) {
       depth: false,
       stencil: false,
       powerPreference: "low-power",
+      // Bez GPU (sterownik na czarnej liście, emulacja programowa) kontekst
+      // nie powstaje — shader liczony na CPU zabiłby całą stronę.
+      failIfMajorPerformanceCaveat: true,
     });
     if (!gl) {
       canvas.remove();
+      // WebGL jest, tylko programowy → reszta efektów też będzie się dławić.
+      const probe = document.createElement("canvas").getContext("webgl");
+      if (probe) {
+        probe.getExtension("WEBGL_lose_context")?.loseContext();
+        markLite();
+      }
       // Poza ciałem efektu — bez kaskady renderów w tej samej klatce.
       queueMicrotask(() => setFailed(true));
       return;
@@ -178,8 +202,10 @@ export function LiquidField({ className }: { className?: string }) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     // Słabszy sprzęt / dotyk: 30 kl./s wystarczy na wolne falowanie.
+    // Reszta: 60. Próg z zapasem 20%, bo odstępy rAF lekko pływają —
+    // przy 120 Hz rysujemy co drugą klatkę, przy 144 Hz ~72 razy na sekundę.
     const lowEnd = coarse || (navigator.hardwareConcurrency ?? 8) <= 4;
-    const frameInterval = lowEnd ? 1000 / 30 : 0;
+    const frameInterval = (lowEnd ? 1000 / 30 : 1000 / 60) * 0.8;
 
     let program: WebGLProgram | null = null;
     let buffer: WebGLBuffer | null = null;
@@ -243,7 +269,10 @@ export function LiquidField({ className }: { className?: string }) {
     let scale = 1;
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      scale = Math.min(window.devicePixelRatio || 1, 1.5) * 0.5;
+      scale = Math.min(
+        Math.min(window.devicePixelRatio || 1, 1.5) * 0.5,
+        Math.sqrt(MAX_PIXELS / Math.max(1, rect.width * rect.height)),
+      );
       const w = Math.max(1, Math.round(rect.width * scale));
       const h = Math.max(1, Math.round(rect.height * scale));
       if (canvas.width !== w || canvas.height !== h) {
@@ -316,7 +345,7 @@ export function LiquidField({ className }: { className?: string }) {
     };
 
     const start = () => {
-      if (running || lost || reduce.matches || !visible || document.hidden)
+      if (running || lost || reduce.matches || isLite() || !visible || document.hidden)
         return;
       running = true;
       last = 0;
@@ -328,7 +357,7 @@ export function LiquidField({ className }: { className?: string }) {
     };
     const sync = () => {
       stop();
-      if (reduce.matches) {
+      if (reduce.matches || isLite()) {
         force = 0;
         draw();
       } else start();
@@ -370,9 +399,11 @@ export function LiquidField({ className }: { className?: string }) {
     reduce.addEventListener("change", sync);
     canvas.addEventListener("webglcontextlost", onLost);
     canvas.addEventListener("webglcontextrestored", onRestored);
+    const unsubscribePerf = subscribePerf(sync);
 
     return () => {
       stop();
+      unsubscribePerf();
       io.disconnect();
       ro.disconnect();
       window.removeEventListener("pointermove", onPointerMove);
@@ -403,12 +434,7 @@ export function LiquidField({ className }: { className?: string }) {
         height: "100%",
         zIndex: -1,
         pointerEvents: "none",
-        // Dym na całym hero; tylko przy samej krawędzi miękkie przejście
-        // w kolejną sekcję, żeby nie było twardej linii.
-        maskImage:
-          "linear-gradient(180deg, #000 0%, #000 88%, transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(180deg, #000 0%, #000 88%, transparent 100%)",
+        // Wygaszenie dolnej krawędzi liczy shader (`edge`).
         opacity: ready ? 1 : 0,
         transition: "opacity 1.2s var(--ease-out-expo)",
       }}

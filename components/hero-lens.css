@@ -1,27 +1,40 @@
 /* ==========================================================================
    Soczewka „pod wodą" — style do components/HeroLens.tsx
+
+   Zmienne pisze JS: --lx/--ly środek kropli, --lr jej promień, --lk ten
+   promień względem bazowego (--lb), --ls/--la rozciągnięcie i kierunek
+   ruchu, --lw połowa boku okna soczewki, --lens-w szerokość nagłówka.
+   Na klatkę zmieniają się wyłącznie transformy i przycięcie — bez
+   przeliczania układu.
    ========================================================================== */
 
 .hero-lens {
   --lx: 0px;
   --ly: 0px;
   --lr: 0px;
+  --lk: 0;
   --ls: 1;
   --la: 0rad;
+  --lb: 120px;
+  --lw: 144px;
+  --lens-w: 100%;
   position: relative;
+}
+
+/* Maska potrzebuje zapasu: przycina do pudełka elementu, a `text-box: trim`
+   kończy je na linii bazowej — bez tego obcinała ogonki j, y, ą, ę.
+   Padding + ujemny margines = więcej miejsca bez zmiany układu. Stoi na
+   stałe, żeby włączenie maski nie przesuwało nagłówka. */
+.hero-lens[data-lens] > h1 {
+  padding-block: 0.3em;
+  margin-block: -0.3em;
 }
 
 /* Oryginał ma w miejscu kropli dziurę — inaczej pod powiększoną kopią
    prześwituje tekst w normalnej skali i dwa napisy się nakładają.
-   Promień 0 = gradient zdegenerowany, rysuje się ostatni kolor, czyli
-   nagłówek jest w pełni widoczny. */
-.hero-lens[data-lens] > h1 {
-  /* Maska przycina do pudełka elementu, a `text-box: trim` kończy je na
-     linii bazowej — bez tego zapasu maska obcinała ogonki j, y, ą, ę.
-     Padding + ujemny margines = więcej miejsca bez zmiany układu;
-     środek koła przesunięty o ten sam zapas. */
-  padding-block: 0.3em;
-  margin-block: -0.3em;
+   Środek koła przesunięty o zapas paddingu. Tylko gdy kropla jest
+   widoczna — schowana nie kosztuje maskowania. */
+.hero-lens[data-lens][data-active] > h1 {
   mask-image: radial-gradient(
     circle var(--lr) at var(--lx) calc(var(--ly) + 0.3em),
     transparent calc(100% - 1px),
@@ -29,40 +42,61 @@
   );
 }
 
-/* Kopia nagłówka pod kroplą. Leży dokładnie na h1 (te same klasy
-   typograficzne, ta sama szerokość), powiększona wokół wskaźnika
-   i przycięta do koła. Clip jest w układzie elementu, więc skaluje się
-   razem z nim — stąd promień dzielony przez zoom. */
+.hero-lens:not([data-active]) > :is(.hero-lens__window, .hero-lens__drop) {
+  display: none;
+}
+
+/* Okno soczewki: kwadrat o boku 2 × --lw, środkiem na kropli, przycięty
+   do koła o promieniu kropli. Filtr (inline) liczy się tylko w nim. */
+.hero-lens__window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--lw) * 2);
+  height: calc(var(--lw) * 2);
+  overflow: clip;
+  pointer-events: none;
+  transform: translate(calc(var(--lx) - var(--lw)), calc(var(--ly) - var(--lw)));
+  clip-path: circle(var(--lr) at 50% 50%);
+  will-change: transform;
+}
+
+/* Kopia nagłówka w oknie. Ta sama szerokość i klasy co h1, więc wiersze
+   łamią się identycznie. Przesunięcie oddaje ruch okna (tekst stoi
+   w miejscu), skala powiększa wokół środka kropli. */
 .hero-lens__clone {
   position: absolute;
-  inset: 0 0 auto 0;
+  top: 0;
+  left: 0;
+  width: var(--lens-w);
   margin: 0;
-  pointer-events: none;
   user-select: none;
   /* Czysta kość, bez zielonego zabarwienia — zieleń na jasnym tekście
      pod ziarnem czytała się jak porost. */
   color: var(--color-bone);
   transform-origin: var(--lx) var(--ly);
-  transform: scale(var(--lens-zoom));
-  clip-path: circle(calc(var(--lr) / var(--lens-zoom)) at var(--lx) var(--ly));
-  will-change: clip-path, transform;
+  transform: translate(calc(var(--lw) - var(--lx)), calc(var(--lw) - var(--ly)))
+    scale(var(--lens-zoom));
 }
 
 /* Krawędź kropli: bez wypełnienia, tylko światło na powierzchni —
-   refleks u góry, zielona poświata od dna, cień pod spodem. */
+   refleks u góry, zielona poświata od dna, cień pod spodem.
+   Stały rozmiar (promień bazowy), wzrost i rozciąganie przez scale —
+   cienie malują się raz, potem kompozytor tylko przesuwa warstwę. */
 .hero-lens__drop {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(var(--lr) * 2);
-  height: calc(var(--lr) * 2);
+  width: calc(var(--lb) * 2);
+  height: calc(var(--lb) * 2);
   border-radius: 50%;
   pointer-events: none;
   transform:
-    translate(calc(var(--lx) - var(--lr)), calc(var(--ly) - var(--lr)))
+    translate(calc(var(--lx) - var(--lb)), calc(var(--ly) - var(--lb)))
     rotate(var(--la))
-    scale(var(--ls), calc(2 - var(--ls)))
+    scale(calc(var(--ls) * var(--lk)), calc((2 - var(--ls)) * var(--lk)))
     rotate(calc(var(--la) * -1));
+  will-change: transform;
   background: radial-gradient(
     circle at 34% 28%,
     color-mix(in oklab, var(--color-bone) 14%, transparent) 0%,
