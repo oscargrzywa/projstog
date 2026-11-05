@@ -30,8 +30,8 @@ const pl = {
   },
 
   home: {
-    badge: "Rzeszów / Mielec · Podkarpacie",
-    h1: "Strona, która zarabia dla Twojej firmy.",
+    badge: "Rzeszów / Mielec · obsługa w całej Polsce",
+    h1: "Strony internetowe, które zarabiają.",
     lead:
       "Dostajesz stronę, sklep albo automatyzację, która pomaga Ci zdobywać klientów i zdejmuje z Ciebie ręczną robotę. Od pierwszej rozmowy po opiekę po starcie masz jeden numer telefonu i jedną osobę, która odpowiada za całość.",
     ctaPrimary: "Umów bezpłatną rozmowę",
@@ -65,10 +65,45 @@ const pl = {
     notAgency: {
       heading: "Rozmawiasz z człowiekiem z Podkarpacia, nie z agencją.",
       lead:
-        "Wpisz w Google „strony internetowe” i nazwę podkarpackiego miasta. Prawie żadna z firm na górze wyników nie ma tu siedziby.",
+        "Stron internetowych robi wiele firm, także w Rzeszowie. Zanim wybierzesz, zapytaj, kto odbierze telefon po uruchomieniu i czy to ta sama osoba, która pisze kod.",
       punchline: "Ze mną spotkasz się na miejscu, przy jednym stole.",
       detail:
         "Dla Ciebie to prostsza współpraca. Twój projekt nie trafia do podwykonawcy i nikt nie odsyła Cię do „innego działu”. Dzwonisz i rozmawiasz z osobą, która zrobiła Twoją stronę i zna ją na pamięć.",
+    },
+
+    /* Sekcja lokalna — główna treść pod frazy „strony internetowe Rzeszów". */
+    local: {
+      heading: "Strony internetowe w Rzeszowie i dla firm z całej Polski",
+      lead:
+        "Twój klient wpisuje w telefonie usługę i nazwę miasta, a potem dzwoni do jednej z pierwszych firm. Twoja strona i wizytówka Google mają działać razem, żeby ten telefon trafiał do Ciebie.",
+      points: [
+        {
+          title: "W Rzeszowie i okolicy",
+          text: "Przyjadę do Ciebie, obejrzę firmę i ustalimy zakres przy jednym stole.",
+        },
+        {
+          title: "W całej Polsce",
+          text: "Cały projekt poprowadzimy telefonicznie i online, na tych samych zasadach i z tym samym jednym kontaktem.",
+        },
+        {
+          title: "Strona gotowa pod Google",
+          text: "Dostajesz tytuły, opisy, mapę strony i dane firmy podane Google wprost, zgodne z Twoją wizytówką.",
+        },
+        {
+          title: "Cena i termin przed startem",
+          text: "Zakres, termin i cenę znasz, zanim powstanie pierwsza linijka kodu. Bez dopłat, o których dowiadujesz się na końcu.",
+        },
+      ],
+      link: "Zobacz, jak ustawiam wizytówkę Google",
+      asideHeading: "Dane firmy",
+      maps: "Zobacz w Mapach Google",
+    },
+
+    reviews: {
+      heading: "Co mówią klienci",
+      lead: "Opinie z wizytówki Google, słowo w słowo.",
+      all: "Wszystkie opinie w Google",
+      starsLabel: "gwiazdek na 5",
     },
 
 
@@ -229,7 +264,7 @@ const pl = {
   },
 
   footer: {
-    tagline: "Strony internetowe i narzędzia cyfrowe dla firm z Podkarpacia, które chcą więcej zapytań od klientów.",
+    tagline: "Strony internetowe i narzędzia cyfrowe dla firm z Rzeszowa i całej Polski, które chcą więcej zapytań od klientów.",
     columnOffer: "Oferta",
     columnCompany: "Firma",
     columnContact: "Kontakt",
@@ -269,8 +304,8 @@ const en: Dictionary = {
   },
 
   home: {
-    badge: "Rzeszów / Mielec · south-eastern Poland",
-    h1: "A website that earns for your business.",
+    badge: "Rzeszów / Mielec · serving all of Poland",
+    h1: "Websites that earn their keep.",
     lead:
       "You get a website, an online store or an automation that helps you win customers and takes manual work off your plate. From the first call to support after launch, you have one phone number and one person responsible for all of it.",
     ctaPrimary: "Book a free call",
@@ -302,10 +337,44 @@ const en: Dictionary = {
     notAgency: {
       heading: "You deal with a person from the region, not an agency.",
       lead:
-        "Search Google for web design plus the name of any town in the region. Almost none of the companies at the top are based here.",
+        "Plenty of firms build websites, in Rzeszów too. Before you pick one, ask who answers the phone after launch and whether that is the person who writes the code.",
       punchline: "With me, you can sit down and talk face to face.",
       detail:
         "For you, that means simpler work together. Your project is not passed to a subcontractor and nobody sends you to another department. You call and speak to the person who built your site and knows it by heart.",
+    },
+
+    local: {
+      heading: "Websites in Rzeszów and for businesses across Poland",
+      lead:
+        "Your customer types a service and a city into their phone, then calls one of the first businesses they see. Your website and Google Business Profile work together so that call comes to you.",
+      points: [
+        {
+          title: "In and around Rzeszów",
+          text: "I come to you, see the business and we agree the scope at one table.",
+        },
+        {
+          title: "Across Poland",
+          text: "We run the whole project by phone and online, on the same terms and with the same single contact.",
+        },
+        {
+          title: "Ready for Google",
+          text: "You get titles, descriptions, a sitemap and business details stated plainly for Google, matching your Business Profile.",
+        },
+        {
+          title: "Price and deadline up front",
+          text: "You know the scope, deadline and price before the first line of code. No extras you only hear about at the end.",
+        },
+      ],
+      link: "See how your Google Business Profile gets set up",
+      asideHeading: "Business details",
+      maps: "View on Google Maps",
+    },
+
+    reviews: {
+      heading: "What clients say",
+      lead: "Reviews from Google, quoted word for word in the original Polish.",
+      all: "All reviews on Google",
+      starsLabel: "stars out of 5",
     },
 
 
@@ -463,7 +532,7 @@ const en: Dictionary = {
   },
 
   footer: {
-    tagline: "Websites and digital tools for businesses in south-eastern Poland that want more enquiries.",
+    tagline: "Websites and digital tools for businesses in Rzeszów and across Poland that want more enquiries.",
     columnOffer: "Services",
     columnCompany: "Company",
     columnContact: "Contact",

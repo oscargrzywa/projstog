@@ -21,7 +21,8 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         "Strona to najczęściej pierwsze miejsce, w którym ktoś sprawdza, czy " +
         "warto do Ciebie zadzwonić. Twoja będzie ładować się szybko, dobrze " +
         "wyglądać na telefonie i jasno mówić, co oferujesz. Gdy trzeba coś " +
-        "poprawić, dzwonisz do osoby, która napisała jej kod.",
+        "poprawić, dzwonisz do osoby, która napisała jej kod. Zasady są te " +
+        "same w Rzeszowie i na drugim końcu Polski.",
       services: [
         {
           slug: "strona-one-page",
@@ -77,10 +78,10 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Strony internetowe i sklepy — Rzeszów, Mielec | PROJSTOG",
+        title: "Strony internetowe i sklepy Rzeszów | PROJSTOG",
         description:
           "Strona one page, strona firmowa, sklep WooCommerce albo blog dla " +
-          "Twojej firmy z Rzeszowa, Mielca i Podkarpacia. Stałą cenę znasz przed " +
+          "Twojej firmy z Rzeszowa, Mielca i całej Polski. Stałą cenę znasz przed " +
           "startem, a stronę robi osoba, z którą rozmawiasz.",
       },
     },
@@ -149,7 +150,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Automatyzacje AI, chatboty i CRM — Rzeszów, Mielec | PROJSTOG",
+        title: "Automatyzacje AI, chatboty i CRM Rzeszów | PROJSTOG",
         description:
           "Mniej ręcznej roboty w Twojej firmie: automatyzacje w Make i n8n, " +
           "chatboty odpowiadające klientom po godzinach, proste systemy CRM " +
@@ -161,10 +162,10 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
       slug: "marketing-i-widocznosc",
       title: "Marketing i widoczność",
       lead:
-        "Najlepsza strona nic nie da, jeśli nikt na nią nie trafi. Zadbam o " +
-        "to, żeby Twoja firma była widoczna tam, gdzie klienci naprawdę szukają — " +
-        "w mapach Google, w wynikach wyszukiwania i w social mediach. Bez " +
-        "kampanii na oślep i bez raportów, których nikt nie czyta.",
+        "Najlepsza strona nic nie da, jeśli nikt na nią nie trafi. Gdy ktoś " +
+        "w Twojej okolicy wpisuje nazwę Twojej usługi, Twoja firma ma się " +
+        "pokazać — w mapach Google, w wynikach wyszukiwania i w social mediach. " +
+        "Bez kampanii na oślep i bez raportów, których nikt nie czyta.",
       services: [
         {
           slug: "google-moja-firma",
@@ -208,11 +209,11 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Google Moja Firma i lokalne SEO — Rzeszów, Mielec | PROJSTOG",
+        title: "Pozycjonowanie lokalne i wizytówka Google Rzeszów | PROJSTOG",
         description:
           "Twoja firma widoczna tam, gdzie szukają klienci: wizytówka Google, " +
           "lokalne SEO, social media i teksty, które sprzedają. Dla firm " +
-          "z Rzeszowa, Mielca i okolic.",
+          "z Rzeszowa, Mielca i całej Polski.",
       },
     },
 
@@ -252,7 +253,7 @@ export const SERVICE_CATEGORIES: Record<Locale, ServiceCategory[]> = {
         },
       ],
       seo: {
-        title: "Hosting, opieka nad stroną i wsparcie | PROJSTOG Rzeszów / Mielec",
+        title: "Hosting i opieka nad stroną Rzeszów | PROJSTOG",
         description:
           "Twoja strona pod opieką: hosting, SSL, kopie zapasowe, aktualizacje " +
           "i szybka pomoc, gdy coś przestanie działać. Zajmuje się nią ta sama " +

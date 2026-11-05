@@ -11,6 +11,7 @@ import { StackWipe } from "@/components/StackWipe";
 import { ProcessFilm } from "@/components/ProcessFilm";
 import { HomeServices } from "@/components/HomeServices";
 import { CaseLocation } from "@/components/CaseLocation";
+import { REVIEWS } from "@/content/reviews";
 import { SITE } from "@/content/site";
 import { listServiceCategories, listCaseStudies, listPosts } from "@/lib/cms";
 import { personSchema } from "@/lib/schema";
@@ -27,11 +28,11 @@ export async function generateMetadata({
   const pl = lang === "pl";
   return {
     title: pl
-      ? "Strony internetowe Rzeszów, Mielec i Podkarpacie — PROJSTOG"
-      : "Web design in Rzeszów, Mielec and south-eastern Poland — PROJSTOG",
+      ? "Strony internetowe Rzeszów i cała Polska | PROJSTOG"
+      : "Web design in Rzeszów and across Poland | PROJSTOG",
     description: pl
-      ? "Strony internetowe, sklepy i automatyzacje AI dla firm z Rzeszowa, Mielca, Dębicy i całego Podkarpacia. Robi je jedna osoba — od rozmowy po wsparcie po wdrożeniu."
-      : "Websites, online stores and AI automation for companies in Rzeszów, Mielec, Dębica and the wider region. Built by one person, start to finish.",
+      ? "Strony internetowe i sklepy dla firm z Rzeszowa i całej Polski. Zakres, termin i cenę znasz przed startem, a przez cały projekt masz jeden kontakt."
+      : "Websites and online stores for businesses in Rzeszów and across Poland. You know the scope, deadline and price before we start, with one contact throughout.",
     alternates: metadataAlternates(lang, []),
   };
 }
@@ -204,6 +205,65 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* ============================================================ Rzeszów */}
+      {/* Główna treść pod frazy lokalne. Podstron miast nie ma (decyzja
+          z 2026-09-29), więc to strona główna odpowiada na „strony
+          internetowe Rzeszów", nie zawężając oferty: klient to cała Polska.
+          NAP z `SITE`, spójny z wizytówką Google. */}
+      <section className="mx-auto max-w-6xl px-5 py-28">
+        <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)]">
+          <div>
+            <h2 className="mask-reveal max-w-[18ch] text-5xl">
+              <span className="mask-reveal__inner">{t.home.local.heading}</span>
+            </h2>
+            <p className="reveal mt-6 max-w-[58ch] leading-relaxed text-lichen">
+              {t.home.local.lead}
+            </p>
+            <ul className="reveal-stagger mt-12 divide-y divide-hairline border-y border-hairline">
+              {t.home.local.points.map((point) => (
+                <li
+                  key={point.title}
+                  className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]"
+                >
+                  <h3 className="text-xl">{point.title}</h3>
+                  <p className="leading-relaxed text-lichen">{point.text}</p>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={`${publicPath(lang, ["oferta", "marketing-i-widocznosc"])}#google-moja-firma`}
+              className="hit reveal mt-8 inline-block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            >
+              {t.home.local.link}
+            </Link>
+          </div>
+
+          <aside className="reveal rounded-2xl border border-hairline bg-basalt p-6 lg:mt-2 lg:self-start">
+            <h3 className="text-xl">{t.home.local.asideHeading}</h3>
+            <p className="mt-5 font-display text-bone">{SITE.name}</p>
+            <address className="mt-2 leading-relaxed text-lichen not-italic">
+              {SITE.address.street}
+              <br />
+              {SITE.address.postalCode} {SITE.address.city}
+            </address>
+            <a
+              href={`tel:${SITE.phoneRaw}`}
+              className="hit mt-4 inline-block font-display text-xl whitespace-nowrap text-bone transition-colors hover:text-voltage"
+            >
+              {SITE.phone}
+            </a>
+            <a
+              href={SITE.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hit mt-5 block text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            >
+              {t.home.local.maps} ↗
+            </a>
+          </aside>
+        </div>
+      </section>
+
       {/* ============================================================= proces */}
       {/* Makieta „strona buduje się sama". Nagłówek, lead i CTA są tu,
           w HTML-u z SSR; sama makieta to dekoracja (aria-hidden). */}
@@ -292,6 +352,51 @@ export default async function HomePage({
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* ============================================================== opinie */}
+      {/* Prawdziwe opinie z wizytówki Google, bez `aggregateRating` w JSON-LD
+          (powód w lib/schema.ts). Treść po polsku także w wersji EN. */}
+      <section className="border-y border-hairline bg-basalt">
+        <div className="mx-auto max-w-6xl px-5 py-28">
+          <div className="section-head">
+            <h2 className="mask-reveal text-5xl">
+              <span className="mask-reveal__inner">{t.home.reviews.heading}</span>
+            </h2>
+            <a
+              href={SITE.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hit reveal text-sm font-medium text-voltage underline-offset-4 hover:underline"
+            >
+              {t.home.reviews.all} ↗
+            </a>
+          </div>
+          <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-lichen">
+            {t.home.reviews.lead}
+          </p>
+
+          <ul className="reveal mt-14 gap-6 md:columns-2 lg:columns-3">
+            {REVIEWS.map((review) => (
+              <li
+                key={review.name}
+                className="mb-6 break-inside-avoid rounded-2xl border border-hairline bg-obsydian p-6"
+              >
+                <p
+                  role="img"
+                  aria-label={`${review.stars} ${t.home.reviews.starsLabel}`}
+                  className="text-sm tracking-widest text-voltage"
+                >
+                  {"★".repeat(review.stars)}
+                </p>
+                <blockquote lang="pl" className="mt-4 leading-relaxed text-bone-70">
+                  {review.text}
+                </blockquote>
+                <p className="mt-4 text-sm font-medium text-bone">{review.name}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* =============================================================== blog */}

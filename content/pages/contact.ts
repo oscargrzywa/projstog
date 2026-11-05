@@ -250,6 +250,7 @@ type ContactPageCopy = {
   phoneNote: string;
   emailLabel: string;
   emailNote: string;
+  addressNote: string;
   responseHeading: string;
   responsePoints: string[];
   formHeading: string;
@@ -266,7 +267,7 @@ type ContactPageCopy = {
 export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
   pl: {
     seo: {
-      title: "Kontakt — Oscar Grzywa, PROJSTOG Rzeszów / Mielec",
+      title: "Kontakt — strony internetowe Rzeszów / Mielec | PROJSTOG",
       description:
         "Zadzwoń, napisz albo wypełnij formularz. Rozmawiasz od razu z osobą, która zrobi Twój projekt — bez pośredników. Rzeszów i Mielec, woj. podkarpackie.",
     },
@@ -280,6 +281,7 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     phoneNote: "Najszybsza droga — dzwoń śmiało.",
     emailLabel: "E-mail",
     emailNote: "Wolisz napisać? Odpowiedź przyjdzie z tego samego adresu.",
+    addressNote: "Otwórz w Mapach Google.",
     responseHeading: "Co dostajesz po wysłaniu wiadomości",
     responsePoints: [
       "Odpowiedź w ciągu jednego dnia roboczego — telefonicznie albo mailem, jak wolisz.",
@@ -312,6 +314,7 @@ export const CONTACT_PAGE: Record<Locale, ContactPageCopy> = {
     phoneNote: "The fastest route — just call.",
     emailLabel: "Email",
     emailNote: "Prefer writing? The reply comes from the same address.",
+    addressNote: "Open in Google Maps.",
     responseHeading: "What you get after you write",
     responsePoints: [
       "A reply within one working day — by phone or email, whichever you prefer.",

@@ -138,11 +138,11 @@ export type OfferCategoryContent = {
 export const OFFER_PAGE: Record<Locale, OfferOverviewContent> = {
   pl: {
     seo: {
-      title: "Oferta — strony, sklepy, AI i lokalne SEO | PROJSTOG Rzeszów / Mielec",
+      title: "Oferta: strony, sklepy, AI i lokalne SEO Rzeszów | PROJSTOG",
       description:
         "Profit Site: strona o ustalonym zakresie, uruchomienie w 14 dni, " +
         "stała cena podana przed startem. Do tego sklepy, automatyzacje AI, " +
-        "widoczność w Google i opieka po uruchomieniu. Rzeszów, Mielec i Podkarpacie.",
+        "widoczność w Google i opieka po uruchomieniu. Rzeszów, Mielec i cała Polska.",
     },
 
     h1: "Wiesz, co dostajesz, zanim zaczniemy.",

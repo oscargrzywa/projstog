@@ -54,6 +54,7 @@ export function localBusinessSchema(locale: Locale) {
     name: SITE.name,
     legalName: SITE.legalName,
     url: absolute(publicPath(locale)),
+    logo: absolute("/brand/projstog-logo-horizontal-2048.png"),
     email: SITE.email,
     telephone: SITE.phoneRaw,
     address: postalAddress(),
@@ -62,13 +63,15 @@ export function localBusinessSchema(locale: Locale) {
       latitude: SITE.geo.latitude,
       longitude: SITE.geo.longitude,
     },
+    /* Wskazuje wprost wizytówkę Google — spina stronę z profilem w Mapach. */
+    hasMap: SITE.mapsUrl,
     /* Celowo bez `openingHoursSpecification` — strona nie podaje godzin
        pracy (decyzja właściciela, 2026-10-09), a dane strukturalne nie
        mogą mówić więcej niż treść. */
     founder: { "@type": "Person", "@id": OWNER_ID, name: SITE.owner },
     taxID: SITE.nip,
     identifier: { "@type": "PropertyValue", propertyID: "REGON", value: SITE.regon },
-    sameAs: Object.values(SITE.social).filter(Boolean),
+    sameAs: [SITE.mapsUrl, ...Object.values(SITE.social).filter(Boolean)],
     /* Google nie wymienia `areaServed` w dokumentacji — to nie jest
        dźwignia rankingowa, tylko zgodność z treścią strony. */
     areaServed: areaServedSchema(),

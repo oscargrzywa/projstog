@@ -27,8 +27,12 @@ export const SITE = {
   /** Etykieta „Rzeszów / Mielec" do treści. */
   citiesLabel: "Rzeszów / Mielec",
 
-  /** Domena produkcyjna — baza dla canonical, OG i sitemapy. */
-  url: "https://projstog.pl",
+  /**
+   * Domena produkcyjna — baza dla canonical, OG i sitemapy.
+   * ⚠ Z `www`: hosting przekierowuje `projstog.pl` (308) na `www.projstog.pl`.
+   * Canonical musi wskazywać adres docelowy, nie przekierowanie.
+   */
+  url: "https://www.projstog.pl",
 
   email: "biuro@projstog.pl",
 
@@ -46,9 +50,11 @@ export const SITE = {
     country: "PL",
   },
 
-  /** Współrzędne adresu z CEIDG (OpenStreetMap). */
-  geo: { latitude: 50.04112, longitude: 22.01601 },
+  /** Współrzędne pinezki z wizytówki Google. */
+  geo: { latitude: 50.041141, longitude: 22.016002 },
 
+  /** Wizytówka w Mapach Google (stały link po CID profilu). */
+  mapsUrl: "https://www.google.com/maps?cid=4443834914241095971",
 
   /**
    * Widełki cenowe. Konkurencja w regionie cen NIE podaje — jawny cennik

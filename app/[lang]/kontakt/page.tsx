@@ -110,6 +110,24 @@ export default async function ContactPage({
                   <GoArrow />
                 </dd>
               </div>
+
+              <div className="contact-card__row">
+                <dt>{copy.companyLabels.address}</dt>
+                <dd>
+                  <a
+                    href={SITE.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-card__link font-display text-lg leading-snug"
+                  >
+                    {SITE.address.street}
+                    <br />
+                    {SITE.address.postalCode} {SITE.address.city}
+                  </a>
+                  <p className="contact-card__note">{copy.addressNote}</p>
+                  <GoArrow />
+                </dd>
+              </div>
             </dl>
           </div>
         }

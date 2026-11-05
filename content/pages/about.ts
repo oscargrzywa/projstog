@@ -74,11 +74,11 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     photoAlt: "Oscar Grzywa, właściciel PROJSTOG",
     photoCaption: "Oscar Grzywa · PROJSTOG · Rzeszów / Mielec",
 
-    localHeading: "Masz wykonawcę stąd. Większość konkurencji jest daleko.",
+    localHeading: "Masz wykonawcę stąd, którego spotkasz osobiście.",
     localLead:
-      "Wpisz w Google hasło o stronach internetowych na Podkarpaciu i sprawdź, skąd są firmy na górze wyników. Prawie żadna nie ma siedziby w regionie.",
+      "Pod hasłem „strony internetowe Rzeszów” znajdziesz i firmy stąd, i agencje z innych miast, które obsługują region zdalnie. Zanim wybierzesz, sprawdź adres firmy i zapytaj, czy spotkacie się osobiście.",
     localPunchline:
-      "To firmy, które obsługują Podkarpacie zdalnie, z adresem oddalonym o kilkaset kilometrów. Firma działa w Rzeszowie, a mieszkam w Mielcu, więc spotkasz się ze mną na miejscu w obu miastach.",
+      "Firma działa w Rzeszowie, a mieszkam w Mielcu, więc spotkasz się ze mną na miejscu w obu miastach.",
     localDetail:
       "Dla Ciebie to znaczy, że przyjadę na spotkanie, obejrzę Twój lokal albo realizacje na miejscu, a teksty na Twoją stronę napiszę z wiedzą o lokalnym rynku. Nie zgaduję, jak wygląda sytuacja w Dębicy, Tarnobrzegu czy Kolbuszowej — jeżdżę tamtędy.",
     mapDistance: "ok. 50 km",
@@ -146,11 +146,11 @@ export const ABOUT_PAGE: Record<Locale, AboutPageCopy> = {
     photoAlt: "Oscar Grzywa, owner of PROJSTOG",
     photoCaption: "Oscar Grzywa · PROJSTOG · Rzeszów / Mielec",
 
-    localHeading: "Your contractor is local. Most of the competition is far away.",
+    localHeading: "Your contractor is local, and you can meet them in person.",
     localLead:
-      "Search Google for web design anywhere in south-eastern Poland and check where the companies at the top are based. Almost none of them are in the region.",
+      "Search for web design in Rzeszów and you will find both local firms and agencies from other cities serving the region remotely. Before you pick one, check the company address and ask whether you will meet in person.",
     localPunchline:
-      "These are firms serving Podkarpacie remotely, from an address several hundred kilometres away. The business is based in Rzeszów and I live in Mielec, so you can meet me in person in either town.",
+      "The business is based in Rzeszów and I live in Mielec, so you can meet me in person in either town.",
     localDetail:
       "For you, that means I come to the meeting, look at your premises or your work on site, and write your copy knowing the local market. I do not guess what things look like in Dębica, Tarnobrzeg or Kolbuszowa — I drive through them.",
     mapDistance: "approx. 50 km",

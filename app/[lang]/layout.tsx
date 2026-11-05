@@ -24,6 +24,8 @@ export const metadata: Metadata = {
   /* Pozwala używać ścieżek względnych w canonical i OG — składa je w pełny URL. */
   metadataBase: new URL(SITE.url),
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }] },
+  /* Tytuł i opis Next dziedziczy z metadanych podstrony. */
+  openGraph: { type: "website", siteName: SITE.name },
 };
 
 export default async function RootLayout({

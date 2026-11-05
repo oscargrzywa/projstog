@@ -175,7 +175,8 @@ h3 {
    muszą być identyczne, inaczej obraz pod kroplą się rozjedzie. */
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.4rem, 0.4rem + 9.4vw, 10.5rem);
+  /* `14vw` mieści „internetowe," w jednym wierszu na telefonach 320–375 px. */
+  font-size: clamp(min(3.4rem, 14vw), 0.4rem + 9.4vw, 10.5rem);
   font-weight: 640;
   letter-spacing: clamp(-0.06em, -0.02em - 0.35vw, -0.03em);
   word-spacing: 0.14em;

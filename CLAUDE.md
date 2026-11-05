@@ -119,6 +119,13 @@ właściciela 2026-09-29**. Lokalne SEO = **Rzeszów / Mielec** (decyzja
 (Rzeszów) + wizytówka Google Moja Firma. Dane firmy (NAP, NIP, REGON) żyją
 w `content/site.ts` (`SITE`).
 
+Priorytet właściciela od 2026-11-05: **widoczność w Rzeszowie, ale klient
+docelowy to cała Polska** — Rzeszów jest sygnałem lokalnym, treść nie może
+zawężać oferty do jednego miasta (dlatego H1 bez miasta). Frazę „strony
+internetowe Rzeszów" niosą: title strony głównej, tekst nad H1 i sekcja lokalna,
+a tytuły podstron mają samo „Rzeszów". Mielec zostaje w opisach i treści.
+Kanoniczna domena to `https://www.projstog.pl` (apex przekierowuje 308 na `www`).
+
 ## Realizacje (portfolio)
 
 **Nowe do dodania:** `finanseszelagowski.pl`, `apartsea.pl`, `mojagruzja.pl`, `landrew.pl`
@@ -179,6 +186,11 @@ powtarzające się w TOP10 dla wielu miast mają siedziby w Sochaczewie, Pile,
 Czechowicach-Dziedzicach, Krakowie i na Podlasiu. Większość to farmy podstron
 lokalizacyjnych — jedna z nich ma szacunkowo 1800–2300 podstron miejskich
 z identycznym cennikiem i FAQ.
+
+**Korekta dla samego Rzeszowa (sprawdzone w Google 2026-11-05):** powyższe NIE
+dotyczy frazy „strony internetowe Rzeszów". Tam TOP Local Packa to firmy z adresem
+w Rzeszowie (Ayoti 90 opinii, Zdzislowicz 52, MJ Grafik 17). Nie pisać na stronie,
+że „prawie nikt z góry wyników nie ma tu siedziby" — klient sprawdzi to w 10 sekund.
 
 Z tego wynikają cztery przewagi do wyeksponowania:
 
