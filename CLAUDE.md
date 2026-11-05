@@ -45,7 +45,7 @@ blokuje `.env*`, `node_modules/`, buildy i artefakty `.playwright-mcp/`.
 | Firma (CEIDG) | PROJSTOG Oscar Grzywa · NIP 8172228348 · REGON 545844575 |
 | E-mail | biuro@projstog.pl |
 | Telefon | +48 730 771 568 |
-| Social | FB `oscar.grzywa`, IG `@oscargrzywa`, LinkedIn |
+| Social | IG `@oscargrzywa`, LinkedIn, YouTube `@projstog` (wizytówka). **Bez Facebooka** — decyzja właściciela 2026-11-05 |
 
 **Nie podawać daty rozpoczęcia działalności** (decyzja właściciela) — ani
 w treści, ani w JSON-LD (`foundingDate`).

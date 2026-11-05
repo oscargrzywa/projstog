@@ -69,7 +69,6 @@ export const SITE = {
   areaServed: { country: "PL", name: "Polska" },
 
   social: {
-    facebook: "https://www.facebook.com/oscar.grzywa",
     instagram: "https://www.instagram.com/oscargrzywa",
     linkedin: "https://www.linkedin.com/in/oscar-grzywa",
   },
